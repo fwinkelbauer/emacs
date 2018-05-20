@@ -1,0 +1,209 @@
+* Configuration
+
+I am currently running GNU Emacs 25.3.1.
+
+** OS Detection
+
+#+BEGIN_SRC emacs-lisp
+(setq IS-LINUX (eq system-type 'gnu/linux)
+      IS-WINDOWS (eq system-type 'windows-nt))
+#+END_SRC
+
+** General
+
+*** Simplify confirmation
+
+#+BEGIN_SRC emacs-lisp
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+*** Reload file if it changed on disk
+
+#+BEGIN_SRC emacs-lisp
+(global-auto-revert-mode t)
+#+END_SRC
+
+*** Disable backups
+
+#+BEGIN_SRC emacs-lisp
+(setq backup-inhibited t)
+#+END_SRC
+
+*** Disable auto save
+
+#+BEGIN_SRC emacs-lisp
+(setq auto-save-default nil)
+#+END_SRC
+
+*** Disable audio bell
+
+#+BEGIN_SRC emacs-lisp
+(setq visible-bell t)
+#+END_SRC
+
+*** Hide startup message and empty scratch buffer
+
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-message t)
+(setq initial-scratch-message nil)
+#+END_SRC
+
+*** Allow 20mb before garbage collection
+
+#+BEGIN_SRC emacs-lisp
+(setq gc-cons-threshold 20000000)
+#+END_SRC
+
+*** Always start in fullscreen
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+#+END_SRC
+
+** Text
+
+*** Prefer UTF-8
+
+#+BEGIN_SRC emacs-lisp
+(setq locale-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+#+END_SRC
+
+*** Set default line length
+
+#+BEGIN_SRC emacs-lisp
+(setq-default fill-column 80)
+#+END_SRC
+
+*** Overwrite selected text when typing
+
+#+BEGIN_SRC emacs-lisp
+(delete-selection-mode t)
+#+END_SRC
+
+*** Ensure that files end with a new line
+
+#+BEGIN_SRC emacs-lisp
+(setq require-final-newline t)
+#+END_SRC
+
+*** Mark matching pairs of parentheses
+
+#+BEGIN_SRC emacs-lisp
+(show-paren-mode t)
+(setq show-paren-delay 0.0)
+#+END_SRC
+
+*** Spaces > Tabs
+
+#+BEGIN_SRC emacs-lisp
+(setq-default indent-tabs-mode nil)
+#+END_SRC
+
+*** Use single space after a sentence
+
+#+BEGIN_SRC emacs-lisp
+(setq sentence-end-double-space nil)
+#+END_SRC
+
+*** Delete trailing whitespace on save
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
+*** Enable auto-fill
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook 'turn-on-auto-fill)
+#+END_SRC
+
+** Custom
+
+Custom configuration that is only relevant on a particular machine should be
+stored in ~.emacs.d/custom.el~.
+
+#+BEGIN_SRC emacs-lisp
+(when (file-exists-p "~/.emacs.d/custom.el")
+  (load-file "~/.emacs.d/custom.el"))
+#+END_SRC
+
+** Styling
+
+*** Hide toolbar on Windows
+
+#+BEGIN_SRC emacs-lisp
+(if IS-WINDOWS
+  (tool-bar-mode -1))
+#+END_SRC
+
+*** Set the default font
+
+#+BEGIN_SRC emacs-lisp
+(set-default-font "Roboto Mono 12" nil t)
+#+END_SRC
+
+*** Enable line numbers
+
+#+BEGIN_SRC emacs-lisp
+(global-linum-mode t)
+#+END_SRC
+
+*** Enable column numbers
+
+#+BEGIN_SRC emacs-lisp
+(setq column-number-mode t)
+#+END_SRC
+
+*** Highlight current line
+
+#+BEGIN_SRC emacs-lisp
+(when window-system
+  (global-hl-line-mode))
+#+END_SRC
+
+** Packages
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/packages")
+#+END_SRC
+
+*** Themes
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+#+END_SRC
+
+*** Use Custom Theme
+
+Found on [[https://github.com/purcell/color-theme-sanityinc-tomorrow][GitHub]].
+
+#+BEGIN_SRC emacs-lisp
+(load-theme 'sanityinc-tomorrow-day t)
+#+END_SRC
+
+*** Markdown
+
+Found on [[https://github.com/jrblevin/markdown-mode][GitHub]].
+
+#+BEGIN_SRC emacs-lisp
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+(autoload 'gfm-mode "markdown-mode"
+   "Major mode for editing GitHub Flavored Markdown files" t)
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+#+END_SRC
+
+** Org
+
+*** Open file unfolded
+
+#+BEGIN_SRC emacs-lisp
+(setq org-startup-folded nil)
+#+END_SRC
