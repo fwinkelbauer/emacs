@@ -121,16 +121,6 @@ I am currently running GNU Emacs 25.3.1.
 (add-hook 'org-mode-hook 'turn-on-auto-fill)
 #+END_SRC
 
-** Custom
-
-Custom configuration that is only relevant on a particular machine should be
-stored in ~.emacs.d/custom.el~.
-
-#+BEGIN_SRC emacs-lisp
-(when (file-exists-p "~/.emacs.d/custom.el")
-  (load-file "~/.emacs.d/custom.el"))
-#+END_SRC
-
 ** Styling
 
 *** Hide toolbar on Windows
@@ -216,4 +206,14 @@ Found on [[https://github.com/jaypei/emacs-neotree][GitHub]].
 
 #+BEGIN_SRC emacs-lisp
 (setq org-startup-folded nil)
+#+END_SRC
+
+** Custom
+
+Custom configuration that is only relevant on a particular machine should be
+stored in ~.emacs.d/custom.el~.
+
+#+BEGIN_SRC emacs-lisp
+(when (file-exists-p "~/.emacs.d/custom.el")
+  (load-file "~/.emacs.d/custom.el"))
 #+END_SRC
