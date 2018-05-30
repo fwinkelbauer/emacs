@@ -200,6 +200,16 @@ Found on [[https://github.com/jrblevin/markdown-mode][GitHub]].
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 #+END_SRC
 
+*** Neotree
+
+Found on [[https://github.com/jaypei/emacs-neotree][GitHub]].
+
+#+BEGIN_SRC emacs-lisp
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+(global-set-key [f9] 'neotree-dir)
+#+END_SRC
+
 ** Org
 
 *** Open file unfolded
