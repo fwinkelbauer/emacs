@@ -1,3 +1,5 @@
+#+STARTUP: content
+
 * Configuration
 
 I am currently running GNU Emacs 25.3.1.
@@ -161,17 +163,12 @@ I am currently running GNU Emacs 25.3.1.
 (add-to-list 'load-path "~/.emacs.d/packages")
 #+END_SRC
 
-*** Themes
-
-#+BEGIN_SRC emacs-lisp
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-#+END_SRC
-
 *** Use Custom Theme
 
 Found on [[https://github.com/purcell/color-theme-sanityinc-tomorrow][GitHub]].
 
 #+BEGIN_SRC emacs-lisp
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'sanityinc-tomorrow-day t)
 #+END_SRC
 
