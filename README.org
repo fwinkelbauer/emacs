@@ -1,70 +1,70 @@
 #+STARTUP: content
 
-* Configuration
+* Introduction
 
 I am currently running GNU Emacs 25.3.1.
 
-** OS Detection
+* OS Detection
 
 #+BEGIN_SRC emacs-lisp
 (setq IS-LINUX (eq system-type 'gnu/linux)
       IS-WINDOWS (eq system-type 'windows-nt))
 #+END_SRC
 
-** General
+* General
 
-*** Simplify confirmation
+** Simplify confirmation
 
 #+BEGIN_SRC emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
-*** Reload file if it changed on disk
+** Reload file if it changed on disk
 
 #+BEGIN_SRC emacs-lisp
 (global-auto-revert-mode t)
 #+END_SRC
 
-*** Disable backups
+** Disable backups
 
 #+BEGIN_SRC emacs-lisp
 (setq backup-inhibited t)
 #+END_SRC
 
-*** Disable auto save
+** Disable auto save
 
 #+BEGIN_SRC emacs-lisp
 (setq auto-save-default nil)
 #+END_SRC
 
-*** Disable audio bell
+** Disable audio bell
 
 #+BEGIN_SRC emacs-lisp
 (setq visible-bell t)
 #+END_SRC
 
-*** Hide startup message and empty scratch buffer
+** Hide startup message and empty scratch buffer
 
 #+BEGIN_SRC emacs-lisp
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
 #+END_SRC
 
-*** Allow 20mb before garbage collection
+** Allow 20mb before garbage collection
 
 #+BEGIN_SRC emacs-lisp
 (setq gc-cons-threshold 20000000)
 #+END_SRC
 
-*** Always start in fullscreen
+** Always start in fullscreen
 
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 #+END_SRC
 
-** Text
+* Text
 
-*** Prefer UTF-8
+** Prefer UTF-8
 
 #+BEGIN_SRC emacs-lisp
 (setq locale-coding-system 'utf-8)
@@ -74,96 +74,96 @@ I am currently running GNU Emacs 25.3.1.
 (prefer-coding-system 'utf-8)
 #+END_SRC
 
-*** Set default line length
+** Set default line length
 
 #+BEGIN_SRC emacs-lisp
 (setq-default fill-column 80)
 #+END_SRC
 
-*** Overwrite selected text when typing
+** Overwrite selected text when typing
 
 #+BEGIN_SRC emacs-lisp
 (delete-selection-mode t)
 #+END_SRC
 
-*** Ensure that files end with a new line
+** Ensure that files end with a new line
 
 #+BEGIN_SRC emacs-lisp
 (setq require-final-newline t)
 #+END_SRC
 
-*** Mark matching pairs of parentheses
+** Mark matching pairs of parentheses
 
 #+BEGIN_SRC emacs-lisp
 (show-paren-mode t)
 (setq show-paren-delay 0.0)
 #+END_SRC
 
-*** Spaces > Tabs
+** Spaces > Tabs
 
 #+BEGIN_SRC emacs-lisp
 (setq-default indent-tabs-mode nil)
 #+END_SRC
 
-*** Use single space after a sentence
+** Use single space after a sentence
 
 #+BEGIN_SRC emacs-lisp
 (setq sentence-end-double-space nil)
 #+END_SRC
 
-*** Delete trailing whitespace on save
+** Delete trailing whitespace on save
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
-*** Enable auto-fill
+** Enable auto-fill
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-mode-hook 'turn-on-auto-fill)
 #+END_SRC
 
-** Styling
+* Styling
 
-*** Hide toolbar on Windows
+** Hide toolbar on Windows
 
 #+BEGIN_SRC emacs-lisp
 (if IS-WINDOWS
   (tool-bar-mode -1))
 #+END_SRC
 
-*** Set the default font
+** Set the default font
 
 #+BEGIN_SRC emacs-lisp
 (set-default-font "Roboto Mono 12" nil t)
 #+END_SRC
 
-*** Enable line numbers
+** Enable line numbers
 
 #+BEGIN_SRC emacs-lisp
 (global-linum-mode t)
 #+END_SRC
 
-*** Enable column numbers
+** Enable column numbers
 
 #+BEGIN_SRC emacs-lisp
 (setq column-number-mode t)
 #+END_SRC
 
-*** Highlight current line
+** Highlight current line
 
 #+BEGIN_SRC emacs-lisp
 (when window-system
   (global-hl-line-mode))
 #+END_SRC
 
-** Packages
+* Packages
 
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'load-path "~/.emacs.d/packages")
 #+END_SRC
 
-*** Use Custom Theme
+** Use Custom Theme
 
 Found on [[https://github.com/purcell/color-theme-sanityinc-tomorrow][GitHub]].
 
@@ -172,7 +172,7 @@ Found on [[https://github.com/purcell/color-theme-sanityinc-tomorrow][GitHub]].
 (load-theme 'sanityinc-tomorrow-day t)
 #+END_SRC
 
-*** Markdown
+** Markdown
 
 Found on [[https://github.com/jrblevin/markdown-mode][GitHub]].
 
@@ -187,7 +187,7 @@ Found on [[https://github.com/jrblevin/markdown-mode][GitHub]].
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 #+END_SRC
 
-*** Neotree
+** Neotree
 
 Found on [[https://github.com/jaypei/emacs-neotree][GitHub]].
 
@@ -197,22 +197,14 @@ Found on [[https://github.com/jaypei/emacs-neotree][GitHub]].
 (global-set-key [f9] 'neotree-dir)
 #+END_SRC
 
-*** Undo Tree
+** Undo Tree
 
 #+BEGIN_SRC emacs-lisp
 (require 'undo-tree)
 (global-undo-tree-mode)
 #+END_SRC
 
-** Org
-
-*** Open file unfolded
-
-#+BEGIN_SRC emacs-lisp
-(setq org-startup-folded nil)
-#+END_SRC
-
-** Custom
+* Custom
 
 Custom configuration that is only relevant on a particular machine should be
 stored in ~.emacs.d/custom.el~.
