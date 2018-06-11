@@ -118,12 +118,6 @@ I am currently running GNU Emacs 25.3.1.
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
-** Enable auto-fill
-
-#+BEGIN_SRC emacs-lisp
-(add-hook 'org-mode-hook 'turn-on-auto-fill)
-#+END_SRC
-
 * Styling
 
 ** Hide toolbar on Windows
@@ -186,6 +180,8 @@ Found on [[https://github.com/jrblevin/markdown-mode][GitHub]].
 (autoload 'gfm-mode "markdown-mode"
    "Major mode for editing GitHub Flavored Markdown files" t)
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+
+(add-hook 'markdown-mode-hook 'turn-on-auto-fill)
 #+END_SRC
 
 ** Neotree
@@ -203,6 +199,12 @@ Found on [[https://github.com/jaypei/emacs-neotree][GitHub]].
 #+BEGIN_SRC emacs-lisp
 (require 'undo-tree)
 (global-undo-tree-mode)
+#+END_SRC
+
+** Org
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook 'turn-on-auto-fill)
 #+END_SRC
 
 * Custom
