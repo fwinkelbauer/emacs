@@ -51,7 +51,7 @@ I am currently running GNU Emacs 25.3.1.
 (setq initial-scratch-message nil)
 #+END_SRC
 
-** Allow 20mb before garbage collection
+** Garbage collection
 
 #+BEGIN_SRC emacs-lisp
 (setq gc-cons-threshold 20000000)
@@ -67,11 +67,18 @@ I am currently running GNU Emacs 25.3.1.
 
 ** Prefer UTF-8
 
+Based on this [[https://rufflewind.com/2014-07-20/pasting-unicode-in-emacs-on-windows][StackOverflow post]].
+
 #+BEGIN_SRC emacs-lisp
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
+(set-language-environment 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
+(setq locale-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-selection-coding-system
+  (if IS-WINDOWS
+      'utf-16-le
+    'utf-8))
 (prefer-coding-system 'utf-8)
 #+END_SRC
 
