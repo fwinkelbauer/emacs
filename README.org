@@ -208,6 +208,17 @@ Found on [[https://github.com/jaypei/emacs-neotree][GitHub]].
 (global-undo-tree-mode)
 #+END_SRC
 
+** Highlight Symbol
+
+Found on [[https://github.com/nschum/highlight-symbol.el][GitHub]].
+
+#+BEGIN_SRC emacs-lisp
+(require 'highlight-symbol)
+(global-set-key [f3] 'highlight-symbol)
+
+(add-hook 'python-mode-hook 'highlight-symbol-mode)
+#+END_SRC
+
 ** Org
 
 #+BEGIN_SRC emacs-lisp
