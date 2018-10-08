@@ -205,6 +205,8 @@ Found on [[https://github.com/jaypei/emacs-neotree][GitHub]].
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-mode-hook 'turn-on-auto-fill)
+(setq org-catch-invisible-edits 'smart)
+(setq org-src-fontify-natively t)
 #+END_SRC
 
 * Custom
