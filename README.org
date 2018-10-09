@@ -207,6 +207,8 @@ Found on [[https://github.com/jaypei/emacs-neotree][GitHub]].
 (add-hook 'org-mode-hook 'turn-on-auto-fill)
 (setq org-catch-invisible-edits 'smart)
 (setq org-src-fontify-natively t)
+(setq org-enforce-todo-dependencies t)
+(setq org-enforce-todo-checkbox-dependencies t)
 #+END_SRC
 
 * Custom
