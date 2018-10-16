@@ -200,6 +200,7 @@ Found on [[https://github.com/jaypei/emacs-neotree][GitHub]]:
 (setq org-catch-invisible-edits 'smart)
 (setq org-src-fontify-natively t)
 (setq org-src-tab-acts-natively t)
+(setq org-log-into-drawer t)
 #+END_SRC
 
 ** Magit
