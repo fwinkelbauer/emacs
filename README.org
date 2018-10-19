@@ -201,6 +201,9 @@ Found on [[https://github.com/jaypei/emacs-neotree][GitHub]]:
 (setq org-src-fontify-natively t)
 (setq org-src-tab-acts-natively t)
 (setq org-log-into-drawer t)
+(setq initial-major-mode 'org-mode)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cc" 'org-capture)
 #+END_SRC
 
 ** Magit
