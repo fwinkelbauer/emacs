@@ -208,13 +208,21 @@ Found on [[https://github.com/jaypei/emacs-neotree][GitHub]]:
 
 ** Magit
 
-Found on [[https://magit.vc/][Magit.vc]].
+Found on [[https://magit.vc/][magit.vc]].
 
 Change the git commit message guidelines:
 
 #+BEGIN_SRC emacs-lisp
 (setq git-commit-summary-max-length 50)
 (setq git-commit-fill-column 72)
+#+END_SRC
+
+** Editorconfig
+
+Found on [[https://editorconfig.org/][editorconfig.org]]:
+
+#+BEGIN_SRC emacs-lisp
+(editorconfig-mode 1)
 #+END_SRC
 
 * Custom
