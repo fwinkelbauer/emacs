@@ -189,6 +189,7 @@ Found on [[https://github.com/jrblevin/markdown-mode][GitHub]]:
 Found on [[https://github.com/jaypei/emacs-neotree][GitHub]]:
 
 #+BEGIN_SRC emacs-lisp
+(setq neo-autorefresh nil)
 (global-set-key [f8] 'neotree-toggle)
 (global-set-key [f9] 'neotree-dir)
 #+END_SRC
@@ -204,6 +205,9 @@ Found on [[https://github.com/jaypei/emacs-neotree][GitHub]]:
 (setq initial-major-mode 'org-mode)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
+(setq org-icalendar-include-body 0)
+(setq org-icalendar-timezone "Europe/Berlin")
+(calendar-set-date-style 'iso)
 #+END_SRC
 
 ** Magit
@@ -213,6 +217,7 @@ Found on [[https://magit.vc/][magit.vc]].
 Change the git commit message guidelines:
 
 #+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-x g") 'magit-status)
 (setq git-commit-summary-max-length 50)
 (setq git-commit-fill-column 72)
 #+END_SRC
