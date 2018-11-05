@@ -229,6 +229,13 @@ Found on [[https://editorconfig.org/][editorconfig.org]]:
 (editorconfig-mode 1)
 #+END_SRC
 
+** Ivy
+
+#+BEGIN_SRC emacs-lisp
+(ivy-mode 1)
+(setq ivy-count-format "%d/%d ")
+#+END_SRC
+
 * Custom
 
 Custom configuration that is only relevant on a particular machine should be
