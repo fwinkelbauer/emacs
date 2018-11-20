@@ -125,11 +125,10 @@ Delete trailing whitespace on save:
 
 * Styling
 
-Hide toolbar on Windows:
+Hide toolbar:
 
 #+BEGIN_SRC emacs-lisp
-(if IS-WINDOWS
-  (tool-bar-mode -1))
+(tool-bar-mode -1)
 #+END_SRC
 
 Set the default font:
