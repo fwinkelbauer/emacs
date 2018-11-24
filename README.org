@@ -158,12 +158,18 @@ Highlight current line:
 
 * Package Configuration
 
-** Tomorrow Theme
+** Themes
 
-Found on [[https://github.com/purcell/color-theme-sanityinc-tomorrow][GitHub]]:
+A [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light theme]]:
 
 #+BEGIN_SRC emacs-lisp
 (load-theme 'sanityinc-tomorrow-day t)
+#+END_SRC
+
+And a [[https://github.com/Greduan/emacs-theme-gruvbox][dark theme]]:
+
+#+BEGIN_SRC emacs-lisp
+;(load-theme 'gruvbox-dark-medium t)
 #+END_SRC
 
 ** Markdown
