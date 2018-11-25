@@ -156,6 +156,35 @@ Highlight current line:
   (global-hl-line-mode))
 #+END_SRC
 
+* Ibuffer
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(setq-default ibuffer-saved-filter-groups
+  `(("Default"
+    ("Temporary" (name . "\*.*\*"))
+    ("Magit" (name . "^magit"))
+    ("Dired" (mode . dired-mode))
+    )))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'ibuffer-mode-hook
+  (lambda ()
+    (ibuffer-auto-mode 1)
+    (ibuffer-switch-to-saved-filter-groups "Default")))
+(setq ibuffer-show-empty-filter-groups nil)
+#+END_SRC
+
+Disables unnecessary confirmations:
+
+#+BEGIN_SRC emacs-lisp
+(setq ibuffer-expert t)
+#+END_SRC
+
 * Package Configuration
 
 ** Themes
