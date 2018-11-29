@@ -254,6 +254,7 @@ Change the git commit message guidelines:
 (global-set-key (kbd "C-x g") 'magit-status)
 (setq git-commit-summary-max-length 50)
 (setq git-commit-fill-column 72)
+(setq magit-completing-read-function 'ivy-completing-read)
 #+END_SRC
 
 ** Editorconfig
@@ -269,6 +270,7 @@ Found on [[https://editorconfig.org/][editorconfig.org]]:
 #+BEGIN_SRC emacs-lisp
 (counsel-mode 1)
 (setq ivy-count-format "%d/%d ")
+(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
 #+END_SRC
 
 * Custom
