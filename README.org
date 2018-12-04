@@ -8,8 +8,8 @@ I am currently running GNU Emacs 25.3.1.
 * OS Detection
 
 #+BEGIN_SRC emacs-lisp
-(setq IS-LINUX (eq system-type 'gnu/linux)
-      IS-WINDOWS (eq system-type 'windows-nt))
+  (setq IS-LINUX (eq system-type 'gnu/linux)
+        IS-WINDOWS (eq system-type 'windows-nt))
 #+END_SRC
 
 * General
@@ -17,50 +17,45 @@ I am currently running GNU Emacs 25.3.1.
 Simplify confirmation:
 
 #+BEGIN_SRC emacs-lisp
-(fset 'yes-or-no-p 'y-or-n-p)
+  (fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
 Reload file if it changed on disk:
 
 #+BEGIN_SRC emacs-lisp
-(global-auto-revert-mode t)
+  (global-auto-revert-mode t)
 #+END_SRC
 
-Disable backups:
+Disable backups and auto save:
 
 #+BEGIN_SRC emacs-lisp
-(setq backup-inhibited t)
-#+END_SRC
-
-Disable auto save:
-
-#+BEGIN_SRC emacs-lisp
-(setq auto-save-default nil)
+  (setq backup-inhibited t)
+  (setq auto-save-default nil)
 #+END_SRC
 
 Disable audio bell:
 
 #+BEGIN_SRC emacs-lisp
-(setq visible-bell t)
+  (setq visible-bell t)
 #+END_SRC
 
 Hide startup message and empty scratch buffer:
 
 #+BEGIN_SRC emacs-lisp
-(setq inhibit-startup-message t)
-(setq initial-scratch-message nil)
+  (setq inhibit-startup-message t)
+  (setq initial-scratch-message nil)
 #+END_SRC
 
 Garbage collection:
 
 #+BEGIN_SRC emacs-lisp
-(setq gc-cons-threshold 20000000)
+  (setq gc-cons-threshold 20000000)
 #+END_SRC
 
 Always start in fullscreen:
 
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 #+END_SRC
 
 * Text
@@ -68,59 +63,59 @@ Always start in fullscreen:
 Prefer UTF-8. This code is based on this [[https://rufflewind.com/2014-07-20/pasting-unicode-in-emacs-on-windows][StackOverflow post]]:
 
 #+BEGIN_SRC emacs-lisp
-(set-language-environment 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(setq locale-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-selection-coding-system
-  (if IS-WINDOWS
-      'utf-16-le
-    'utf-8))
-(prefer-coding-system 'utf-8)
+  (set-language-environment 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+  (setq locale-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (set-selection-coding-system
+   (if IS-WINDOWS
+       'utf-16-le
+     'utf-8))
+  (prefer-coding-system 'utf-8)
 #+END_SRC
 
 Set default line length:
 
 #+BEGIN_SRC emacs-lisp
-(setq-default fill-column 80)
+  (setq-default fill-column 80)
 #+END_SRC
 
 Overwrite selected text when typing:
 
 #+BEGIN_SRC emacs-lisp
-(delete-selection-mode t)
+  (delete-selection-mode t)
 #+END_SRC
 
 Ensure that files end with a new line:
 
 #+BEGIN_SRC emacs-lisp
-(setq require-final-newline t)
+  (setq require-final-newline t)
 #+END_SRC
 
 Mark matching pairs of parentheses:
 
 #+BEGIN_SRC emacs-lisp
-(show-paren-mode t)
-(setq show-paren-delay 0.0)
+  (show-paren-mode t)
+  (setq show-paren-delay 0.0)
 #+END_SRC
 
 Spaces > Tabs:
 
 #+BEGIN_SRC emacs-lisp
-(setq-default indent-tabs-mode nil)
+  (setq-default indent-tabs-mode nil)
 #+END_SRC
 
 Use single space after a sentence:
 
 #+BEGIN_SRC emacs-lisp
-(setq sentence-end-double-space nil)
+  (setq sentence-end-double-space nil)
 #+END_SRC
 
 Delete trailing whitespace on save:
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
 * Styling
@@ -128,77 +123,77 @@ Delete trailing whitespace on save:
 Hide toolbar:
 
 #+BEGIN_SRC emacs-lisp
-(tool-bar-mode -1)
+  (tool-bar-mode -1)
 #+END_SRC
 
 Set the default font:
 
 #+BEGIN_SRC emacs-lisp
-(set-default-font "Roboto Mono 12" nil t)
+  (set-default-font "Roboto Mono 12" nil t)
 #+END_SRC
 
-Enable line numbers:
+Enable line/column numbers:
 
 #+BEGIN_SRC emacs-lisp
-(global-linum-mode t)
-#+END_SRC
-
-Enable column numbers:
-
-#+BEGIN_SRC emacs-lisp
-(setq column-number-mode t)
+  (global-linum-mode t)
+  (setq column-number-mode t)
 #+END_SRC
 
 Highlight current line:
 
 #+BEGIN_SRC emacs-lisp
-(when window-system
-  (global-hl-line-mode))
+  (when window-system
+    (global-hl-line-mode))
 #+END_SRC
 
 * Ibuffer
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+  (setq-default ibuffer-saved-filter-groups
+                `(("Default"
+                   ("Temporary" (name . "\*.*\*"))
+                   ("Magit" (name . "^magit"))
+                   ("Dired" (mode . dired-mode))
+                   )))
+  (add-hook 'ibuffer-mode-hook
+            (lambda ()
+              (ibuffer-auto-mode 1)
+              (ibuffer-switch-to-saved-filter-groups "Default")))
+  (setq ibuffer-show-empty-filter-groups nil)
+  (setq ibuffer-expert t)
 #+END_SRC
+
+* Org
 
 #+BEGIN_SRC emacs-lisp
-(setq-default ibuffer-saved-filter-groups
-  `(("Default"
-    ("Temporary" (name . "\*.*\*"))
-    ("Magit" (name . "^magit"))
-    ("Dired" (mode . dired-mode))
-    )))
+  (add-hook 'org-mode-hook 'turn-on-auto-fill)
+  (setq org-catch-invisible-edits 'smart)
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+  (setq org-log-into-drawer t)
+  (setq initial-major-mode 'org-mode)
+  (global-set-key "\C-ca" 'org-agenda)
+  (global-set-key "\C-cc" 'org-capture)
+  (setq org-icalendar-include-body 0)
+  (setq org-icalendar-timezone "Europe/Berlin")
+  (calendar-set-date-style 'iso)
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-(add-hook 'ibuffer-mode-hook
-  (lambda ()
-    (ibuffer-auto-mode 1)
-    (ibuffer-switch-to-saved-filter-groups "Default")))
-(setq ibuffer-show-empty-filter-groups nil)
-#+END_SRC
-
-Disables unnecessary confirmations:
-
-#+BEGIN_SRC emacs-lisp
-(setq ibuffer-expert t)
-#+END_SRC
-
-* Package Configuration
+* External Packages
 
 ** Themes
 
 A [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light theme]]:
 
 #+BEGIN_SRC emacs-lisp
-(load-theme 'sanityinc-tomorrow-day t)
+  (load-theme 'sanityinc-tomorrow-day t)
 #+END_SRC
 
 And a [[https://github.com/Greduan/emacs-theme-gruvbox][dark theme]]:
 
 #+BEGIN_SRC emacs-lisp
-;(load-theme 'gruvbox-dark-medium t)
+  ;(load-theme 'gruvbox-dark-medium t)
 #+END_SRC
 
 ** Markdown
@@ -206,16 +201,16 @@ And a [[https://github.com/Greduan/emacs-theme-gruvbox][dark theme]]:
 Found on [[https://github.com/jrblevin/markdown-mode][GitHub]]:
 
 #+BEGIN_SRC emacs-lisp
-(autoload 'markdown-mode "markdown-mode"
-   "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+  (autoload 'markdown-mode "markdown-mode"
+    "Major mode for editing Markdown files" t)
+  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-(autoload 'gfm-mode "markdown-mode"
-   "Major mode for editing GitHub Flavored Markdown files" t)
-(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+  (autoload 'gfm-mode "markdown-mode"
+    "Major mode for editing GitHub Flavored Markdown files" t)
+  (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
-(add-hook 'markdown-mode-hook 'turn-on-auto-fill)
+  (add-hook 'markdown-mode-hook 'turn-on-auto-fill)
 #+END_SRC
 
 ** Neotree
@@ -223,38 +218,20 @@ Found on [[https://github.com/jrblevin/markdown-mode][GitHub]]:
 Found on [[https://github.com/jaypei/emacs-neotree][GitHub]]:
 
 #+BEGIN_SRC emacs-lisp
-(setq neo-autorefresh nil)
-(global-set-key [f8] 'neotree-toggle)
-(global-set-key [f9] 'neotree-dir)
-#+END_SRC
-
-** Org
-
-#+BEGIN_SRC emacs-lisp
-(add-hook 'org-mode-hook 'turn-on-auto-fill)
-(setq org-catch-invisible-edits 'smart)
-(setq org-src-fontify-natively t)
-(setq org-src-tab-acts-natively t)
-(setq org-log-into-drawer t)
-(setq initial-major-mode 'org-mode)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cc" 'org-capture)
-(setq org-icalendar-include-body 0)
-(setq org-icalendar-timezone "Europe/Berlin")
-(calendar-set-date-style 'iso)
+  (setq neo-autorefresh nil)
+  (global-set-key [f8] 'neotree-toggle)
+  (global-set-key [f9] 'neotree-dir)
 #+END_SRC
 
 ** Magit
 
-Found on [[https://magit.vc/][magit.vc]].
-
-Change the git commit message guidelines:
+Found on [[https://magit.vc/][magit.vc]]:
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-x g") 'magit-status)
-(setq git-commit-summary-max-length 50)
-(setq git-commit-fill-column 72)
-(setq magit-completing-read-function 'ivy-completing-read)
+  (global-set-key (kbd "C-x g") 'magit-status)
+  (setq git-commit-summary-max-length 50)
+  (setq git-commit-fill-column 72)
+  (setq magit-completing-read-function 'ivy-completing-read)
 #+END_SRC
 
 ** Editorconfig
@@ -262,15 +239,15 @@ Change the git commit message guidelines:
 Found on [[https://editorconfig.org/][editorconfig.org]]:
 
 #+BEGIN_SRC emacs-lisp
-(editorconfig-mode 1)
+  (editorconfig-mode 1)
 #+END_SRC
 
 ** Ivy & Counsel
 
 #+BEGIN_SRC emacs-lisp
-(counsel-mode 1)
-(setq ivy-count-format "%d/%d ")
-(global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+  (counsel-mode 1)
+  (setq ivy-count-format "%d/%d ")
+  (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
 #+END_SRC
 
 * Custom
@@ -279,6 +256,6 @@ Custom configuration that is only relevant on a particular machine should be
 stored in ~.emacs.d/custom.el~.
 
 #+BEGIN_SRC emacs-lisp
-(when (file-exists-p "~/.emacs.d/custom.el")
-  (load-file "~/.emacs.d/custom.el"))
+  (when (file-exists-p "~/.emacs.d/custom.el")
+    (load-file "~/.emacs.d/custom.el"))
 #+END_SRC
