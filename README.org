@@ -209,8 +209,6 @@ Found on [[https://github.com/jrblevin/markdown-mode][GitHub]]:
   (autoload 'gfm-mode "markdown-mode"
     "Major mode for editing GitHub Flavored Markdown files" t)
   (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-
-  (add-hook 'markdown-mode-hook 'turn-on-auto-fill)
 #+END_SRC
 
 ** Neotree
