@@ -118,6 +118,12 @@ Delete trailing whitespace on save:
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
+Treat each element of a "camelCase" word as a separate word
+
+#+BEGIN_SRC emacs-lisp
+  (global-subword-mode 1)
+#+END_SRC
+
 * Styling
 
 Hide toolbar:
@@ -171,6 +177,7 @@ Highlight current line:
   (setq org-catch-invisible-edits 'smart)
   (setq org-src-fontify-natively t)
   (setq org-src-tab-acts-natively t)
+  (setq org-src-window-setup 'current-window)
   (setq org-log-into-drawer t)
   (setq initial-major-mode 'org-mode)
   (global-set-key "\C-ca" 'org-agenda)
@@ -240,14 +247,15 @@ Found on [[https://editorconfig.org/][editorconfig.org]]:
   (editorconfig-mode 1)
 #+END_SRC
 
-** Ivy & Counsel
+** Ivy, Counsel & Swiper
 
 #+BEGIN_SRC emacs-lisp
   (counsel-mode 1)
   (setq ivy-count-format "%d/%d ")
   (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
   (global-set-key (kbd "C-c g") 'counsel-git)
-  (global-set-key (kbd "M-s M-s") 'swiper)
+  (global-set-key (kbd "C-c j") 'counsel-git-grep)
+  (global-set-key (kbd "C-c s") 'swiper)
 #+END_SRC
 
 ** Company
@@ -256,6 +264,7 @@ Found on [[https://editorconfig.org/][editorconfig.org]]:
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 3)
   (setq company-show-numbers t)
+  (setq company-dabbrev-downcase nil)
   (global-company-mode t)
 #+END_SRC
 
