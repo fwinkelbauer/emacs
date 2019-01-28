@@ -268,6 +268,49 @@ Found on [[https://editorconfig.org/][editorconfig.org]]:
   (global-company-mode t)
 #+END_SRC
 
+** Elfeed
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-x w") 'elfeed)
+  (setq elfeed-feeds
+        '("https://www.youtube.com/feeds/videos.xml?channel_id=UCTdw38Cw6jcm0atBPA39a0Q"
+          "https://www.youtube.com/feeds/videos.xml?user=GotoConferences"
+          "https://www.youtube.com/feeds/videos.xml?channel_id=UCP1OgsLk-HkEdQyhjJX_5JQ"))
+
+  (defun fw/youtube-dl (url)
+    (start-process "youtube-dl"
+                   (concat "*youtube-dl " url "*")
+                   "youtube-dl"
+                   url))
+
+  (eval-after-load 'elfeed-search
+    '(define-key elfeed-search-mode-map "d" 'fw/elfeed-search-youtube-dl))
+
+  (eval-after-load 'elfeed-search
+    '(define-key elfeed-search-mode-map "D" 'fw/elfeed-search-podcast))
+
+  ;; Based on https://github.com/skeeto/.emacs.d/blob/master/etc/feed-setup.el
+  (defun fw/elfeed-search-youtube-dl ()
+    (interactive)
+    (let ((entries (elfeed-search-selected)))
+      (dolist (entry entries)
+        (fw/youtube-dl (elfeed-entry-link entry))
+        (message "Downloading %s" (elfeed-entry-title entry))
+        (elfeed-untag entry 'unread)
+        (elfeed-search-update-entry entry)
+        (unless (use-region-p) (forward-line)))))
+
+  (defun fw/elfeed-search-podcast ()
+    (interactive)
+    (let ((entries (elfeed-search-selected)))
+      (dolist (entry entries)
+        (fw/youtube-dl (caar (elfeed-entry-enclosures entry)))
+        (message "Downloading %s" (elfeed-entry-title entry))
+        (elfeed-untag entry 'unread)
+        (elfeed-search-update-entry entry)
+        (unless (use-region-p) (forward-line)))))
+#+END_SRC
+
 * Custom
 
 Custom configuration that is only relevant on a particular machine should be
