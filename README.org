@@ -149,7 +149,6 @@ Set the default font:
 Enable line/column numbers:
 
 #+BEGIN_SRC emacs-lisp
-  (global-linum-mode t)
   (setq column-number-mode t)
 #+END_SRC
 
