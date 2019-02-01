@@ -2,5 +2,6 @@ eshell/
 server/
 auto-save-list/
 elpa/archives/
+elpa/gnupg/
 README.el
 custom.el
