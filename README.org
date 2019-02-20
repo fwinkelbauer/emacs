@@ -273,10 +273,6 @@ Found on [[https://editorconfig.org/][editorconfig.org]]:
 
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-x w") 'elfeed)
-  (setq elfeed-feeds
-        '("https://www.youtube.com/feeds/videos.xml?channel_id=UCTdw38Cw6jcm0atBPA39a0Q"
-          "https://www.youtube.com/feeds/videos.xml?user=GotoConferences"
-          "https://www.youtube.com/feeds/videos.xml?channel_id=UCP1OgsLk-HkEdQyhjJX_5JQ"))
 
   (defun fw/youtube-dl (url)
     (start-process "youtube-dl"
