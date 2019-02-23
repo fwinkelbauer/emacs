@@ -240,6 +240,15 @@ Found on [[https://magit.vc/][magit.vc]]:
   (setq magit-completing-read-function 'ivy-completing-read)
 #+END_SRC
 
+[[https://github.com/howardabrams/dot-files/blob/master/emacs.org][Howard Abrams]] has a nice snippet which lets ~magit-status~ open in fullscreen:
+
+#+BEGIN_SRC emacs-lisp
+  (defadvice magit-status (around magit-fullscreen activate)
+    (window-configuration-to-register :magit-fullscreen)
+    ad-do-it
+    (delete-other-windows))
+#+END_SRC
+
 ** Editorconfig
 
 Found on [[https://editorconfig.org/][editorconfig.org]]:
