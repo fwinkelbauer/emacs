@@ -175,11 +175,14 @@ Highlight current line:
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
+  (setq org-ellipsis " [...]")
   (setq org-catch-invisible-edits 'smart)
   (setq org-src-fontify-natively t)
   (setq org-src-tab-acts-natively t)
   (setq org-src-window-setup 'current-window)
   (setq org-log-into-drawer t)
+  (setq org-enforce-todo-dependencies t)
+  (setq org-enforce-todo-checkbox-dependencies t)
   (setq initial-major-mode 'org-mode)
   (global-set-key "\C-ca" 'org-agenda)
   (global-set-key "\C-cc" 'org-capture)
