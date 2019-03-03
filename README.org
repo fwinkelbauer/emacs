@@ -274,7 +274,7 @@ Found on [[https://editorconfig.org/][editorconfig.org]]:
 ** Company
 
 #+BEGIN_SRC emacs-lisp
-  (setq company-idle-delay 0)
+  (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 3)
   (setq company-show-numbers t)
   (setq company-dabbrev-downcase nil)
