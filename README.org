@@ -137,7 +137,7 @@ Hide toolbar:
 Set the default font:
 
 #+BEGIN_SRC emacs-lisp
-  (set-default-font "Roboto Mono 12" nil t)
+  (set-frame-font "Roboto Mono 12" nil t)
 #+END_SRC
 
 Enable line/column numbers:
