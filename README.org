@@ -219,6 +219,7 @@ Found on [[https://github.com/jrblevin/markdown-mode][GitHub]]:
     "Major mode for editing Markdown files" t)
   (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
   (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("CHANGELOG\\.md\\'" . markdown-mode))
 
   (autoload 'gfm-mode "markdown-mode"
     "Major mode for editing GitHub Flavored Markdown files" t)
