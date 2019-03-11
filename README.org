@@ -157,7 +157,9 @@ Highlight current line:
     (global-hl-line-mode))
 #+END_SRC
 
-* Ibuffer
+* Buffer
+
+Use ibuffer:
 
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -173,6 +175,12 @@ Highlight current line:
               (ibuffer-switch-to-saved-filter-groups "Default")))
   (setq ibuffer-show-empty-filter-groups nil)
   (setq ibuffer-expert t)
+#+END_SRC
+
+~C-x k~ should kill the current buffer:
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-x k") 'kill-this-buffer)
 #+END_SRC
 
 * Org
