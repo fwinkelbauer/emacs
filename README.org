@@ -336,6 +336,7 @@ Found on [[https://editorconfig.org/][editorconfig.org]]:
 
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c w") 'er/expand-region)
+  (setq expand-region-contract-fast-key "s")
 #+END_SRC
 
 * Custom
