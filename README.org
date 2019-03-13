@@ -332,6 +332,12 @@ Found on [[https://editorconfig.org/][editorconfig.org]]:
         (unless (use-region-p) (forward-line)))))
 #+END_SRC
 
+** Expand Region
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-c w") 'er/expand-region)
+#+END_SRC
+
 * Custom
 
 Custom configuration that is only relevant on a particular machine should be
