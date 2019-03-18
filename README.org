@@ -20,13 +20,13 @@ Simplify confirmation:
   (fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
-Reload file if it changed on disk:
+Reload a file if it changed on disk:
 
 #+BEGIN_SRC emacs-lisp
   (global-auto-revert-mode t)
 #+END_SRC
 
-Disable backups and auto save:
+Disable backup and auto save files:
 
 #+BEGIN_SRC emacs-lisp
   (setq backup-inhibited t)
@@ -144,7 +144,7 @@ Set the default font:
                       :width 'normal)
 #+END_SRC
 
-Enable line/column numbers:
+Enable column numbers:
 
 #+BEGIN_SRC emacs-lisp
   (setq column-number-mode t)
@@ -220,8 +220,6 @@ And a [[https://github.com/Greduan/emacs-theme-gruvbox][dark theme]]:
 
 ** Markdown
 
-Found on [[https://github.com/jrblevin/markdown-mode][GitHub]]:
-
 #+BEGIN_SRC emacs-lisp
   (autoload 'markdown-mode "markdown-mode"
     "Major mode for editing Markdown files" t)
@@ -236,8 +234,6 @@ Found on [[https://github.com/jrblevin/markdown-mode][GitHub]]:
 
 ** Neotree
 
-Found on [[https://github.com/jaypei/emacs-neotree][GitHub]]:
-
 #+BEGIN_SRC emacs-lisp
   (setq neo-autorefresh nil)
   (global-set-key [f8] 'neotree-toggle)
@@ -245,8 +241,6 @@ Found on [[https://github.com/jaypei/emacs-neotree][GitHub]]:
 #+END_SRC
 
 ** Magit
-
-Found on [[https://magit.vc/][magit.vc]]:
 
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-x g") 'magit-status)
@@ -265,8 +259,6 @@ Found on [[https://magit.vc/][magit.vc]]:
 #+END_SRC
 
 ** Editorconfig
-
-Found on [[https://editorconfig.org/][editorconfig.org]]:
 
 #+BEGIN_SRC emacs-lisp
   (editorconfig-mode 1)
@@ -307,25 +299,12 @@ Found on [[https://editorconfig.org/][editorconfig.org]]:
   (eval-after-load 'elfeed-search
     '(define-key elfeed-search-mode-map "d" 'fw/elfeed-search-youtube-dl))
 
-  (eval-after-load 'elfeed-search
-    '(define-key elfeed-search-mode-map "D" 'fw/elfeed-search-podcast))
-
   ;; Based on https://github.com/skeeto/.emacs.d/blob/master/etc/feed-setup.el
   (defun fw/elfeed-search-youtube-dl ()
     (interactive)
     (let ((entries (elfeed-search-selected)))
       (dolist (entry entries)
         (fw/youtube-dl (elfeed-entry-link entry))
-        (message "Downloading %s" (elfeed-entry-title entry))
-        (elfeed-untag entry 'unread)
-        (elfeed-search-update-entry entry)
-        (unless (use-region-p) (forward-line)))))
-
-  (defun fw/elfeed-search-podcast ()
-    (interactive)
-    (let ((entries (elfeed-search-selected)))
-      (dolist (entry entries)
-        (fw/youtube-dl (caar (elfeed-entry-enclosures entry)))
         (message "Downloading %s" (elfeed-entry-title entry))
         (elfeed-untag entry 'unread)
         (elfeed-search-update-entry entry)
