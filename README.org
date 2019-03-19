@@ -282,6 +282,7 @@ And a [[https://github.com/Greduan/emacs-theme-gruvbox][dark theme]]:
   (setq company-minimum-prefix-length 3)
   (setq company-show-numbers t)
   (setq company-dabbrev-downcase nil)
+  (setq company-dabbrev-ignore-case nil)
   (global-company-mode t)
 #+END_SRC
 
