@@ -249,7 +249,7 @@ And a [[https://github.com/Greduan/emacs-theme-gruvbox][dark theme]]:
   (setq magit-completing-read-function 'ivy-completing-read)
 #+END_SRC
 
-[[https://github.com/howardabrams/dot-files/blob/master/emacs.org][Howard Abrams]] has a nice snippet which lets ~magit-status~ open in fullscreen:
+[[https://github.com/howardabrams/dot-files/blob/master/emacs.org][Howard Abrams]] wrote a nice snippet which lets ~magit-status~ open in fullscreen:
 
 #+BEGIN_SRC emacs-lisp
   (defadvice magit-status (around magit-fullscreen activate)
@@ -281,9 +281,15 @@ And a [[https://github.com/Greduan/emacs-theme-gruvbox][dark theme]]:
   (setq company-idle-delay 0.1)
   (setq company-minimum-prefix-length 3)
   (setq company-show-numbers t)
+  (global-company-mode t)
+#+END_SRC
+
+The dabbrev backend has some inconvenient default settings (e.g. its suggestions
+get downcased, even if notations such as camel casing are used):
+
+#+BEGIN_SRC emacs-lisp
   (setq company-dabbrev-downcase nil)
   (setq company-dabbrev-ignore-case nil)
-  (global-company-mode t)
 #+END_SRC
 
 ** Elfeed
