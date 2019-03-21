@@ -183,6 +183,20 @@ Use ibuffer:
   (global-set-key (kbd "C-x k") 'kill-this-buffer)
 #+END_SRC
 
+* Flyspell
+
+I haven't found a way to get ~hunspell~ working on my Windows machine, so I'm
+only using spell checkers on Linux:
+
+#+BEGIN_SRC emacs-lisp
+  (if IS-LINUX
+      (progn
+        (add-hook 'markdown-mode-hook 'flyspell-mode)
+        (add-hook 'gfm-mode-hook 'flyspell-mode)
+        (add-hook 'org-mode-hook 'flyspell-mode)
+        (add-hook 'git-commit-mode-hook 'flyspell-mode)))
+#+END_SRC
+
 * Org
 
 #+BEGIN_SRC emacs-lisp
@@ -327,7 +341,7 @@ get downcased, even if notations such as camel casing are used):
 
 * Custom
 
-Custom configuration that is only relevant on a particular machine should be
+Additional configuration that is only relevant on a particular machine should be
 stored in ~.emacs.d/custom.el~.
 
 #+BEGIN_SRC emacs-lisp
