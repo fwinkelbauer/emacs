@@ -183,6 +183,24 @@ Use ibuffer:
   (global-set-key (kbd "C-x k") 'kill-this-buffer)
 #+END_SRC
 
+* Calendar
+
+Dates should be displayed in the format year/month/day:
+
+#+BEGIN_SRC emacs-lisp
+  (calendar-set-date-style 'iso)
+#+END_SRC
+
+I'd like to use my native language when viewing my calendar:
+
+#+BEGIN_SRC emacs-lisp
+  (setq calendar-week-start-day 1
+        calendar-day-name-array ["Sonntag" "Montag" "Dienstag" "Mittwoch"
+                                 "Donnerstag" "Freitag" "Samstag"]
+        calendar-month-name-array ["Jänner" "Februar" "März" "April" "Mai"
+                                   "Juni" "Juli" "August" "September" "Oktober" "November" "Dezember"])
+#+END_SRC
+
 * Flyspell
 
 I haven't found a way to get ~hunspell~ working on my Windows machine, so I'm
@@ -213,7 +231,6 @@ only using spell checkers on Linux:
   (global-set-key "\C-cc" 'org-capture)
   (setq org-icalendar-include-body 0)
   (setq org-icalendar-timezone "Europe/Berlin")
-  (calendar-set-date-style 'iso)
 #+END_SRC
 
 * External Packages
