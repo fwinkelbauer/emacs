@@ -197,7 +197,7 @@ I'd like to use my native language when viewing my calendar:
   (setq calendar-week-start-day 1
         calendar-day-name-array ["Sonntag" "Montag" "Dienstag" "Mittwoch"
                                  "Donnerstag" "Freitag" "Samstag"]
-        calendar-month-name-array ["Jaenner" "Februar" "Maerz" "April" "Mai"
+        calendar-month-name-array ["Jänner" "Februar" "März" "April" "Mai"
                                    "Juni" "Juli" "August" "September" "Oktober" "November" "Dezember"])
 #+END_SRC
 

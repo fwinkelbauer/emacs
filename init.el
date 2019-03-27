@@ -4,6 +4,7 @@
 
 (package-initialize)
 
+(prefer-coding-system 'utf-8)
 (org-babel-load-file "~/.emacs.d/README.org")
 
 (custom-set-variables
