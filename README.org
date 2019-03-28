@@ -235,16 +235,10 @@ only using spell checkers on Linux:
 
 ** Themes
 
-A [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light theme]]:
+I like [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light themes]]:
 
 #+BEGIN_SRC emacs-lisp
   (load-theme 'sanityinc-tomorrow-day t)
-#+END_SRC
-
-And a [[https://github.com/Greduan/emacs-theme-gruvbox][dark theme]]:
-
-#+BEGIN_SRC emacs-lisp
-  ;(load-theme 'gruvbox-dark-medium t)
 #+END_SRC
 
 ** Markdown
