@@ -298,6 +298,27 @@ I like [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light themes
   (global-set-key (kbd "C-c s") 'swiper)
 #+END_SRC
 
+[[https://github.com/abo-abo/swiper/issues/1068][abo-abo]] has posted some decent functions which I'd like to use:
+
+#+BEGIN_SRC emacs-lisp
+  (defun ivy-with-thing-at-point (cmd)
+    (let ((ivy-initial-inputs-alist
+           (list
+            (cons cmd (thing-at-point 'symbol)))))
+      (funcall cmd)))
+
+  (defun counsel-rg-thing-at-point ()
+    (interactive)
+    (ivy-with-thing-at-point 'counsel-rg))
+
+  (defun swiper-thing-at-point ()
+    (interactive)
+    (ivy-with-thing-at-point 'swiper))
+
+  (global-set-key [f12] 'counsel-rg-thing-at-point)
+  (global-set-key (kbd "M-s .") 'swiper-thing-at-point)
+#+END_SRC
+
 ** Company
 
 #+BEGIN_SRC emacs-lisp
