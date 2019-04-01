@@ -284,8 +284,8 @@ I like [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light themes
 
 #+BEGIN_SRC emacs-lisp
   (setq neo-autorefresh nil)
-  (global-set-key [f8] 'neotree-toggle)
-  (global-set-key [f9] 'neotree-dir)
+  (global-set-key (kbd "<f8>") 'neotree-toggle)
+  (global-set-key (kbd "<f9>") 'neotree-dir)
 #+END_SRC
 
 ** Magit
@@ -340,7 +340,7 @@ I like [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light themes
     (interactive)
     (ivy-with-thing-at-point 'swiper))
 
-  (global-set-key [f12] 'counsel-rg-thing-at-point)
+  (global-set-key (kbd "<f12>") 'counsel-rg-thing-at-point)
   (global-set-key (kbd "M-s .") 'swiper-thing-at-point)
 #+END_SRC
 
