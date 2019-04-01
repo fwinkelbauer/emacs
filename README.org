@@ -185,7 +185,7 @@ Use ibuffer:
 
 * Calendar
 
-Dates should be displayed in the format year/month/day:
+Dates should be displayed in the format year-month-day (e.g. 2019-01-01):
 
 #+BEGIN_SRC emacs-lisp
   (calendar-set-date-style 'iso)
