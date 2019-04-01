@@ -183,6 +183,31 @@ Use ibuffer:
   (global-set-key (kbd "C-x k") 'kill-this-buffer)
 #+END_SRC
 
+* Window
+
+By default, ~split-window-vertically~ and ~split-window-horizontally~ display
+the current buffer twice. Most of the time I'll change the buffer in the second
+window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_tips_and_tricks/chldury/][this snippet]] looks really handy:
+
+#+BEGIN_SRC emacs-lisp
+  (defun fw/vsplit-last-buffer ()
+    (interactive)
+    (split-window-vertically)
+    (other-window 1 nil)
+    (switch-to-next-buffer)
+    (other-window 1 nil))
+
+  (defun fw/hsplit-last-buffer ()
+    (interactive)
+    (split-window-horizontally)
+    (other-window 1 nil)
+    (switch-to-next-buffer)
+    (other-window 1 nil))
+
+  (global-set-key (kbd "C-x 2") 'fw/vsplit-last-buffer)
+  (global-set-key (kbd "C-x 3") 'fw/hsplit-last-buffer)
+#+END_SRC
+
 * Calendar
 
 Dates should be displayed in the format year-month-day (e.g. 2019-01-01):
