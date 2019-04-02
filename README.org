@@ -288,6 +288,18 @@ I like [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light themes
   (global-set-key (kbd "<f9>") 'neotree-dir)
 #+END_SRC
 
+By defining ~#+LINK: dir elisp:(fw/visit-directory "%s")~ at the top of a
+org-mode file, I can create links which let me jump into a specific directory
+using this helper method:
+
+#+BEGIN_SRC emacs-lisp
+  (defun fw/visit-directory (path)
+    (interactive)
+    (setq default-directory path)
+    (neotree-dir path)
+    (other-window 1))
+#+END_SRC
+
 ** Magit
 
 #+BEGIN_SRC emacs-lisp
