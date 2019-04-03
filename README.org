@@ -353,7 +353,7 @@ using this helper method:
     (interactive)
     (ivy-with-thing-at-point 'swiper))
 
-  (global-set-key (kbd "<f12>") 'counsel-rg-thing-at-point)
+  (global-set-key (kbd "M-s _") 'counsel-rg-thing-at-point)
   (global-set-key (kbd "M-s .") 'swiper-thing-at-point)
 #+END_SRC
 
