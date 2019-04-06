@@ -234,16 +234,13 @@ I'd like to use my native language when viewing my calendar:
 
 * Flyspell
 
-I haven't found a way to get ~hunspell~ working on my Windows machine, so I'm
-only using spell checkers on Linux:
+I'm running aspell on Linux and Windows (using WSL):
 
 #+BEGIN_SRC emacs-lisp
-  (if IS-LINUX
-      (progn
-        (add-hook 'markdown-mode-hook 'flyspell-mode)
-        (add-hook 'gfm-mode-hook 'flyspell-mode)
-        (add-hook 'org-mode-hook 'flyspell-mode)
-        (add-hook 'git-commit-mode-hook 'flyspell-mode)))
+  (add-hook 'markdown-mode-hook 'flyspell-mode)
+  (add-hook 'gfm-mode-hook 'flyspell-mode)
+  (add-hook 'org-mode-hook 'flyspell-mode)
+  (add-hook 'git-commit-mode-hook 'flyspell-mode)
 #+END_SRC
 
 * Org
