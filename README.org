@@ -400,6 +400,17 @@ get downcased, even if notations such as camel casing are used):
         (unless (use-region-p) (forward-line)))))
 #+END_SRC
 
+** Doom Modeline
+
+This modeline uses ~all-the-icons~, which can be installed using ~M-x
+all-the-icons-install-fonts~.
+
+Alternative: All fonts can be found [[https://github.com/domtronn/all-the-icons.el][here]].
+
+#+BEGIN_SRC emacs-lisp
+  (doom-modeline-mode 1)
+#+END_SRC
+
 * Custom
 
 Additional configuration that is only relevant on a particular machine should be
