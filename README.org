@@ -400,13 +400,6 @@ get downcased, even if notations such as camel casing are used):
         (unless (use-region-p) (forward-line)))))
 #+END_SRC
 
-** Expand Region
-
-#+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-c w") 'er/expand-region)
-  (setq expand-region-contract-fast-key "s")
-#+END_SRC
-
 * Custom
 
 Additional configuration that is only relevant on a particular machine should be
