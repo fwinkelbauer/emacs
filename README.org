@@ -411,6 +411,12 @@ Alternative: All fonts can be found [[https://github.com/domtronn/all-the-icons.
   (doom-modeline-mode 1)
 #+END_SRC
 
+Do not show method names in the modeline:
+
+#+BEGIN_SRC emacs-lisp
+  (setq which-func-modes nil)
+#+END_SRC
+
 * Custom
 
 Additional configuration that is only relevant on a particular machine should be
