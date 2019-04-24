@@ -66,12 +66,6 @@ This should fix it:
       (setenv "GIT_ASKPASS" "git-gui--askpass"))
 #+END_SRC
 
-~C-x C-f~ feels clunky, let's use ~C-x f~ instead:
-
-#+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-x f") 'counsel-find-file)
-#+END_SRC
-
 * Text
 
 Prefer UTF-8. This code is based on this [[https://rufflewind.com/2014-07-20/pasting-unicode-in-emacs-on-windows][StackOverflow post]]:
@@ -334,6 +328,12 @@ using this helper method:
   (global-set-key (kbd "C-c g") 'counsel-rg)
   (global-set-key (kbd "C-s") 'swiper)
   (global-set-key (kbd "C-r") 'swiper)
+#+END_SRC
+
+~C-x C-f~ feels clunky, let's use ~C-x f~ instead:
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-x f") 'counsel-find-file)
 #+END_SRC
 
 [[https://github.com/abo-abo/swiper/issues/1068][abo-abo]] has posted some decent functions which I'd like to use:
