@@ -14,7 +14,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (doom-modeline company elfeed counsel ivy editorconfig gruvbox-theme color-theme-sanityinc-tomorrow neotree markdown-mode magit))))
+    (doom-modeline company elfeed counsel ivy editorconfig color-theme-sanityinc-tomorrow neotree markdown-mode magit))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
