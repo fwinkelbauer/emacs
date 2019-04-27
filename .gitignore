@@ -5,3 +5,4 @@ elpa/archives/
 elpa/gnupg/
 README.el
 custom.el
+*.elc

@@ -252,6 +252,18 @@ I'm running aspell on Linux and Windows (using WSL):
 
 * External Packages
 
+** Compilation
+
+I have excluded ~*.elc~ files in this git repository, which is I need a function
+to compile new packages:
+
+#+BEGIN_SRC emacs-lisp
+  (defun fw/compile-elpa-dir ()
+    "Byte-compile all packages."
+    (interactive)
+    (byte-recompile-directory (concat user-emacs-directory "elpa") 0))
+#+END_SRC
+
 ** Themes
 
 I like [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light themes]]:
