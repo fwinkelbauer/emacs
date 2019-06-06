@@ -72,6 +72,15 @@ Make scrolling a little bit smoother:
   (setq mouse-wheel-progressive-speed nil)
 #+END_SRC
 
+* Server
+
+Start Emacs in server mode:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'server)
+  (if (not (server-running-p)) (server-start))
+#+END_SRC
+
 * Text
 
 Prefer UTF-8:
