@@ -214,24 +214,6 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
   (global-set-key (kbd "C-x 3") 'fw/hsplit-last-buffer)
 #+END_SRC
 
-* Calendar
-
-Dates should be displayed in the format year-month-day (e.g. 2019-01-01):
-
-#+BEGIN_SRC emacs-lisp
-  (calendar-set-date-style 'iso)
-#+END_SRC
-
-I'd like to use my native language when viewing my calendar:
-
-#+BEGIN_SRC emacs-lisp
-  (setq calendar-week-start-day 1
-        calendar-day-name-array ["Sonntag" "Montag" "Dienstag" "Mittwoch"
-                                 "Donnerstag" "Freitag" "Samstag"]
-        calendar-month-name-array ["Jänner" "Februar" "März" "April" "Mai"
-                                   "Juni" "Juli" "August" "September" "Oktober" "November" "Dezember"])
-#+END_SRC
-
 * Flyspell
 
 I'm running aspell on Linux and Windows (using WSL):
@@ -242,18 +224,59 @@ I'm running aspell on Linux and Windows (using WSL):
 
 * Org
 
+General org configuration:
+
 #+BEGIN_SRC emacs-lisp
   (setq org-catch-invisible-edits 'smart)
+  (setq org-log-into-drawer t)
+  (setq initial-major-mode 'org-mode)
+#+END_SRC
+
+Improve org's source code blocks:
+
+#+BEGIN_SRC emacs-lisp
   (setq org-src-fontify-natively t)
   (setq org-src-tab-acts-natively t)
   (setq org-src-window-setup 'current-window)
-  (setq org-log-into-drawer t)
-  (setq initial-major-mode 'org-mode)
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (global-set-key (kbd "C-c c") 'org-capture)
+#+END_SRC
+
+My calendar should use my native language. The ~calendar-set-date-style~ line
+changes the date format in ~diary.anniversary~:
+
+#+BEGIN_SRC emacs-lisp
   (setq org-icalendar-include-body 0)
   (setq org-icalendar-timezone "Europe/Berlin")
+
+  (calendar-set-date-style 'iso)
+  (setq calendar-week-start-day 1
+        calendar-day-name-array ["Sonntag" "Montag" "Dienstag" "Mittwoch"
+                                 "Donnerstag" "Freitag" "Samstag"]
+        calendar-month-name-array ["Jänner" "Februar" "März" "April" "Mai"
+                                   "Juni" "Juli" "August" "September" "Oktober" "November" "Dezember"])
+
+  (setq parse-time-months '(("jän" . 1) ("feb" . 2) ("mär" . 3)
+                              ("apr" . 4) ("mai" . 5) ("jun" . 6)
+                              ("jul" . 7) ("aug" . 8) ("sep" . 9)
+                              ("okt" . 10) ("nov" . 11) ("dez" . 12)
+                              ("jänner" . 1) ("februar" . 2) ("märz" . 3)
+                              ("april" . 4) ("mai" . 5) ("juni" . 6)
+                              ("juli" . 7) ("august" . 8)
+                              ("september" . 9) ("oktober" . 10)
+                              ("november" . 11) ("dezember" . 12)))
+
+  (setq parse-time-weekdays '(("so" . 0) ("mo" . 1) ("di" . 2)
+                                ("mi" . 3) ("do" . 4) ("fr" . 5)
+                                ("sa" . 6) ("sonntag" . 0) ("montag" . 1)
+                                ("dienstag" . 2) ("mittwoch" . 3)
+                                ("donnerstag" . 4) ("freitag" . 5)
+                                ("samstag" . 6)))
+#+END_SRC
+
+Basic agenda configuration:
+
+#+BEGIN_SRC emacs-lisp
   (setq org-agenda-skip-scheduled-if-done t)
+  (global-set-key (kbd "C-c a") 'org-agenda)
 #+END_SRC
 
 * External Packages
