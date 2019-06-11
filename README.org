@@ -283,8 +283,8 @@ Basic agenda configuration:
 
 ** Compilation
 
-I have excluded ~*.elc~ files in this git repository, which is I need a function
-to compile new packages:
+I have excluded ~*.elc~ files in this git repository, which is why I need a
+function to compile new packages:
 
 #+BEGIN_SRC emacs-lisp
   (defun fw/compile-elpa-dir ()
