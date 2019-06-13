@@ -241,12 +241,9 @@ Improve org's source code blocks:
 #+END_SRC
 
 My calendar should use my native language. The ~calendar-set-date-style~ line
-changes the date format in ~diary.anniversary~:
+changes the date format in ~%%(diary.anniversary ...)~:
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-icalendar-include-body 0)
-  (setq org-icalendar-timezone "Europe/Berlin")
-
   (calendar-set-date-style 'iso)
   (setq calendar-week-start-day 1
         calendar-day-name-array ["Sonntag" "Montag" "Dienstag" "Mittwoch"
