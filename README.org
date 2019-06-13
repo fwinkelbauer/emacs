@@ -440,26 +440,6 @@ get downcased, even if notations such as camel casing are used):
 
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-x w") 'elfeed)
-
-  (defun fw/youtube-dl (url)
-    (start-process "youtube-dl"
-                   (concat "*youtube-dl " url "*")
-                   "youtube-dl"
-                   url))
-
-  (eval-after-load 'elfeed-search
-    '(define-key elfeed-search-mode-map "d" 'fw/elfeed-search-youtube-dl))
-
-  ;; Based on https://github.com/skeeto/.emacs.d/blob/master/etc/feed-setup.el
-  (defun fw/elfeed-search-youtube-dl ()
-    (interactive)
-    (let ((entries (elfeed-search-selected)))
-      (dolist (entry entries)
-        (fw/youtube-dl (elfeed-entry-link entry))
-        (message "Downloading %s" (elfeed-entry-title entry))
-        (elfeed-untag entry 'unread)
-        (elfeed-search-update-entry entry)
-        (unless (use-region-p) (forward-line)))))
 #+END_SRC
 
 ** Doom Modeline
