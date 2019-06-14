@@ -351,6 +351,7 @@ using this helper method:
 #+BEGIN_SRC emacs-lisp
   (defun fw/visit-directory (path)
     (interactive)
+    (delete-other-windows)
     (setq default-directory path)
     (neotree-dir path)
     (other-window 1))
