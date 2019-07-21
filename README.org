@@ -390,7 +390,7 @@ using this helper method:
   (global-set-key (kbd "C-c f") 'counsel-git)
   (global-set-key (kbd "C-c g") 'counsel-rg)
   (global-set-key (kbd "C-s") 'swiper)
-  (global-set-key (kbd "C-r") 'swiper)
+  (global-set-key (kbd "C-r") 'swiper-backward)
 #+END_SRC
 
 ~C-x C-f~ feels clunky, let's use ~C-x f~ instead:
@@ -399,25 +399,21 @@ using this helper method:
   (global-set-key (kbd "C-x f") 'counsel-find-file)
 #+END_SRC
 
-[[https://github.com/abo-abo/swiper/issues/1068][abo-abo]] has posted some decent functions which I'd like to use:
+[[https://oremacs.com/2019/07/20/ivy-0.12.0/][Ivy 0.12.0]] did add some command extensions such as ~swiper-thing-at-point~,
+which is based on ~ivy-thing-at-point~. I'd like to use ~counsel-rg~ through
+~ivy-thing-at-point~, so let's the function and update some keybindings:
 
 #+BEGIN_SRC emacs-lisp
-  (defun ivy-with-thing-at-point (cmd)
-    (let ((ivy-initial-inputs-alist
-           (list
-            (cons cmd (thing-at-point 'symbol)))))
-      (funcall cmd)))
-
-  (defun counsel-rg-thing-at-point ()
+  (defun fw/counsel-rg-thing-at-point ()
+    "`counsel-rg' with `ivy-thing-at-point'."
     (interactive)
-    (ivy-with-thing-at-point 'counsel-rg))
+    (let ((thing (ivy-thing-at-point)))
+      (when (use-region-p)
+        (deactivate-mark))
+      (counsel-rg thing)))
 
-  (defun swiper-thing-at-point ()
-    (interactive)
-    (ivy-with-thing-at-point 'swiper))
-
-  (global-set-key (kbd "M-s _") 'counsel-rg-thing-at-point)
-  (global-set-key (kbd "M-s .") 'swiper-thing-at-point)
+  (global-set-key (kbd "M-s _") 'fw/counsel-rg-thing-at-point)
+  (global-set-key (kbd "M-s .") 'swiper-isearch-thing-at-point)
 #+END_SRC
 
 ** Company
