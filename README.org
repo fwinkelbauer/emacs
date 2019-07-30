@@ -293,11 +293,22 @@ I've found this snippet of Austrian holidays in [[https://github.com/novoid/dot-
   (setq calendar-holidays (append holiday-local-holidays holiday-other-holidays))
 #+END_SRC
 
-Basic agenda configuration:
+Basic agenda configuration with a custom agenda view:
 
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-skip-scheduled-if-done t)
   (global-set-key (kbd "C-c a") 'org-agenda)
+
+  (setq org-agenda-custom-commands
+        '(("." "Overview"
+           ((agenda ""
+                    ((org-agenda-overriding-header "Kalender\n")))
+            (todo ""
+                  ((org-agenda-overriding-header "\nOffen\n")
+                   (org-agenda-block-separator nil)
+                   (org-agenda-sorting-strategy '(todo-state-up))
+                   (org-agenda-todo-ignore-scheduled 'all)))
+            ))))
 #+END_SRC
 
 * External Packages
@@ -320,6 +331,12 @@ I like [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light themes
 
 #+BEGIN_SRC emacs-lisp
   (load-theme 'sanityinc-tomorrow-day t)
+#+END_SRC
+
+with just some minor adjustments:
+
+#+BEGIN_SRC emacs-lisp
+  (set-face-attribute 'org-agenda-structure nil :inherit 'default :height 1.25)
 #+END_SRC
 
 ** Markdown
