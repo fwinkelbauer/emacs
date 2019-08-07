@@ -222,6 +222,12 @@ I'm running aspell on Linux and Windows (using WSL):
   (add-hook 'git-commit-mode-hook 'flyspell-mode)
 #+END_SRC
 
+The [[https://www.emacswiki.org/emacs/FlySpell][EmacsWiki]] contains a section on how to improve the performance of Flyspell:
+
+#+BEGIN_SRC emacs-lisp
+  (setq flyspell-issue-message-flag nil)
+#+END_SRC
+
 * Org
 
 General org configuration:
