@@ -8,8 +8,8 @@ I am currently running GNU Emacs 25.3.1.
 * OS Detection
 
 #+BEGIN_SRC emacs-lisp
-  (setq IS-LINUX (eq system-type 'gnu/linux)
-        IS-WINDOWS (eq system-type 'windows-nt))
+  (setq fw/is-linux (eq system-type 'gnu/linux)
+        fw/is-windows (eq system-type 'windows-nt))
 #+END_SRC
 
 * General
@@ -62,7 +62,7 @@ I used to get errors in the login process when doing a ~git push~ on Windows.
 This should fix it:
 
 #+BEGIN_SRC emacs-lisp
-  (if IS-WINDOWS
+  (if fw/is-windows
       (setenv "GIT_ASKPASS" "git-gui--askpass"))
 #+END_SRC
 
