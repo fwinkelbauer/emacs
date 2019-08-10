@@ -46,7 +46,7 @@ Hide startup message and empty scratch buffer:
   (setq initial-scratch-message nil)
 #+END_SRC
 
-Garbage collection:
+Increase the garbage collection threshold:
 
 #+BEGIN_SRC emacs-lisp
   (setq gc-cons-threshold 20000000)
@@ -169,16 +169,19 @@ Use ibuffer:
 
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-x C-b") 'ibuffer)
+
   (setq-default ibuffer-saved-filter-groups
                 `(("Default"
                    ("Temporary" (name . "\*.*\*"))
                    ("Magit" (name . "^magit"))
                    ("Dired" (mode . dired-mode))
                    )))
+
   (add-hook 'ibuffer-mode-hook
             (lambda ()
               (ibuffer-auto-mode 1)
               (ibuffer-switch-to-saved-filter-groups "Default")))
+
   (setq ibuffer-show-empty-filter-groups nil)
   (setq ibuffer-expert t)
 #+END_SRC
@@ -214,20 +217,6 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
   (global-set-key (kbd "C-x 3") 'fw/hsplit-last-buffer)
 #+END_SRC
 
-* Flyspell
-
-I'm running aspell on Linux and Windows (using WSL):
-
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'git-commit-mode-hook 'flyspell-mode)
-#+END_SRC
-
-The [[https://www.emacswiki.org/emacs/FlySpell][EmacsWiki]] contains a section on how to improve the performance of Flyspell:
-
-#+BEGIN_SRC emacs-lisp
-  (setq flyspell-issue-message-flag nil)
-#+END_SRC
-
 * Org
 
 General org configuration:
@@ -246,7 +235,7 @@ Improve org's source code blocks:
   (setq org-src-window-setup 'current-window)
 #+END_SRC
 
-My calendar should use my native language. The ~calendar-set-date-style~ line
+The calendar should use my native language. The ~calendar-set-date-style~ line
 changes the date format in ~%%(diary.anniversary ...)~:
 
 #+BEGIN_SRC emacs-lisp
@@ -258,21 +247,21 @@ changes the date format in ~%%(diary.anniversary ...)~:
                                    "Juni" "Juli" "August" "September" "Oktober" "November" "Dezember"])
 
   (setq parse-time-months '(("jän" . 1) ("feb" . 2) ("mär" . 3)
-                              ("apr" . 4) ("mai" . 5) ("jun" . 6)
-                              ("jul" . 7) ("aug" . 8) ("sep" . 9)
-                              ("okt" . 10) ("nov" . 11) ("dez" . 12)
-                              ("jänner" . 1) ("februar" . 2) ("märz" . 3)
-                              ("april" . 4) ("mai" . 5) ("juni" . 6)
-                              ("juli" . 7) ("august" . 8)
-                              ("september" . 9) ("oktober" . 10)
-                              ("november" . 11) ("dezember" . 12)))
+                            ("apr" . 4) ("mai" . 5) ("jun" . 6)
+                            ("jul" . 7) ("aug" . 8) ("sep" . 9)
+                            ("okt" . 10) ("nov" . 11) ("dez" . 12)
+                            ("jänner" . 1) ("februar" . 2) ("märz" . 3)
+                            ("april" . 4) ("mai" . 5) ("juni" . 6)
+                            ("juli" . 7) ("august" . 8)
+                            ("september" . 9) ("oktober" . 10)
+                            ("november" . 11) ("dezember" . 12)))
 
   (setq parse-time-weekdays '(("so" . 0) ("mo" . 1) ("di" . 2)
-                                ("mi" . 3) ("do" . 4) ("fr" . 5)
-                                ("sa" . 6) ("sonntag" . 0) ("montag" . 1)
-                                ("dienstag" . 2) ("mittwoch" . 3)
-                                ("donnerstag" . 4) ("freitag" . 5)
-                                ("samstag" . 6)))
+                              ("mi" . 3) ("do" . 4) ("fr" . 5)
+                              ("sa" . 6) ("sonntag" . 0) ("montag" . 1)
+                              ("dienstag" . 2) ("mittwoch" . 3)
+                              ("donnerstag" . 4) ("freitag" . 5)
+                              ("samstag" . 6)))
 #+END_SRC
 
 I've found this snippet of Austrian holidays in [[https://github.com/novoid/dot-emacs/blob/master/config.org][Karl Void's configuration]]:
@@ -313,8 +302,7 @@ Basic agenda configuration with a custom agenda view:
                   ((org-agenda-overriding-header "\nOffen\n")
                    (org-agenda-block-separator nil)
                    (org-agenda-sorting-strategy '(todo-state-up))
-                   (org-agenda-todo-ignore-scheduled 'all)))
-            ))))
+                   (org-agenda-todo-ignore-scheduled 'all)))))))
 #+END_SRC
 
 * External Packages
@@ -398,6 +386,12 @@ using this helper method:
     (delete-other-windows))
 #+END_SRC
 
+I'd like to spellcheck my commit messages:
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'git-commit-mode-hook 'flyspell-mode)
+#+END_SRC
+
 ** Editorconfig
 
 #+BEGIN_SRC emacs-lisp
@@ -424,7 +418,7 @@ using this helper method:
 
 [[https://oremacs.com/2019/07/20/ivy-0.12.0/][Ivy 0.12.0]] did add some command extensions such as ~swiper-thing-at-point~,
 which is based on ~ivy-thing-at-point~. I'd like to use ~counsel-rg~ through
-~ivy-thing-at-point~, so let's the function and update some keybindings:
+~ivy-thing-at-point~:
 
 #+BEGIN_SRC emacs-lisp
   (defun fw/counsel-rg-thing-at-point ()
