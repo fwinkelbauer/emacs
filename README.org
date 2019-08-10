@@ -72,6 +72,31 @@ Make scrolling a little bit smoother:
   (setq mouse-wheel-progressive-speed nil)
 #+END_SRC
 
+The ~undo~ command should be more accessible:
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-z") 'undo)
+#+END_SRC
+
+Use [[https://www.emacswiki.org/emacs/ElectricPair][electric-pair-mode]]:
+
+#+BEGIN_SRC emacs-lisp
+  (electric-pair-mode t)
+#+END_SRC
+
+Sometimes I'd like to open the current directory in an "explorer":
+
+#+BEGIN_SRC emacs-lisp
+  (defun fw/explorer ()
+    "Opens thunar (Linux XFCE) or Windows explorer at the `default-directory'"
+    (interactive)
+    (if fw/is-linux
+        (start-process "thunar" nil "thunar" (expand-file-name default-directory))
+      (browse-url-of-file default-directory)))
+
+  (global-set-key (kbd "<f11>") 'fw/explorer)
+#+END_SRC
+
 * Server
 
 Start Emacs in server mode:
@@ -132,6 +157,20 @@ Delete trailing whitespace on save:
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
+It's useful to open a file without any encoding:
+
+#+BEGIN_SRC emacs-lisp
+  (defun fw/find-file-or-find-file-literally ()
+    "Kills the current buffer and opens it via `find-file' or`find-file-literally'"
+    (interactive)
+    (let ((current-file-name buffer-file-name)
+          (current-is-literal (string= buffer-file-coding-system "no-conversion")))
+      (kill-this-buffer)
+      (if current-is-literal
+          (find-file current-file-name)
+        (find-file-literally current-file-name))))
+#+END_SRC
+
 * Styling
 
 Hide toolbar:
@@ -163,13 +202,9 @@ Highlight current line:
     (global-hl-line-mode))
 #+END_SRC
 
-* Buffer
-
-Use ibuffer:
+* Ibuffer
 
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-x C-b") 'ibuffer)
-
   (setq-default ibuffer-saved-filter-groups
                 `(("Default"
                    ("Temporary" (name . "\*.*\*"))
@@ -184,12 +219,6 @@ Use ibuffer:
 
   (setq ibuffer-show-empty-filter-groups nil)
   (setq ibuffer-expert t)
-#+END_SRC
-
-~C-x k~ should kill the current buffer:
-
-#+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-x k") 'kill-this-buffer)
 #+END_SRC
 
 * Window
@@ -212,9 +241,6 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
     (other-window 1 nil)
     (switch-to-next-buffer)
     (other-window 1 nil))
-
-  (global-set-key (kbd "C-x 2") 'fw/vsplit-last-buffer)
-  (global-set-key (kbd "C-x 3") 'fw/hsplit-last-buffer)
 #+END_SRC
 
 * Org
@@ -292,7 +318,6 @@ Basic agenda configuration with a custom agenda view:
 
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-skip-scheduled-if-done t)
-  (global-set-key (kbd "C-c a") 'org-agenda)
 
   (setq org-agenda-custom-commands
         '(("." "Overview"
@@ -303,6 +328,12 @@ Basic agenda configuration with a custom agenda view:
                    (org-agenda-block-separator nil)
                    (org-agenda-sorting-strategy '(todo-state-up))
                    (org-agenda-todo-ignore-scheduled 'all)))))))
+
+  (defun fw/org-agenda ()
+    (interactive)
+    (org-agenda nil "."))
+
+  (global-set-key (kbd "<f12>") 'fw/org-agenda)
 #+END_SRC
 
 * External Packages
@@ -350,9 +381,13 @@ with just some minor adjustments:
 ** Neotree
 
 #+BEGIN_SRC emacs-lisp
+  (defun fw/neotree-dir ()
+    (interactive)
+    (neotree-dir default-directory))
+
   (setq neo-autorefresh nil)
   (global-set-key (kbd "<f8>") 'neotree-toggle)
-  (global-set-key (kbd "<f9>") 'neotree-dir)
+  (global-set-key (kbd "<f9>") 'fw/neotree-dir)
 #+END_SRC
 
 By defining ~#+LINK: dir elisp:(fw/visit-directory "%s")~ at the top of a
@@ -371,7 +406,6 @@ using this helper method:
 ** Magit
 
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-x g") 'magit-status)
   (setq git-commit-summary-max-length 50)
   (setq git-commit-fill-column 72)
   (setq magit-completing-read-function 'ivy-completing-read)
@@ -403,17 +437,6 @@ I'd like to spellcheck my commit messages:
 #+BEGIN_SRC emacs-lisp
   (counsel-mode 1)
   (setq ivy-count-format "%d/%d ")
-  (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
-  (global-set-key (kbd "C-c f") 'counsel-git)
-  (global-set-key (kbd "C-c g") 'counsel-rg)
-  (global-set-key (kbd "C-s") 'swiper)
-  (global-set-key (kbd "C-r") 'swiper-backward)
-#+END_SRC
-
-~C-x C-f~ feels clunky, let's use ~C-x f~ instead:
-
-#+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-x f") 'counsel-find-file)
 #+END_SRC
 
 [[https://oremacs.com/2019/07/20/ivy-0.12.0/][Ivy 0.12.0]] did add some command extensions such as ~swiper-thing-at-point~,
@@ -450,12 +473,6 @@ get downcased, even if notations such as camel casing are used):
   (setq company-dabbrev-ignore-case nil)
 #+END_SRC
 
-** Elfeed
-
-#+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-x w") 'elfeed)
-#+END_SRC
-
 ** Doom Modeline
 
 This modeline uses ~all-the-icons~, which can be installed using ~M-x
@@ -471,6 +488,65 @@ Do not show method names in the modeline:
 
 #+BEGIN_SRC emacs-lisp
   (setq which-func-modes nil)
+#+END_SRC
+
+* My Keymap
+
+The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app_keys.html][xah's blog post]]:
+
+#+BEGIN_SRC emacs-lisp
+  (progn
+    (define-prefix-command 'fw-key-map)
+
+    (define-key fw-key-map (kbd "<return>") 'counsel-M-x)
+
+    ;; window management
+    (define-key fw-key-map (kbd "1") 'delete-other-windows)
+    (define-key fw-key-map (kbd "2") 'fw/vsplit-last-buffer)
+    (define-key fw-key-map (kbd "3") 'fw/hsplit-last-buffer)
+    (define-key fw-key-map (kbd "0") 'delete-window)
+    (define-key fw-key-map (kbd "o") 'other-window)
+
+    ;; buffer management
+    (define-key fw-key-map (kbd "f") 'counsel-find-file)
+    (define-key fw-key-map (kbd "k") 'kill-this-buffer)
+    (define-key fw-key-map (kbd "b") 'ivy-switch-buffer)
+    (define-key fw-key-map (kbd "h") 'mark-whole-buffer)
+
+    ;; applications
+    (define-key fw-key-map (kbd "x g") 'magit-status)
+    (define-key fw-key-map (kbd "x w") 'elfeed)
+    (define-key fw-key-map (kbd "x b") 'ibuffer)
+
+    ;; navigation
+    (define-key fw-key-map (kbd "s") 'swiper)
+    (define-key fw-key-map (kbd "r") 'swiper-backward)
+    (define-key fw-key-map (kbd "x s") 'counsel-rg)
+    (define-key fw-key-map (kbd "x f") 'counsel-git)
+
+    ;; other
+    (define-key fw-key-map (kbd "+") 'text-scale-increase)
+    (define-key fw-key-map (kbd "-") 'text-scale-decrease)
+    (define-key fw-key-map (kbd "g") 'keyboard-escape-quit)
+    (define-key fw-key-map (kbd "q") 'save-buffers-kill-terminal))
+
+  (if fw/is-windows
+      (global-set-key (kbd "<apps>") 'fw-key-map)
+    (global-set-key (kbd "<menu>") 'fw-key-map))
+#+END_SRC
+
+~C-x C-s~ and ~C-c~ belong to a set of keybindings for which the bound function
+can change depending on the context. We'll use a trick to bind them to other
+keys:
+
+#+BEGIN_SRC emacs-lisp
+  (if fw/is-windows
+      (define-key key-translation-map (kbd "<apps> w") (kbd "C-x C-s"))
+    (define-key key-translation-map (kbd "<menu> w") (kbd "C-x C-s")))
+
+  (if fw/is-windows
+      (define-key key-translation-map (kbd "<apps> c") (kbd "C-c"))
+    (define-key key-translation-map (kbd "<menu> c") (kbd "C-c")))
 #+END_SRC
 
 * Custom
