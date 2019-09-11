@@ -39,7 +39,7 @@ Disable audio bell:
   (setq visible-bell t)
 #+END_SRC
 
-Hide startup message and empty scratch buffer:
+Hide startup message and show an empty scratch buffer:
 
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t)
@@ -84,7 +84,7 @@ Use [[https://www.emacswiki.org/emacs/ElectricPair][electric-pair-mode]]:
   (electric-pair-mode t)
 #+END_SRC
 
-Sometimes I'd like to open the current directory in an "explorer":
+Define a function to open the current directory in an "explorer":
 
 #+BEGIN_SRC emacs-lisp
   (defun fw/explorer ()
@@ -352,7 +352,7 @@ function to compile new packages:
 
 ** Themes
 
-I like [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light themes]]:
+I like to use [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light themes]]:
 
 #+BEGIN_SRC emacs-lisp
   (load-theme 'sanityinc-tomorrow-day t)
@@ -440,7 +440,7 @@ I'd like to spellcheck my commit messages:
 #+END_SRC
 
 [[https://oremacs.com/2019/07/20/ivy-0.12.0/][Ivy 0.12.0]] did add some command extensions such as ~swiper-thing-at-point~,
-which is based on ~ivy-thing-at-point~. I'd like to use ~counsel-rg~ through
+which are based on ~ivy-thing-at-point~. I'd like to use ~counsel-rg~ through
 ~ivy-thing-at-point~:
 
 #+BEGIN_SRC emacs-lisp
