@@ -490,6 +490,12 @@ Do not show method names in the modeline:
   (setq which-func-modes nil)
 #+END_SRC
 
+** Expand Region
+
+#+BEGIN_SRC emacs-lisp
+  (setq expand-region-contract-fast-key "d")
+#+END_SRC
+
 * My Keymap
 
 The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app_keys.html][xah's blog post]]:
@@ -511,6 +517,7 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
     (define-key fw-key-map (kbd "f") 'counsel-find-file)
     (define-key fw-key-map (kbd "k") 'kill-this-buffer)
     (define-key fw-key-map (kbd "b") 'ivy-switch-buffer)
+    (define-key fw-key-map (kbd "e") 'er/expand-region)
 
     ;; applications
     (define-key fw-key-map (kbd "x g") 'magit-status)
