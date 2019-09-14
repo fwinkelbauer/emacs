@@ -511,7 +511,6 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
     (define-key fw-key-map (kbd "f") 'counsel-find-file)
     (define-key fw-key-map (kbd "k") 'kill-this-buffer)
     (define-key fw-key-map (kbd "b") 'ivy-switch-buffer)
-    (define-key fw-key-map (kbd "h") 'mark-whole-buffer)
 
     ;; applications
     (define-key fw-key-map (kbd "x g") 'magit-status)
