@@ -496,6 +496,12 @@ Do not show method names in the modeline:
   (setq expand-region-contract-fast-key "d")
 #+END_SRC
 
+** PowerShell
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.psm1\\'" . powershell-mode))
+#+END_SRC
+
 * My Keymap
 
 The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app_keys.html][xah's blog post]]:
