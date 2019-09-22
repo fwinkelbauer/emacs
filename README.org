@@ -331,6 +331,9 @@ Basic agenda configuration with a custom agenda view:
 
   (defun fw/org-agenda ()
     (interactive)
+    (delete-other-windows)
+    (if (boundp 'fw/default-inbox)
+        (find-file fw/default-inbox))
     (org-agenda nil "."))
 
   (global-set-key (kbd "<f12>") 'fw/org-agenda)
