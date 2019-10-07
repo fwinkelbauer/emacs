@@ -429,12 +429,6 @@ I'd like to spellcheck my commit messages:
   (add-hook 'git-commit-mode-hook 'flyspell-mode)
 #+END_SRC
 
-** Editorconfig
-
-#+BEGIN_SRC emacs-lisp
-  (editorconfig-mode 1)
-#+END_SRC
-
 ** Ivy, Counsel & Swiper
 
 #+BEGIN_SRC emacs-lisp
@@ -491,12 +485,6 @@ Do not show method names in the modeline:
 
 #+BEGIN_SRC emacs-lisp
   (setq which-func-modes nil)
-#+END_SRC
-
-** Expand Region
-
-#+BEGIN_SRC emacs-lisp
-  (setq expand-region-contract-fast-key "d")
 #+END_SRC
 
 ** PowerShell
