@@ -515,7 +515,6 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
     (define-key fw-key-map (kbd "k") 'kill-this-buffer)
     (define-key fw-key-map (kbd "b") 'ivy-switch-buffer)
     (define-key fw-key-map (kbd "h") 'mark-whole-buffer)
-    (define-key fw-key-map (kbd "e") 'er/expand-region)
 
     ;; applications
     (define-key fw-key-map (kbd "x g") 'magit-status)
