@@ -78,12 +78,6 @@ The ~undo~ command should be more accessible:
   (global-set-key (kbd "C-z") 'undo)
 #+END_SRC
 
-Use [[https://www.emacswiki.org/emacs/ElectricPair][electric-pair-mode]]:
-
-#+BEGIN_SRC emacs-lisp
-  (electric-pair-mode t)
-#+END_SRC
-
 Define a function to open the current directory in an "explorer":
 
 #+BEGIN_SRC emacs-lisp
