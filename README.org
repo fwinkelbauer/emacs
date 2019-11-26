@@ -485,6 +485,7 @@ Do not show method names in the modeline:
 
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.psm1\\'" . powershell-mode))
+  (add-to-list 'auto-mode-alist '("\\.psd1\\'" . powershell-mode))
 #+END_SRC
 
 * My Keymap
