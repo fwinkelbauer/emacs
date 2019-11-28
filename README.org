@@ -88,7 +88,7 @@ Define a function to open the current directory in an "explorer":
         (start-process "thunar" nil "thunar" (expand-file-name default-directory))
       (browse-url-of-file default-directory)))
 
-  (global-set-key (kbd "<f11>") 'fw/explorer)
+  (global-set-key (kbd "<f9>") 'fw/explorer)
 #+END_SRC
 
 * Server
@@ -384,7 +384,7 @@ with just some minor adjustments:
 
   (setq neo-autorefresh nil)
   (global-set-key (kbd "<f8>") 'neotree-toggle)
-  (global-set-key (kbd "<f9>") 'fw/neotree-dir)
+  (global-set-key (kbd "S-<f8>") 'fw/neotree-dir)
 #+END_SRC
 
 By defining ~#+LINK: dir elisp:(fw/visit-directory "%s")~ at the top of a
@@ -406,6 +406,8 @@ using this helper method:
   (setq git-commit-summary-max-length 50)
   (setq git-commit-fill-column 72)
   (setq magit-completing-read-function 'ivy-completing-read)
+
+  (global-set-key (kbd "<f10>") 'magit-status)
 #+END_SRC
 
 [[https://github.com/howardabrams/dot-files/blob/master/emacs.org][Howard Abrams]] wrote a nice snippet which lets ~magit-status~ open in fullscreen:
@@ -421,6 +423,12 @@ I'd like to spellcheck my commit messages:
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'git-commit-mode-hook 'flyspell-mode)
+#+END_SRC
+
+** Elfeed
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "<f11>") 'elfeed)
 #+END_SRC
 
 ** Ivy, Counsel & Swiper
