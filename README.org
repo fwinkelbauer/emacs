@@ -494,6 +494,12 @@ Do not show method names in the modeline:
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'auto-mode-alist '("\\.psm1\\'" . powershell-mode))
   (add-to-list 'auto-mode-alist '("\\.psd1\\'" . powershell-mode))
+
+  (if fw/is-windows
+      (defun fw/ps-pretty-print-buffer ()
+        "Pretty prints the current PowerShell buffer. This function needs the PowerShell module PSScriptAnalyzer"
+        (interactive)
+        (shell-command-on-region (point-min) (point-max) "powershell.exe -Command \"$script = $input | Out-String; Invoke-Formatter $script\" " t t)))
 #+END_SRC
 
 * My Keymap
