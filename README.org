@@ -237,6 +237,15 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
     (other-window 1 nil))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  (defun fw/kill-this-buffer ()
+    "Kills this buffer and removes this window when split"
+    (interactive)
+    (kill-this-buffer)
+    (if (> (length (window-list)) 1)
+        (delete-window)))
+#+END_SRC
+
 * Org
 
 General org configuration:
@@ -521,7 +530,7 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
 
     ;; buffer management
     (define-key fw-key-map (kbd "f") 'counsel-find-file)
-    (define-key fw-key-map (kbd "k") 'kill-this-buffer)
+    (define-key fw-key-map (kbd "k") 'fw/kill-this-buffer)
     (define-key fw-key-map (kbd "b") 'ivy-switch-buffer)
     (define-key fw-key-map (kbd "h") 'mark-whole-buffer)
 
