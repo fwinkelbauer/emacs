@@ -86,7 +86,7 @@ Define a function to open the current directory in an "explorer":
     (interactive)
     (if fw/is-linux
         (start-process "thunar" nil "thunar" (expand-file-name default-directory))
-      (browse-url-of-file default-directory)))
+      (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (expand-file-name default-directory)))))
 
   (global-set-key (kbd "<f9>") 'fw/explorer)
 #+END_SRC
