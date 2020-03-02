@@ -251,6 +251,7 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
 General org configuration:
 
 #+BEGIN_SRC emacs-lisp
+  (require 'org)
   (setq org-catch-invisible-edits 'smart)
   (setq org-log-into-drawer t)
   (setq initial-major-mode 'org-mode)
@@ -268,6 +269,7 @@ The calendar should use my native language. The ~calendar-set-date-style~ line
 changes the date format in ~%%(diary.anniversary ...)~:
 
 #+BEGIN_SRC emacs-lisp
+  (require 'calendar)
   (calendar-set-date-style 'iso)
   (setq calendar-week-start-day 1
         calendar-day-name-array ["Sonntag" "Montag" "Dienstag" "Mittwoch"
@@ -321,6 +323,7 @@ Basic agenda configuration with a custom agenda view:
 
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-skip-scheduled-if-done t)
+  (setq org-agenda-show-future-repeats nil)
 
   (setq org-agenda-custom-commands
         '(("." "Overview"
