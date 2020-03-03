@@ -323,7 +323,6 @@ Basic agenda configuration with a custom agenda view:
 
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-skip-scheduled-if-done t)
-  (setq org-agenda-show-future-repeats nil)
 
   (setq org-agenda-custom-commands
         '(("." "Overview"
@@ -343,6 +342,15 @@ Basic agenda configuration with a custom agenda view:
     (org-agenda nil "."))
 
   (global-set-key (kbd "<f12>") 'fw/org-agenda)
+#+END_SRC
+
+I don't want to see repeating TODOs in my calendar. The variable name to change
+this behavior is different depending on version of org-mode is running, so I'll
+set them both:
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-show-future-repeats nil)
+  (setq org-agenda-repeating-timestamp-show-all nil)
 #+END_SRC
 
 * External Packages
