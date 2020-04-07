@@ -91,6 +91,26 @@ Define a function to open the current directory in an "explorer":
   (global-set-key (kbd "<f9>") 'fw/explorer)
 #+END_SRC
 
+I'd like to open a shell buffer in either the current directory, or in the root
+directory of a project in version control:
+
+#+BEGIN_SRC emacs-lisp
+  (defun fw/root-dir ()
+    (let ((root-dir (vc-root-dir)))
+      (if root-dir
+          root-dir
+        default-directory)))
+
+  (defun fw/shell ()
+    (interactive)
+    (delete-other-windows)
+    (let ((default-directory (expand-file-name (fw/root-dir)))
+          (shell-buffer-name (concat "*shell (" default-directory ")*")))
+      (shell shell-buffer-name)))
+
+  (global-set-key (kbd "S-<f9>") 'fw/shell)
+#+END_SRC
+
 * Server
 
 Start Emacs in server mode:
@@ -543,8 +563,6 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
   (progn
     (define-prefix-command 'fw-key-map)
 
-    (define-key fw-key-map (kbd "<return>") 'counsel-M-x)
-
     ;; window management
     (define-key fw-key-map (kbd "1") 'delete-other-windows)
     (define-key fw-key-map (kbd "2") 'fw/vsplit-last-buffer)
@@ -571,6 +589,8 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
     (define-key fw-key-map (kbd "x f") 'counsel-git)
 
     ;; other
+    (define-key fw-key-map (kbd "<return>") 'counsel-M-x)
+    (define-key fw-key-map (kbd "SPC") 'company-complete)
     (define-key fw-key-map (kbd "+") 'text-scale-increase)
     (define-key fw-key-map (kbd "-") 'text-scale-decrease)
     (define-key fw-key-map (kbd "g") 'keyboard-escape-quit)
