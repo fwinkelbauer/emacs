@@ -1,8 +1,9 @@
-eshell/
-server/
 auto-save-list/
 elpa/archives/
 elpa/gnupg/
+eshell/
+server/
+transient/
 README.el
 custom.el
 *.elc
