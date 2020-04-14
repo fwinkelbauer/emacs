@@ -78,15 +78,21 @@ The ~undo~ command should be more accessible:
   (global-set-key (kbd "C-z") 'undo)
 #+END_SRC
 
-Define a function to open the current directory in an "explorer":
+Define a function to open the current/root directory in an "explorer":
 
 #+BEGIN_SRC emacs-lisp
+  (defun fw/default-or-root-dir ()
+    (let ((root-dir (vc-root-dir)))
+      (expand-file-name (if root-dir
+          root-dir
+        default-directory))))
+
   (defun fw/explorer ()
     "Opens thunar (Linux XFCE) or Windows explorer at the `default-directory'"
     (interactive)
     (if fw/is-linux
-        (start-process "thunar" nil "thunar" (expand-file-name default-directory))
-      (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (expand-file-name default-directory)))))
+        (start-process "thunar" nil "thunar" (fw/default-or-root-dir))
+      (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (fw/default-or-root-dir)))))
 
   (global-set-key (kbd "<f9>") 'fw/explorer)
 #+END_SRC
@@ -95,16 +101,10 @@ I'd like to open a shell buffer in either the current directory, or in the root
 directory of a project in version control:
 
 #+BEGIN_SRC emacs-lisp
-  (defun fw/root-dir ()
-    (let ((root-dir (vc-root-dir)))
-      (if root-dir
-          root-dir
-        default-directory)))
-
   (defun fw/shell ()
     (interactive)
     (delete-other-windows)
-    (let ((default-directory (expand-file-name (fw/root-dir)))
+    (let ((default-directory (fw/default-or-root-dir))
           (shell-buffer-name (concat "*shell (" default-directory ")*")))
       (shell shell-buffer-name)))
 
