@@ -373,6 +373,22 @@ set them both:
   (setq org-agenda-repeating-timestamp-show-all nil)
 #+END_SRC
 
+Thanks to [[https://www.reddit.com/r/orgmode/comments/fg1im8/calendar_notifications_on_windows_10/][this reddit post]] I can now get calendar notifications using org:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'appt)
+  (appt-activate t)
+
+  (defun fw/org-agenda-to-appt ()
+    "Rebuild all appt reminders using org"
+    (interactive)
+    (setq appt-time-msg-list nil)
+    (org-agenda-to-appt))
+
+  (fw/org-agenda-to-appt)
+  (add-hook 'org-agenda-finalize-hook 'fw/org-agenda-to-appt)
+#+END_SRC
+
 * External Packages
 
 ** Compilation
