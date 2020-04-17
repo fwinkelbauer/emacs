@@ -29,8 +29,8 @@ Reload a file if it changed on disk:
 Disable backup and auto save files:
 
 #+BEGIN_SRC emacs-lisp
-  (setq backup-inhibited t)
-  (setq auto-save-default nil)
+  (setq backup-inhibited t
+        auto-save-default nil)
 #+END_SRC
 
 Disable audio bell:
@@ -42,8 +42,8 @@ Disable audio bell:
 Hide startup message and show an empty scratch buffer:
 
 #+BEGIN_SRC emacs-lisp
-  (setq inhibit-startup-message t)
-  (setq initial-scratch-message nil)
+  (setq inhibit-startup-message t
+        initial-scratch-message nil)
 #+END_SRC
 
 Increase the garbage collection threshold:
@@ -58,14 +58,6 @@ Always start in fullscreen:
   (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 #+END_SRC
 
-I used to get errors in the login process when doing a ~git push~ on Windows.
-This should fix it:
-
-#+BEGIN_SRC emacs-lisp
-  (if fw/is-windows
-      (setenv "GIT_ASKPASS" "git-gui--askpass"))
-#+END_SRC
-
 Make scrolling a little bit smoother:
 
 #+BEGIN_SRC emacs-lisp
@@ -78,23 +70,32 @@ The ~undo~ command should be more accessible:
   (global-set-key (kbd "C-z") 'undo)
 #+END_SRC
 
-Define a function to open the current/root directory in an "explorer":
+Define a function to open the current/root directory in an external file
+explorer:
 
 #+BEGIN_SRC emacs-lisp
-  (defun fw/default-or-root-dir ()
-    (let ((root-dir (vc-root-dir)))
-      (expand-file-name (if root-dir
-          root-dir
-        default-directory))))
+    (defun fw/default-or-root-dir ()
+      "Returns `vc-root-dir' or `default-directory'."
+      (let ((root-dir (vc-root-dir)))
+        (expand-file-name (if root-dir
+            root-dir
+          default-directory))))
 
-  (defun fw/explorer ()
-    "Opens thunar (Linux XFCE) or Windows explorer at the `default-directory'"
-    (interactive)
+    (defun fw/linux-thunar ()
+      "Opens thunar (Linux XFCE) at `vc-root-dir' or `default-directory'."
+      (interactive)
+      (start-process "thunar" nil "thunar" (fw/default-or-root-dir)))
+
+    (defun fw/windows-explorer ()
+      "Opens Windows explorer at `vc-root-dir' or `default-directory'."
+      (interactive)
+      (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (fw/default-or-root-dir))))
+
     (if fw/is-linux
-        (start-process "thunar" nil "thunar" (fw/default-or-root-dir))
-      (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (fw/default-or-root-dir)))))
+        (global-set-key (kbd "<f9>") 'fw/linux-thunar))
 
-  (global-set-key (kbd "<f9>") 'fw/explorer)
+    (if fw/is-windows
+        (global-set-key (kbd "<f9>") 'fw/windows-explorer))
 #+END_SRC
 
 I'd like to open a shell buffer in either the current directory, or in the root
@@ -102,6 +103,7 @@ directory of a project in version control:
 
 #+BEGIN_SRC emacs-lisp
   (defun fw/shell ()
+    "Opens a shell at `vc-root-dir' or `default-directory'."
     (interactive)
     (delete-other-windows)
     (let ((default-directory (fw/default-or-root-dir))
@@ -175,7 +177,7 @@ It's useful to open a file without any encoding:
 
 #+BEGIN_SRC emacs-lisp
   (defun fw/find-file-or-find-file-literally ()
-    "Kills the current buffer and opens it via `find-file' or`find-file-literally'"
+    "Kills the current buffer and opens it via `find-file' or`find-file-literally'."
     (interactive)
     (let ((current-file-name buffer-file-name)
           (current-is-literal (string= buffer-file-coding-system "no-conversion")))
@@ -231,8 +233,8 @@ Highlight current line:
               (ibuffer-auto-mode 1)
               (ibuffer-switch-to-saved-filter-groups "Default")))
 
-  (setq ibuffer-show-empty-filter-groups nil)
-  (setq ibuffer-expert t)
+  (setq ibuffer-show-empty-filter-groups nil
+        ibuffer-expert t)
 #+END_SRC
 
 * Window
@@ -243,6 +245,7 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
 
 #+BEGIN_SRC emacs-lisp
   (defun fw/vsplit-last-buffer ()
+    "Split the selected window into two vertical windows."
     (interactive)
     (split-window-vertically)
     (other-window 1 nil)
@@ -250,6 +253,7 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
     (other-window 1 nil))
 
   (defun fw/hsplit-last-buffer ()
+    "Split the selected window into two horizontal windows."
     (interactive)
     (split-window-horizontally)
     (other-window 1 nil)
@@ -259,7 +263,7 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
 
 #+BEGIN_SRC emacs-lisp
   (defun fw/kill-this-buffer ()
-    "Kills this buffer and removes this window when split"
+    "Kills this buffer and removes this window when split."
     (interactive)
     (kill-this-buffer)
     (if (> (length (window-list)) 1)
@@ -272,17 +276,17 @@ General org configuration:
 
 #+BEGIN_SRC emacs-lisp
   (require 'org)
-  (setq org-catch-invisible-edits 'smart)
-  (setq org-log-into-drawer t)
-  (setq initial-major-mode 'org-mode)
+  (setq org-catch-invisible-edits 'smart
+        org-log-into-drawer t
+        initial-major-mode 'org-mode)
 #+END_SRC
 
 Improve org's source code blocks:
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-src-fontify-natively t)
-  (setq org-src-tab-acts-natively t)
-  (setq org-src-window-setup 'current-window)
+  (setq org-src-fontify-natively t
+        org-src-tab-acts-natively t
+        org-src-window-setup 'current-window)
 #+END_SRC
 
 The calendar should use my native language. The ~calendar-set-date-style~ line
@@ -355,6 +359,7 @@ Basic agenda configuration with a custom agenda view:
                    (org-agenda-todo-ignore-scheduled 'all)))))))
 
   (defun fw/org-agenda ()
+    "Show custom agenda."
     (interactive)
     (delete-other-windows)
     (if (boundp 'fw/default-inbox)
@@ -369,8 +374,8 @@ this behavior is different depending on version of org-mode is running, so I'll
 set them both:
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-agenda-show-future-repeats nil)
-  (setq org-agenda-repeating-timestamp-show-all nil)
+  (setq org-agenda-show-future-repeats nil
+        org-agenda-repeating-timestamp-show-all nil)
 #+END_SRC
 
 Thanks to [[https://www.reddit.com/r/orgmode/comments/fg1im8/calendar_notifications_on_windows_10/][this reddit post]] I can now get calendar notifications using org:
@@ -380,7 +385,7 @@ Thanks to [[https://www.reddit.com/r/orgmode/comments/fg1im8/calendar_notificati
   (appt-activate t)
 
   (defun fw/org-agenda-to-appt ()
-    "Rebuild all appt reminders using org"
+    "Rebuild all appt reminders using org."
     (interactive)
     (setq appt-time-msg-list nil)
     (org-agenda-to-appt))
@@ -398,7 +403,7 @@ function to compile new packages:
 
 #+BEGIN_SRC emacs-lisp
   (defun fw/compile-elpa-dir ()
-    "Byte-compile all packages."
+    "Byte-compile all elpa packages."
     (interactive)
     (byte-recompile-directory (concat user-emacs-directory "elpa") 0))
 #+END_SRC
@@ -435,6 +440,7 @@ with just some minor adjustments:
 
 #+BEGIN_SRC emacs-lisp
   (defun fw/neotree-dir ()
+    "Open neotree at `default-directory'."
     (interactive)
     (neotree-dir default-directory))
 
@@ -443,25 +449,12 @@ with just some minor adjustments:
   (global-set-key (kbd "S-<f8>") 'fw/neotree-dir)
 #+END_SRC
 
-By defining ~#+LINK: dir elisp:(fw/visit-directory "%s")~ at the top of a
-org-mode file, I can create links which let me jump into a specific directory
-using this helper method:
-
-#+BEGIN_SRC emacs-lisp
-  (defun fw/visit-directory (path)
-    (interactive)
-    (delete-other-windows)
-    (setq default-directory path)
-    (neotree-dir path)
-    (other-window 1))
-#+END_SRC
-
 ** Magit
 
 #+BEGIN_SRC emacs-lisp
-  (setq git-commit-summary-max-length 50)
-  (setq git-commit-fill-column 72)
-  (setq magit-completing-read-function 'ivy-completing-read)
+  (setq git-commit-summary-max-length 50
+        git-commit-fill-column 72
+        magit-completing-read-function 'ivy-completing-read)
 
   (global-set-key (kbd "<f10>") 'magit-status)
 #+END_SRC
@@ -501,7 +494,6 @@ which are based on ~ivy-thing-at-point~. I'd like to use ~counsel-rg~ through
 #+BEGIN_SRC emacs-lisp
   (defun fw/counsel-rg-thing-at-point ()
     "`counsel-rg' with `ivy-thing-at-point'."
-    (interactive)
     (let ((thing (ivy-thing-at-point)))
       (when (use-region-p)
         (deactivate-mark))
@@ -514,9 +506,10 @@ which are based on ~ivy-thing-at-point~. I'd like to use ~counsel-rg~ through
 ** Company
 
 #+BEGIN_SRC emacs-lisp
-  (setq company-idle-delay 0.1)
-  (setq company-minimum-prefix-length 3)
-  (setq company-show-numbers t)
+  (setq company-idle-delay 0.1
+        company-minimum-prefix-length 3
+        company-show-numbers t)
+
   (global-company-mode t)
 #+END_SRC
 
@@ -524,8 +517,8 @@ The dabbrev backend has some inconvenient default settings (e.g. its suggestions
 get downcased, even if notations such as camel casing are used):
 
 #+BEGIN_SRC emacs-lisp
-  (setq company-dabbrev-downcase nil)
-  (setq company-dabbrev-ignore-case nil)
+  (setq company-dabbrev-downcase nil
+        company-dabbrev-ignore-case nil)
 #+END_SRC
 
 ** Doom Modeline
@@ -553,7 +546,7 @@ Do not show method names in the modeline:
 
   (if fw/is-windows
       (defun fw/ps-pretty-print-buffer ()
-        "Pretty prints the current PowerShell buffer. This function needs the PowerShell module PSScriptAnalyzer"
+        "Pretty prints the current PowerShell buffer. This function needs the PowerShell module PSScriptAnalyzer."
         (interactive)
         (shell-command-on-region (point-min) (point-max) "powershell.exe -Command \"$script = $input | Out-String; Invoke-Formatter $script\" " t t)))
 #+END_SRC
@@ -618,9 +611,11 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
     (define-key fw-key-map (kbd "g") 'keyboard-escape-quit)
     (define-key fw-key-map (kbd "q") 'save-buffers-kill-terminal))
 
+  (if fw/is-linux
+      (global-set-key (kbd "<menu>") 'fw-key-map))
+
   (if fw/is-windows
-      (global-set-key (kbd "<apps>") 'fw-key-map)
-    (global-set-key (kbd "<menu>") 'fw-key-map))
+      (global-set-key (kbd "<apps>") 'fw-key-map))
 #+END_SRC
 
 ~C-x C-s~ and ~C-c~ belong to a set of keybindings for which the bound function
@@ -628,13 +623,15 @@ can change depending on the context. We'll use a trick to bind them to other
 keys:
 
 #+BEGIN_SRC emacs-lisp
-  (if fw/is-windows
-      (define-key key-translation-map (kbd "<apps> w") (kbd "C-x C-s"))
-    (define-key key-translation-map (kbd "<menu> w") (kbd "C-x C-s")))
+  (if fw/is-linux
+      (progn
+        (define-key key-translation-map (kbd "<menu> w") (kbd "C-x C-s"))
+        (define-key key-translation-map (kbd "<menu> c") (kbd "C-c"))))
 
   (if fw/is-windows
-      (define-key key-translation-map (kbd "<apps> c") (kbd "C-c"))
-    (define-key key-translation-map (kbd "<menu> c") (kbd "C-c")))
+      (progn
+        (define-key key-translation-map (kbd "<apps> w") (kbd "C-x C-s"))
+        (define-key key-translation-map (kbd "<apps> c") (kbd "C-c"))))
 #+END_SRC
 
 * Custom
