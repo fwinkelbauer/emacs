@@ -440,9 +440,9 @@ with just some minor adjustments:
 
 #+BEGIN_SRC emacs-lisp
   (defun fw/neotree-dir ()
-    "Open neotree at `default-directory'."
+    "Open neotree at `vc-root-dir' or `default-directory'."
     (interactive)
-    (neotree-dir default-directory))
+    (neotree-dir (fw/default-or-root-dir)))
 
   (setq neo-autorefresh nil)
   (global-set-key (kbd "<f8>") 'neotree-toggle)
