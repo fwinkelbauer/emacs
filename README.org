@@ -453,8 +453,7 @@ with just some minor adjustments:
 
 #+BEGIN_SRC emacs-lisp
   (setq git-commit-summary-max-length 50
-        git-commit-fill-column 72
-        magit-completing-read-function 'ivy-completing-read)
+        git-commit-fill-column 72)
 
   (global-set-key (kbd "<f10>") 'magit-status)
 #+END_SRC
@@ -483,6 +482,7 @@ I'd like to spellcheck my commit messages:
 ** Ivy, Counsel & Swiper
 
 #+BEGIN_SRC emacs-lisp
+  (ivy-mode 1)
   (counsel-mode 1)
   (setq ivy-count-format "%d/%d ")
 #+END_SRC
