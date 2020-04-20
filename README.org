@@ -480,6 +480,31 @@ I'd like to spellcheck my commit messages:
 (global-set-key (kbd "<f11>") 'elfeed)
 #+END_SRC
 
+Let's extend elfeed's UI so that I can use ~youtube-dl~ to download RSS video
+feeds. This snippet is based on code I found [[https://github.com/skeeto/.emacs.d/blob/master/etc/feed-setup.el][here]] and [[https://codingquark.com/emacs/2019/05/16/emacs-elfeed-youtube.html][here]]:
+
+#+BEGIN_SRC emacs-lisp
+(require 'elfeed)
+
+(defun fw/youtube-dl (url)
+  "Downloads a URL using youtube-dl"
+  (async-shell-command (concat "youtube-dl " url)
+                       (concat "*youtube-dl " url "*")))
+
+(defun fw/elfeed-search-youtube-dl ()
+  "Downloads an elfeed entry using youtube-dl"
+  (interactive)
+  (let ((entries (elfeed-search-selected)))
+    (dolist (entry entries)
+      (fw/youtube-dl (elfeed-entry-link entry))
+      (elfeed-untag entry 'unread)
+      (elfeed-search-update-entry entry)
+      (unless (use-region-p) (forward-line)))))
+
+(define-key elfeed-show-mode-map "d" 'fw/elfeed-search-youtube-dl)
+(define-key elfeed-search-mode-map "d" 'fw/elfeed-search-youtube-dl)
+#+END_SRC
+
 ** Ivy, Counsel & Swiper
 
 #+BEGIN_SRC emacs-lisp
