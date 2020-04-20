@@ -8,8 +8,8 @@ I am currently running GNU Emacs 25.3.1.
 * OS Detection
 
 #+BEGIN_SRC emacs-lisp
-  (setq fw/is-linux (eq system-type 'gnu/linux)
-        fw/is-windows (eq system-type 'windows-nt))
+(setq fw/is-linux (eq system-type 'gnu/linux)
+      fw/is-windows (eq system-type 'windows-nt))
 #+END_SRC
 
 * General
@@ -17,100 +17,100 @@ I am currently running GNU Emacs 25.3.1.
 Simplify confirmation:
 
 #+BEGIN_SRC emacs-lisp
-  (fset 'yes-or-no-p 'y-or-n-p)
+(fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
 Reload a file if it changed on disk:
 
 #+BEGIN_SRC emacs-lisp
-  (global-auto-revert-mode t)
+(global-auto-revert-mode t)
 #+END_SRC
 
 Disable backup and auto save files:
 
 #+BEGIN_SRC emacs-lisp
-  (setq backup-inhibited t
-        auto-save-default nil)
+(setq backup-inhibited t
+      auto-save-default nil)
 #+END_SRC
 
 Disable audio bell:
 
 #+BEGIN_SRC emacs-lisp
-  (setq visible-bell t)
+(setq visible-bell t)
 #+END_SRC
 
 Hide startup message and show an empty scratch buffer:
 
 #+BEGIN_SRC emacs-lisp
-  (setq inhibit-startup-message t
-        initial-scratch-message nil)
+(setq inhibit-startup-message t
+      initial-scratch-message nil)
 #+END_SRC
 
 Increase the garbage collection threshold:
 
 #+BEGIN_SRC emacs-lisp
-  (setq gc-cons-threshold 20000000)
+(setq gc-cons-threshold 20000000)
 #+END_SRC
 
 Always start in fullscreen:
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 #+END_SRC
 
 Make scrolling a little bit smoother:
 
 #+BEGIN_SRC emacs-lisp
-  (setq mouse-wheel-progressive-speed nil)
+(setq mouse-wheel-progressive-speed nil)
 #+END_SRC
 
 The ~undo~ command should be more accessible:
 
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-z") 'undo)
 #+END_SRC
 
 Define a function to open the current/root directory in an external file
 explorer:
 
 #+BEGIN_SRC emacs-lisp
-    (defun fw/default-or-root-dir ()
-      "Returns `vc-root-dir' or `default-directory'."
-      (let ((root-dir (vc-root-dir)))
-        (expand-file-name (if root-dir
-            root-dir
-          default-directory))))
+(defun fw/default-or-root-dir ()
+  "Returns `vc-root-dir' or `default-directory'."
+  (let ((root-dir (vc-root-dir)))
+    (expand-file-name (if root-dir
+        root-dir
+      default-directory))))
 
-    (defun fw/linux-thunar ()
-      "Opens thunar (Linux XFCE) at `vc-root-dir' or `default-directory'."
-      (interactive)
-      (start-process "thunar" nil "thunar" (fw/default-or-root-dir)))
+(defun fw/linux-thunar ()
+  "Opens thunar (Linux XFCE) at `vc-root-dir' or `default-directory'."
+  (interactive)
+  (start-process "thunar" nil "thunar" (fw/default-or-root-dir)))
 
-    (defun fw/windows-explorer ()
-      "Opens Windows explorer at `vc-root-dir' or `default-directory'."
-      (interactive)
-      (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (fw/default-or-root-dir))))
+(defun fw/windows-explorer ()
+  "Opens Windows explorer at `vc-root-dir' or `default-directory'."
+  (interactive)
+  (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (fw/default-or-root-dir))))
 
-    (if fw/is-linux
-        (global-set-key (kbd "<f9>") 'fw/linux-thunar))
+(if fw/is-linux
+    (global-set-key (kbd "<f9>") 'fw/linux-thunar))
 
-    (if fw/is-windows
-        (global-set-key (kbd "<f9>") 'fw/windows-explorer))
+(if fw/is-windows
+    (global-set-key (kbd "<f9>") 'fw/windows-explorer))
 #+END_SRC
 
 I'd like to open a shell buffer in either the current directory, or in the root
 directory of a project in version control:
 
 #+BEGIN_SRC emacs-lisp
-  (defun fw/shell ()
-    "Opens a shell at `vc-root-dir' or `default-directory'."
-    (interactive)
-    (delete-other-windows)
-    (let ((default-directory (fw/default-or-root-dir))
-          (shell-buffer-name (concat "*shell (" default-directory ")*")))
-      (shell shell-buffer-name)))
+(defun fw/shell ()
+  "Opens a shell at `vc-root-dir' or `default-directory'."
+  (interactive)
+  (delete-other-windows)
+  (let ((default-directory (fw/default-or-root-dir))
+        (shell-buffer-name (concat "*shell (" default-directory ")*")))
+    (shell shell-buffer-name)))
 
-  (global-set-key (kbd "S-<f9>") 'fw/shell)
+(global-set-key (kbd "S-<f9>") 'fw/shell)
 #+END_SRC
 
 * Server
@@ -118,8 +118,8 @@ directory of a project in version control:
 Start Emacs in server mode:
 
 #+BEGIN_SRC emacs-lisp
-  (require 'server)
-  (if (not (server-running-p)) (server-start))
+(require 'server)
+(if (not (server-running-p)) (server-start))
 #+END_SRC
 
 * Text
@@ -127,64 +127,64 @@ Start Emacs in server mode:
 Prefer UTF-8:
 
 #+BEGIN_SRC emacs-lisp
-  (prefer-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
 #+END_SRC
 
 Set default line length:
 
 #+BEGIN_SRC emacs-lisp
-  (setq-default fill-column 80)
+(setq-default fill-column 80)
 #+END_SRC
 
 Overwrite selected text when typing:
 
 #+BEGIN_SRC emacs-lisp
-  (delete-selection-mode t)
+(delete-selection-mode t)
 #+END_SRC
 
 Ensure that files end with a new line:
 
 #+BEGIN_SRC emacs-lisp
-  (setq require-final-newline t)
+(setq require-final-newline t)
 #+END_SRC
 
 Mark matching pairs of parentheses:
 
 #+BEGIN_SRC emacs-lisp
-  (show-paren-mode t)
-  (setq show-paren-delay 0.0)
+(show-paren-mode t)
+(setq show-paren-delay 0.0)
 #+END_SRC
 
 Spaces > Tabs:
 
 #+BEGIN_SRC emacs-lisp
-  (setq-default indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)
 #+END_SRC
 
 Use single space after a sentence:
 
 #+BEGIN_SRC emacs-lisp
-  (setq sentence-end-double-space nil)
+(setq sentence-end-double-space nil)
 #+END_SRC
 
 Delete trailing whitespace on save:
 
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
 It's useful to open a file without any encoding:
 
 #+BEGIN_SRC emacs-lisp
-  (defun fw/find-file-or-find-file-literally ()
-    "Kills the current buffer and opens it via `find-file' or`find-file-literally'."
-    (interactive)
-    (let ((current-file-name buffer-file-name)
-          (current-is-literal (string= buffer-file-coding-system "no-conversion")))
-      (kill-this-buffer)
-      (if current-is-literal
-          (find-file current-file-name)
-        (find-file-literally current-file-name))))
+(defun fw/find-file-or-find-file-literally ()
+  "Kills the current buffer and opens it via `find-file' or`find-file-literally'."
+  (interactive)
+  (let ((current-file-name buffer-file-name)
+        (current-is-literal (string= buffer-file-coding-system "no-conversion")))
+    (kill-this-buffer)
+    (if current-is-literal
+        (find-file current-file-name)
+      (find-file-literally current-file-name))))
 #+END_SRC
 
 * Styling
@@ -192,49 +192,49 @@ It's useful to open a file without any encoding:
 Hide toolbar:
 
 #+BEGIN_SRC emacs-lisp
-  (tool-bar-mode -1)
+(tool-bar-mode -1)
 #+END_SRC
 
 Set the default font:
 
 #+BEGIN_SRC emacs-lisp
-  (set-face-attribute 'default nil
-                      :family "Roboto Mono Medium"
-                      :height 120
-                      :weight 'normal
-                      :width 'normal)
+(set-face-attribute 'default nil
+                    :family "Roboto Mono Medium"
+                    :height 120
+                    :weight 'normal
+                    :width 'normal)
 #+END_SRC
 
 Enable column numbers:
 
 #+BEGIN_SRC emacs-lisp
-  (setq column-number-mode t)
+(setq column-number-mode t)
 #+END_SRC
 
 Highlight current line:
 
 #+BEGIN_SRC emacs-lisp
-  (when window-system
-    (global-hl-line-mode))
+(when window-system
+  (global-hl-line-mode))
 #+END_SRC
 
 * Ibuffer
 
 #+BEGIN_SRC emacs-lisp
-  (setq-default ibuffer-saved-filter-groups
-                `(("Default"
-                   ("Temporary" (name . "\*.*\*"))
-                   ("Magit" (name . "^magit"))
-                   ("Dired" (mode . dired-mode))
-                   )))
+(setq-default ibuffer-saved-filter-groups
+              `(("Default"
+                 ("Temporary" (name . "\*.*\*"))
+                 ("Magit" (name . "^magit"))
+                 ("Dired" (mode . dired-mode))
+                 )))
 
-  (add-hook 'ibuffer-mode-hook
-            (lambda ()
-              (ibuffer-auto-mode 1)
-              (ibuffer-switch-to-saved-filter-groups "Default")))
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (ibuffer-auto-mode 1)
+            (ibuffer-switch-to-saved-filter-groups "Default")))
 
-  (setq ibuffer-show-empty-filter-groups nil
-        ibuffer-expert t)
+(setq ibuffer-show-empty-filter-groups nil
+      ibuffer-expert t)
 #+END_SRC
 
 * Window
@@ -244,30 +244,30 @@ the current buffer twice. Most of the time I'll change the buffer in the second
 window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_tips_and_tricks/chldury/][this snippet]] looks really handy:
 
 #+BEGIN_SRC emacs-lisp
-  (defun fw/vsplit-last-buffer ()
-    "Split the selected window into two vertical windows."
-    (interactive)
-    (split-window-vertically)
-    (other-window 1 nil)
-    (switch-to-next-buffer)
-    (other-window 1 nil))
+(defun fw/vsplit-last-buffer ()
+  "Split the selected window into two vertical windows."
+  (interactive)
+  (split-window-vertically)
+  (other-window 1 nil)
+  (switch-to-next-buffer)
+  (other-window 1 nil))
 
-  (defun fw/hsplit-last-buffer ()
-    "Split the selected window into two horizontal windows."
-    (interactive)
-    (split-window-horizontally)
-    (other-window 1 nil)
-    (switch-to-next-buffer)
-    (other-window 1 nil))
+(defun fw/hsplit-last-buffer ()
+  "Split the selected window into two horizontal windows."
+  (interactive)
+  (split-window-horizontally)
+  (other-window 1 nil)
+  (switch-to-next-buffer)
+  (other-window 1 nil))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (defun fw/kill-this-buffer ()
-    "Kills this buffer and removes this window when split."
-    (interactive)
-    (kill-this-buffer)
-    (if (> (length (window-list)) 1)
-        (delete-window)))
+(defun fw/kill-this-buffer ()
+  "Kills this buffer and removes this window when split."
+  (interactive)
+  (kill-this-buffer)
+  (if (> (length (window-list)) 1)
+      (delete-window)))
 #+END_SRC
 
 * Org
@@ -275,98 +275,99 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
 General org configuration:
 
 #+BEGIN_SRC emacs-lisp
-  (require 'org)
-  (setq org-catch-invisible-edits 'smart
-        org-log-into-drawer t
-        initial-major-mode 'org-mode)
+(require 'org)
+(setq org-catch-invisible-edits 'smart
+      org-log-into-drawer t
+      initial-major-mode 'org-mode)
 #+END_SRC
 
 Improve org's source code blocks:
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-src-fontify-natively t
-        org-src-tab-acts-natively t
-        org-src-window-setup 'current-window)
+(setq org-src-fontify-natively t
+      org-src-tab-acts-natively t
+      org-src-window-setup 'current-window
+      org-edit-src-content-indentation 0)
 #+END_SRC
 
 The calendar should use my native language. The ~calendar-set-date-style~ line
 changes the date format in ~%%(diary.anniversary ...)~:
 
 #+BEGIN_SRC emacs-lisp
-  (require 'calendar)
-  (calendar-set-date-style 'iso)
-  (setq calendar-week-start-day 1
-        calendar-day-name-array ["Sonntag" "Montag" "Dienstag" "Mittwoch"
-                                 "Donnerstag" "Freitag" "Samstag"]
-        calendar-month-name-array ["Jänner" "Februar" "März" "April" "Mai"
-                                   "Juni" "Juli" "August" "September" "Oktober" "November" "Dezember"])
+(require 'calendar)
+(calendar-set-date-style 'iso)
+(setq calendar-week-start-day 1
+      calendar-day-name-array ["Sonntag" "Montag" "Dienstag" "Mittwoch"
+                               "Donnerstag" "Freitag" "Samstag"]
+      calendar-month-name-array ["Jänner" "Februar" "März" "April" "Mai"
+                                 "Juni" "Juli" "August" "September" "Oktober" "November" "Dezember"])
 
-  (setq parse-time-months '(("jän" . 1) ("feb" . 2) ("mär" . 3)
-                            ("apr" . 4) ("mai" . 5) ("jun" . 6)
-                            ("jul" . 7) ("aug" . 8) ("sep" . 9)
-                            ("okt" . 10) ("nov" . 11) ("dez" . 12)
-                            ("jänner" . 1) ("februar" . 2) ("märz" . 3)
-                            ("april" . 4) ("mai" . 5) ("juni" . 6)
-                            ("juli" . 7) ("august" . 8)
-                            ("september" . 9) ("oktober" . 10)
-                            ("november" . 11) ("dezember" . 12)))
+(setq parse-time-months '(("jän" . 1) ("feb" . 2) ("mär" . 3)
+                          ("apr" . 4) ("mai" . 5) ("jun" . 6)
+                          ("jul" . 7) ("aug" . 8) ("sep" . 9)
+                          ("okt" . 10) ("nov" . 11) ("dez" . 12)
+                          ("jänner" . 1) ("februar" . 2) ("märz" . 3)
+                          ("april" . 4) ("mai" . 5) ("juni" . 6)
+                          ("juli" . 7) ("august" . 8)
+                          ("september" . 9) ("oktober" . 10)
+                          ("november" . 11) ("dezember" . 12)))
 
-  (setq parse-time-weekdays '(("so" . 0) ("mo" . 1) ("di" . 2)
-                              ("mi" . 3) ("do" . 4) ("fr" . 5)
-                              ("sa" . 6) ("sonntag" . 0) ("montag" . 1)
-                              ("dienstag" . 2) ("mittwoch" . 3)
-                              ("donnerstag" . 4) ("freitag" . 5)
-                              ("samstag" . 6)))
+(setq parse-time-weekdays '(("so" . 0) ("mo" . 1) ("di" . 2)
+                            ("mi" . 3) ("do" . 4) ("fr" . 5)
+                            ("sa" . 6) ("sonntag" . 0) ("montag" . 1)
+                            ("dienstag" . 2) ("mittwoch" . 3)
+                            ("donnerstag" . 4) ("freitag" . 5)
+                            ("samstag" . 6)))
 #+END_SRC
 
 I've found this snippet of Austrian holidays in [[https://github.com/novoid/dot-emacs/blob/master/config.org][Karl Void's configuration]]:
 
 #+BEGIN_SRC emacs-lisp
-  (setq holiday-austria-holidays '((holiday-fixed  1  1 "Neujahr (frei)")
-                                   (holiday-fixed  1  6 "Heilige Drei Könige (frei)")
-                                   (holiday-easter-etc 1 "Ostermontag (frei)")
-                                   (holiday-easter-etc -46 "Aschermittwoch")
-                                   (holiday-easter-etc -2 "Karfreitag")
-                                   (holiday-fixed  5  1 "Österreichischer Staatsfeiertag (frei)")
-                                   (holiday-easter-etc 39 "Christi Himmelfahrt (frei)")
-                                   (holiday-easter-etc 50 "Pfingstmontag (frei)")
-                                   (holiday-easter-etc 60 "Fronleichnam (frei)")
-                                   (holiday-fixed  8 15 "Mariä Himmelfahrt (frei)")
-                                   (holiday-fixed 10 26 "Nationalfeiertag (frei)")
-                                   (holiday-fixed 11  1 "Allerheiligen (frei)")
-                                   (holiday-fixed 12  8 "Maria Empfängnis (frei)")
-                                   (holiday-fixed 12 24 "Heiliger Abend")
-                                   (holiday-fixed 12 25 "Erster Weihnachtstag (frei)")
-                                   (holiday-fixed 12 26 "Zweiter Weihnachtstag (frei)")))
+(setq holiday-austria-holidays '((holiday-fixed  1  1 "Neujahr (frei)")
+                                 (holiday-fixed  1  6 "Heilige Drei Könige (frei)")
+                                 (holiday-easter-etc 1 "Ostermontag (frei)")
+                                 (holiday-easter-etc -46 "Aschermittwoch")
+                                 (holiday-easter-etc -2 "Karfreitag")
+                                 (holiday-fixed  5  1 "Österreichischer Staatsfeiertag (frei)")
+                                 (holiday-easter-etc 39 "Christi Himmelfahrt (frei)")
+                                 (holiday-easter-etc 50 "Pfingstmontag (frei)")
+                                 (holiday-easter-etc 60 "Fronleichnam (frei)")
+                                 (holiday-fixed  8 15 "Mariä Himmelfahrt (frei)")
+                                 (holiday-fixed 10 26 "Nationalfeiertag (frei)")
+                                 (holiday-fixed 11  1 "Allerheiligen (frei)")
+                                 (holiday-fixed 12  8 "Maria Empfängnis (frei)")
+                                 (holiday-fixed 12 24 "Heiliger Abend")
+                                 (holiday-fixed 12 25 "Erster Weihnachtstag (frei)")
+                                 (holiday-fixed 12 26 "Zweiter Weihnachtstag (frei)")))
 
-  (setq holiday-local-holidays holiday-austria-holidays)
-  (setq calendar-holidays (append holiday-local-holidays holiday-other-holidays))
+(setq holiday-local-holidays holiday-austria-holidays)
+(setq calendar-holidays (append holiday-local-holidays holiday-other-holidays))
 #+END_SRC
 
 Basic agenda configuration with a custom agenda view:
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-skip-scheduled-if-done t)
 
-  (setq org-agenda-custom-commands
-        '(("." "Overview"
-           ((agenda ""
-                    ((org-agenda-overriding-header "Kalender\n")))
-            (todo ""
-                  ((org-agenda-overriding-header "\nOffen\n")
-                   (org-agenda-block-separator nil)
-                   (org-agenda-sorting-strategy '(todo-state-up))
-                   (org-agenda-todo-ignore-scheduled 'all)))))))
+(setq org-agenda-custom-commands
+      '(("." "Overview"
+         ((agenda ""
+                  ((org-agenda-overriding-header "Kalender\n")))
+          (todo ""
+                ((org-agenda-overriding-header "\nOffen\n")
+                 (org-agenda-block-separator nil)
+                 (org-agenda-sorting-strategy '(todo-state-up))
+                 (org-agenda-todo-ignore-scheduled 'all)))))))
 
-  (defun fw/org-agenda ()
-    "Show custom agenda."
-    (interactive)
-    (delete-other-windows)
-    (if (boundp 'fw/default-inbox)
-        (find-file fw/default-inbox))
-    (org-agenda nil "."))
+(defun fw/org-agenda ()
+  "Show custom agenda."
+  (interactive)
+  (delete-other-windows)
+  (if (boundp 'fw/default-inbox)
+      (find-file fw/default-inbox))
+  (org-agenda nil "."))
 
-  (global-set-key (kbd "<f12>") 'fw/org-agenda)
+(global-set-key (kbd "<f12>") 'fw/org-agenda)
 #+END_SRC
 
 I don't want to see repeating TODOs in my calendar. The variable name to change
@@ -374,24 +375,24 @@ this behavior is different depending on version of org-mode is running, so I'll
 set them both:
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-agenda-show-future-repeats nil
-        org-agenda-repeating-timestamp-show-all nil)
+(setq org-agenda-show-future-repeats nil
+      org-agenda-repeating-timestamp-show-all nil)
 #+END_SRC
 
 Thanks to [[https://www.reddit.com/r/orgmode/comments/fg1im8/calendar_notifications_on_windows_10/][this reddit post]] I can now get calendar notifications using org:
 
 #+BEGIN_SRC emacs-lisp
-  (require 'appt)
-  (appt-activate t)
+(require 'appt)
+(appt-activate t)
 
-  (defun fw/org-agenda-to-appt ()
-    "Rebuild all appt reminders using org."
-    (interactive)
-    (setq appt-time-msg-list nil)
-    (org-agenda-to-appt))
+(defun fw/org-agenda-to-appt ()
+  "Rebuild all appt reminders using org."
+  (interactive)
+  (setq appt-time-msg-list nil)
+  (org-agenda-to-appt))
 
-  (fw/org-agenda-to-appt)
-  (add-hook 'org-agenda-finalize-hook 'fw/org-agenda-to-appt)
+(fw/org-agenda-to-appt)
+(add-hook 'org-agenda-finalize-hook 'fw/org-agenda-to-appt)
 #+END_SRC
 
 * External Packages
@@ -402,10 +403,10 @@ I have excluded ~*.elc~ files in this git repository, which is why I need a
 function to compile new packages:
 
 #+BEGIN_SRC emacs-lisp
-  (defun fw/compile-elpa-dir ()
-    "Byte-compile all elpa packages."
-    (interactive)
-    (byte-recompile-directory (concat user-emacs-directory "elpa") 0))
+(defun fw/compile-elpa-dir ()
+  "Byte-compile all elpa packages."
+  (interactive)
+  (byte-recompile-directory (concat user-emacs-directory "elpa") 0))
 #+END_SRC
 
 ** Themes
@@ -413,78 +414,78 @@ function to compile new packages:
 I like to use [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light themes]]:
 
 #+BEGIN_SRC emacs-lisp
-  (load-theme 'sanityinc-tomorrow-day t)
+(load-theme 'sanityinc-tomorrow-day t)
 #+END_SRC
 
 with just some minor adjustments:
 
 #+BEGIN_SRC emacs-lisp
-  (set-face-attribute 'org-agenda-structure nil :inherit 'default :height 1.25)
+(set-face-attribute 'org-agenda-structure nil :inherit 'default :height 1.25)
 #+END_SRC
 
 ** Markdown
 
 #+BEGIN_SRC emacs-lisp
-  (autoload 'markdown-mode "markdown-mode"
-    "Major mode for editing Markdown files" t)
-  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("CHANGELOG\\.md\\'" . markdown-mode))
+(autoload 'markdown-mode "markdown-mode"
+  "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("CHANGELOG\\.md\\'" . markdown-mode))
 
-  (autoload 'gfm-mode "markdown-mode"
-    "Major mode for editing GitHub Flavored Markdown files" t)
-  (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+(autoload 'gfm-mode "markdown-mode"
+  "Major mode for editing GitHub Flavored Markdown files" t)
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 #+END_SRC
 
 ** Neotree
 
 #+BEGIN_SRC emacs-lisp
-  (defun fw/neotree-dir ()
-    "Open neotree at `vc-root-dir' or `default-directory'."
-    (interactive)
-    (neotree-dir (fw/default-or-root-dir)))
+(defun fw/neotree-dir ()
+  "Open neotree at `vc-root-dir' or `default-directory'."
+  (interactive)
+  (neotree-dir (fw/default-or-root-dir)))
 
-  (setq neo-autorefresh nil)
-  (global-set-key (kbd "<f8>") 'neotree-toggle)
-  (global-set-key (kbd "S-<f8>") 'fw/neotree-dir)
+(setq neo-autorefresh nil)
+(global-set-key (kbd "<f8>") 'neotree-toggle)
+(global-set-key (kbd "S-<f8>") 'fw/neotree-dir)
 #+END_SRC
 
 ** Magit
 
 #+BEGIN_SRC emacs-lisp
-  (setq git-commit-summary-max-length 50
-        git-commit-fill-column 72)
+(setq git-commit-summary-max-length 50
+      git-commit-fill-column 72)
 
-  (global-set-key (kbd "<f10>") 'magit-status)
+(global-set-key (kbd "<f10>") 'magit-status)
 #+END_SRC
 
 [[https://github.com/howardabrams/dot-files/blob/master/emacs.org][Howard Abrams]] wrote a nice snippet which lets ~magit-status~ open in fullscreen:
 
 #+BEGIN_SRC emacs-lisp
-  (defadvice magit-status (around magit-fullscreen activate)
-    (window-configuration-to-register :magit-fullscreen)
-    ad-do-it
-    (delete-other-windows))
+(defadvice magit-status (around magit-fullscreen activate)
+  (window-configuration-to-register :magit-fullscreen)
+  ad-do-it
+  (delete-other-windows))
 #+END_SRC
 
 I'd like to spellcheck my commit messages:
 
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'git-commit-mode-hook 'flyspell-mode)
+(add-hook 'git-commit-mode-hook 'flyspell-mode)
 #+END_SRC
 
 ** Elfeed
 
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "<f11>") 'elfeed)
+(global-set-key (kbd "<f11>") 'elfeed)
 #+END_SRC
 
 ** Ivy, Counsel & Swiper
 
 #+BEGIN_SRC emacs-lisp
-  (ivy-mode 1)
-  (counsel-mode 1)
-  (setq ivy-count-format "%d/%d ")
+(ivy-mode 1)
+(counsel-mode 1)
+(setq ivy-count-format "%d/%d ")
 #+END_SRC
 
 [[https://oremacs.com/2019/07/20/ivy-0.12.0/][Ivy 0.12.0]] did add some command extensions such as ~swiper-thing-at-point~,
@@ -492,33 +493,33 @@ which are based on ~ivy-thing-at-point~. I'd like to use ~counsel-rg~ through
 ~ivy-thing-at-point~:
 
 #+BEGIN_SRC emacs-lisp
-  (defun fw/counsel-rg-thing-at-point ()
-    "`counsel-rg' with `ivy-thing-at-point'."
-    (let ((thing (ivy-thing-at-point)))
-      (when (use-region-p)
-        (deactivate-mark))
-      (counsel-rg thing)))
+(defun fw/counsel-rg-thing-at-point ()
+  "`counsel-rg' with `ivy-thing-at-point'."
+  (let ((thing (ivy-thing-at-point)))
+    (when (use-region-p)
+      (deactivate-mark))
+    (counsel-rg thing)))
 
-  (global-set-key (kbd "M-s _") 'fw/counsel-rg-thing-at-point)
-  (global-set-key (kbd "M-s .") 'swiper-isearch-thing-at-point)
+(global-set-key (kbd "M-s _") 'fw/counsel-rg-thing-at-point)
+(global-set-key (kbd "M-s .") 'swiper-isearch-thing-at-point)
 #+END_SRC
 
 ** Company
 
 #+BEGIN_SRC emacs-lisp
-  (setq company-idle-delay 0.1
-        company-minimum-prefix-length 3
-        company-show-numbers t)
+(setq company-idle-delay 0.1
+      company-minimum-prefix-length 3
+      company-show-numbers t)
 
-  (global-company-mode t)
+(global-company-mode t)
 #+END_SRC
 
 The dabbrev backend has some inconvenient default settings (e.g. its suggestions
 get downcased, even if notations such as camel casing are used):
 
 #+BEGIN_SRC emacs-lisp
-  (setq company-dabbrev-downcase nil
-        company-dabbrev-ignore-case nil)
+(setq company-dabbrev-downcase nil
+      company-dabbrev-ignore-case nil)
 #+END_SRC
 
 ** Doom Modeline
@@ -529,45 +530,45 @@ all-the-icons-install-fonts~.
 Alternative: All fonts can be found [[https://github.com/domtronn/all-the-icons.el][here]].
 
 #+BEGIN_SRC emacs-lisp
-  (doom-modeline-mode 1)
+(doom-modeline-mode 1)
 #+END_SRC
 
 Do not show method names in the modeline:
 
 #+BEGIN_SRC emacs-lisp
-  (setq which-func-modes nil)
+(setq which-func-modes nil)
 #+END_SRC
 
 ** PowerShell
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.psm1\\'" . powershell-mode))
-  (add-to-list 'auto-mode-alist '("\\.psd1\\'" . powershell-mode))
+(add-to-list 'auto-mode-alist '("\\.psm1\\'" . powershell-mode))
+(add-to-list 'auto-mode-alist '("\\.psd1\\'" . powershell-mode))
 
-  (if fw/is-windows
-      (defun fw/ps-pretty-print-buffer ()
-        "Pretty prints the current PowerShell buffer. This function needs the PowerShell module PSScriptAnalyzer."
-        (interactive)
-        (shell-command-on-region (point-min) (point-max) "powershell.exe -Command \"$script = $input | Out-String; Invoke-Formatter $script\" " t t)))
+(if fw/is-windows
+    (defun fw/ps-pretty-print-buffer ()
+      "Pretty prints the current PowerShell buffer. This function needs the PowerShell module PSScriptAnalyzer."
+      (interactive)
+      (shell-command-on-region (point-min) (point-max) "powershell.exe -Command \"$script = $input | Out-String; Invoke-Formatter $script\" " t t)))
 #+END_SRC
 
 ** C Sharp
 
 #+BEGIN_SRC emacs-lisp
-  (defun fw/csharp-mode-setup ()
-    (setq c-syntactic-indentation t)
-    (c-set-style "ellemtel")
-    (setq c-basic-offset 4)
-    (setq truncate-lines t))
+(defun fw/csharp-mode-setup ()
+  (setq c-syntactic-indentation t)
+  (c-set-style "ellemtel")
+  (setq c-basic-offset 4)
+  (setq truncate-lines t))
 
-  (add-hook 'csharp-mode-hook 'fw/csharp-mode-setup t)
-  (add-to-list 'auto-mode-alist '("\\.csproj\\'" . nxml-mode))
+(add-hook 'csharp-mode-hook 'fw/csharp-mode-setup t)
+(add-to-list 'auto-mode-alist '("\\.csproj\\'" . nxml-mode))
 #+END_SRC
 
 ** JavaScript
 
 #+BEGIN_SRC emacs-lisp
-  (setq js-indent-level 2)
+(setq js-indent-level 2)
 #+END_SRC
 
 * My Keymap
@@ -575,47 +576,47 @@ Do not show method names in the modeline:
 The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app_keys.html][xah's blog post]]:
 
 #+BEGIN_SRC emacs-lisp
-  (progn
-    (define-prefix-command 'fw-key-map)
+(progn
+  (define-prefix-command 'fw-key-map)
 
-    ;; window management
-    (define-key fw-key-map (kbd "1") 'delete-other-windows)
-    (define-key fw-key-map (kbd "2") 'fw/vsplit-last-buffer)
-    (define-key fw-key-map (kbd "3") 'fw/hsplit-last-buffer)
-    (define-key fw-key-map (kbd "0") 'delete-window)
-    (define-key fw-key-map (kbd "o") 'other-window)
+  ;; window management
+  (define-key fw-key-map (kbd "1") 'delete-other-windows)
+  (define-key fw-key-map (kbd "2") 'fw/vsplit-last-buffer)
+  (define-key fw-key-map (kbd "3") 'fw/hsplit-last-buffer)
+  (define-key fw-key-map (kbd "0") 'delete-window)
+  (define-key fw-key-map (kbd "o") 'other-window)
 
-    ;; buffer management
-    (define-key fw-key-map (kbd "f") 'counsel-find-file)
-    (define-key fw-key-map (kbd "k") 'kill-this-buffer)
-    (define-key fw-key-map (kbd "b") 'ivy-switch-buffer)
-    (define-key fw-key-map (kbd "h") 'mark-whole-buffer)
-    (define-key fw-key-map (kbd "x k") 'fw/kill-this-buffer)
+  ;; buffer management
+  (define-key fw-key-map (kbd "f") 'counsel-find-file)
+  (define-key fw-key-map (kbd "k") 'kill-this-buffer)
+  (define-key fw-key-map (kbd "b") 'ivy-switch-buffer)
+  (define-key fw-key-map (kbd "h") 'mark-whole-buffer)
+  (define-key fw-key-map (kbd "x k") 'fw/kill-this-buffer)
 
-    ;; applications
-    (define-key fw-key-map (kbd "x g") 'magit-status)
-    (define-key fw-key-map (kbd "x w") 'elfeed)
-    (define-key fw-key-map (kbd "x b") 'ibuffer)
+  ;; applications
+  (define-key fw-key-map (kbd "x g") 'magit-status)
+  (define-key fw-key-map (kbd "x w") 'elfeed)
+  (define-key fw-key-map (kbd "x b") 'ibuffer)
 
-    ;; navigation
-    (define-key fw-key-map (kbd "s") 'swiper)
-    (define-key fw-key-map (kbd "r") 'swiper-backward)
-    (define-key fw-key-map (kbd "x s") 'counsel-rg)
-    (define-key fw-key-map (kbd "x f") 'counsel-git)
+  ;; navigation
+  (define-key fw-key-map (kbd "s") 'swiper)
+  (define-key fw-key-map (kbd "r") 'swiper-backward)
+  (define-key fw-key-map (kbd "x s") 'counsel-rg)
+  (define-key fw-key-map (kbd "x f") 'counsel-git)
 
-    ;; other
-    (define-key fw-key-map (kbd "<return>") 'counsel-M-x)
-    (define-key fw-key-map (kbd "SPC") 'company-complete)
-    (define-key fw-key-map (kbd "+") 'text-scale-increase)
-    (define-key fw-key-map (kbd "-") 'text-scale-decrease)
-    (define-key fw-key-map (kbd "g") 'keyboard-escape-quit)
-    (define-key fw-key-map (kbd "q") 'save-buffers-kill-terminal))
+  ;; other
+  (define-key fw-key-map (kbd "<return>") 'counsel-M-x)
+  (define-key fw-key-map (kbd "SPC") 'company-complete)
+  (define-key fw-key-map (kbd "+") 'text-scale-increase)
+  (define-key fw-key-map (kbd "-") 'text-scale-decrease)
+  (define-key fw-key-map (kbd "g") 'keyboard-escape-quit)
+  (define-key fw-key-map (kbd "q") 'save-buffers-kill-terminal))
 
-  (if fw/is-linux
-      (global-set-key (kbd "<menu>") 'fw-key-map))
+(if fw/is-linux
+    (global-set-key (kbd "<menu>") 'fw-key-map))
 
-  (if fw/is-windows
-      (global-set-key (kbd "<apps>") 'fw-key-map))
+(if fw/is-windows
+    (global-set-key (kbd "<apps>") 'fw-key-map))
 #+END_SRC
 
 ~C-x C-s~ and ~C-c~ belong to a set of keybindings for which the bound function
@@ -623,15 +624,15 @@ can change depending on the context. We'll use a trick to bind them to other
 keys:
 
 #+BEGIN_SRC emacs-lisp
-  (if fw/is-linux
-      (progn
-        (define-key key-translation-map (kbd "<menu> w") (kbd "C-x C-s"))
-        (define-key key-translation-map (kbd "<menu> c") (kbd "C-c"))))
+(if fw/is-linux
+    (progn
+      (define-key key-translation-map (kbd "<menu> w") (kbd "C-x C-s"))
+      (define-key key-translation-map (kbd "<menu> c") (kbd "C-c"))))
 
-  (if fw/is-windows
-      (progn
-        (define-key key-translation-map (kbd "<apps> w") (kbd "C-x C-s"))
-        (define-key key-translation-map (kbd "<apps> c") (kbd "C-c"))))
+(if fw/is-windows
+    (progn
+      (define-key key-translation-map (kbd "<apps> w") (kbd "C-x C-s"))
+      (define-key key-translation-map (kbd "<apps> c") (kbd "C-c"))))
 #+END_SRC
 
 * Custom
@@ -640,6 +641,6 @@ Additional configuration that is only relevant on a particular machine should be
 stored in ~/.emacs.d/custom.el~.
 
 #+BEGIN_SRC emacs-lisp
-  (when (file-exists-p "~/.emacs.d/custom.el")
-    (load-file "~/.emacs.d/custom.el"))
+(when (file-exists-p "~/.emacs.d/custom.el")
+  (load-file "~/.emacs.d/custom.el"))
 #+END_SRC
