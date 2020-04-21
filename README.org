@@ -595,26 +595,27 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
   (define-prefix-command 'fw-key-map)
 
   ;; window management
-  (define-key fw-key-map (kbd "1") 'delete-other-windows)
-  (define-key fw-key-map (kbd "2") 'fw/vsplit-last-buffer)
-  (define-key fw-key-map (kbd "3") 'fw/hsplit-last-buffer)
-  (define-key fw-key-map (kbd "0") 'delete-window)
-  (define-key fw-key-map (kbd "o") 'other-window)
+  (define-key fw-key-map (kbd "w d d") 'delete-window)
+  (define-key fw-key-map (kbd "w d o") 'delete-other-windows)
+  (define-key fw-key-map (kbd "w s v") 'fw/vsplit-last-buffer)
+  (define-key fw-key-map (kbd "w s h") 'fw/hsplit-last-buffer)
+  (define-key fw-key-map (kbd "w o") 'other-window)
+  (define-key fw-key-map (kbd "w k") 'fw/kill-this-buffer)
 
-  ;; buffer management
-  (define-key fw-key-map (kbd "f") 'counsel-find-file)
-  (define-key fw-key-map (kbd "M-f") 'counsel-git)
-  (define-key fw-key-map (kbd "k") 'kill-this-buffer)
-  (define-key fw-key-map (kbd "b") 'counsel-switch-buffer)
-  (define-key fw-key-map (kbd "h") 'mark-whole-buffer)
-  (define-key fw-key-map (kbd "M-k") 'fw/kill-this-buffer)
-  (define-key fw-key-map (kbd "i") 'ibuffer)
-
-  ;; navigation
-  (define-key fw-key-map (kbd "s") 'swiper)
-  (define-key fw-key-map (kbd "M-s") 'counsel-rg)
-  (define-key fw-key-map (kbd ".") 'swiper-isearch-thing-at-point)
-  (define-key fw-key-map (kbd "M-.") 'fw/counsel-rg-thing-at-point)
+  ;; buffer management/navigation
+  (define-key fw-key-map (kbd "b f") 'counsel-find-file)
+  (define-key fw-key-map (kbd "b g") 'counsel-git)
+  (define-key fw-key-map (kbd "b k") 'kill-this-buffer)
+  (define-key fw-key-map (kbd "b b") 'counsel-switch-buffer)
+  (define-key fw-key-map (kbd "b h") 'mark-whole-buffer)
+  (define-key fw-key-map (kbd "b i") 'ibuffer)
+  (define-key fw-key-map (kbd "b s") 'swiper)
+  (define-key fw-key-map (kbd "b r") 'counsel-rg)
+  (define-key fw-key-map (kbd "b . s") 'swiper-isearch-thing-at-point)
+  (define-key fw-key-map (kbd "b . r") 'fw/counsel-rg-thing-at-point)
+  (define-key fw-key-map (kbd "b x") 'kill-region)
+  (define-key fw-key-map (kbd "b c") 'kill-ring-save)
+  (define-key fw-key-map (kbd "b v") 'yank)
 
   ;; other
   (define-key fw-key-map (kbd "<return>") 'counsel-M-x)
@@ -622,18 +623,15 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
   (define-key fw-key-map (kbd "+") 'text-scale-increase)
   (define-key fw-key-map (kbd "-") 'text-scale-decrease)
   (define-key fw-key-map (kbd "g") 'keyboard-escape-quit)
-  (define-key fw-key-map (kbd "q") 'save-buffers-kill-terminal)
-
-  ;; copy/paste/cut
-  (define-key fw-key-map (kbd "x") 'kill-region)
-  (define-key fw-key-map (kbd "c") 'kill-ring-save)
-  (define-key fw-key-map (kbd "v") 'yank))
+  (define-key fw-key-map (kbd "q") 'save-buffers-kill-terminal))
 
 (if fw/is-linux
     (global-set-key (kbd "<menu>") 'fw-key-map))
 
 (if fw/is-windows
     (global-set-key (kbd "<apps>") 'fw-key-map))
+
+(global-set-key (kbd "<home>") 'fw-key-map)
 #+END_SRC
 
 ~C-x C-s~ and ~C-c~ belong to a set of keybindings for which the bound function
@@ -643,13 +641,16 @@ keys:
 #+BEGIN_SRC emacs-lisp
 (if fw/is-linux
     (progn
-      (define-key key-translation-map (kbd "<menu> w") (kbd "C-x C-s"))
-      (define-key key-translation-map (kbd "<menu> y") (kbd "C-c"))))
+      (define-key key-translation-map (kbd "<menu> b w") (kbd "C-x C-s"))
+      (define-key key-translation-map (kbd "<menu> c") (kbd "C-c"))))
 
 (if fw/is-windows
     (progn
-      (define-key key-translation-map (kbd "<apps> w") (kbd "C-x C-s"))
-      (define-key key-translation-map (kbd "<apps> y") (kbd "C-c"))))
+      (define-key key-translation-map (kbd "<apps> b w") (kbd "C-x C-s"))
+      (define-key key-translation-map (kbd "<apps> c") (kbd "C-c"))))
+
+(define-key key-translation-map (kbd "<home> b w") (kbd "C-x C-s"))
+(define-key key-translation-map (kbd "<home> c") (kbd "C-c"))
 #+END_SRC
 
 * Custom
