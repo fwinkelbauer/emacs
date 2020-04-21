@@ -64,12 +64,6 @@ Make scrolling a little bit smoother:
 (setq mouse-wheel-progressive-speed nil)
 #+END_SRC
 
-The ~undo~ command should be more accessible:
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-z") 'undo)
-#+END_SRC
-
 Define a function to open the current/root directory in an external file
 explorer:
 
@@ -90,12 +84,6 @@ explorer:
   "Opens Windows explorer at `vc-root-dir' or `default-directory'."
   (interactive)
   (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (fw/default-or-root-dir))))
-
-(if fw/is-linux
-    (global-set-key (kbd "<f9>") 'fw/linux-thunar))
-
-(if fw/is-windows
-    (global-set-key (kbd "<f9>") 'fw/windows-explorer))
 #+END_SRC
 
 I'd like to open a shell buffer in either the current directory, or in the root
@@ -109,8 +97,6 @@ directory of a project in version control:
   (let ((default-directory (fw/default-or-root-dir))
         (shell-buffer-name (concat "*shell (" default-directory ")*")))
     (shell shell-buffer-name)))
-
-(global-set-key (kbd "S-<f9>") 'fw/shell)
 #+END_SRC
 
 * Server
@@ -366,8 +352,6 @@ Basic agenda configuration with a custom agenda view:
   (if (boundp 'fw/default-inbox)
       (find-file fw/default-inbox))
   (org-agenda nil "."))
-
-(global-set-key (kbd "<f12>") 'fw/org-agenda)
 #+END_SRC
 
 I don't want to see repeating TODOs in my calendar. The variable name to change
@@ -446,8 +430,6 @@ with just some minor adjustments:
   (neotree-dir (fw/default-or-root-dir)))
 
 (setq neo-autorefresh nil)
-(global-set-key (kbd "<f8>") 'neotree-toggle)
-(global-set-key (kbd "S-<f8>") 'fw/neotree-dir)
 #+END_SRC
 
 ** Magit
@@ -455,8 +437,6 @@ with just some minor adjustments:
 #+BEGIN_SRC emacs-lisp
 (setq git-commit-summary-max-length 50
       git-commit-fill-column 72)
-
-(global-set-key (kbd "<f10>") 'magit-status)
 #+END_SRC
 
 [[https://github.com/howardabrams/dot-files/blob/master/emacs.org][Howard Abrams]] wrote a nice snippet which lets ~magit-status~ open in fullscreen:
@@ -475,10 +455,6 @@ I'd like to spellcheck my commit messages:
 #+END_SRC
 
 ** Elfeed
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<f11>") 'elfeed)
-#+END_SRC
 
 Let's extend elfeed's UI so that I can use ~youtube-dl~ to download RSS video
 feeds. This snippet is based on code I found [[https://github.com/skeeto/.emacs.d/blob/master/etc/feed-setup.el][here]] and [[https://codingquark.com/emacs/2019/05/16/emacs-elfeed-youtube.html][here]]:
@@ -520,13 +496,11 @@ which are based on ~ivy-thing-at-point~. I'd like to use ~counsel-rg~ through
 #+BEGIN_SRC emacs-lisp
 (defun fw/counsel-rg-thing-at-point ()
   "`counsel-rg' with `ivy-thing-at-point'."
+  (interactive)
   (let ((thing (ivy-thing-at-point)))
     (when (use-region-p)
       (deactivate-mark))
-    (counsel-rg thing)))
-
-(global-set-key (kbd "M-s _") 'fw/counsel-rg-thing-at-point)
-(global-set-key (kbd "M-s .") 'swiper-isearch-thing-at-point)
+    (counsel-rg (regexp-quote thing))))
 #+END_SRC
 
 ** Company
@@ -601,6 +575,22 @@ Do not show method names in the modeline:
 The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app_keys.html][xah's blog post]]:
 
 #+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-z") 'undo)
+
+(global-set-key (kbd "<f8>") 'neotree-toggle)
+(global-set-key (kbd "S-<f8>") 'fw/neotree-dir)
+
+(if fw/is-linux
+    (global-set-key (kbd "<f9>") 'fw/linux-thunar))
+
+(if fw/is-windows
+    (global-set-key (kbd "<f9>") 'fw/windows-explorer))
+
+(global-set-key (kbd "S-<f9>") 'fw/shell)
+(global-set-key (kbd "<f10>") 'magit-status)
+(global-set-key (kbd "<f11>") 'elfeed)
+(global-set-key (kbd "<f12>") 'fw/org-agenda)
+
 (progn
   (define-prefix-command 'fw-key-map)
 
@@ -613,19 +603,18 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
 
   ;; buffer management
   (define-key fw-key-map (kbd "f") 'counsel-find-file)
+  (define-key fw-key-map (kbd "M-f") 'counsel-git)
   (define-key fw-key-map (kbd "k") 'kill-this-buffer)
-  (define-key fw-key-map (kbd "b") 'ivy-switch-buffer)
+  (define-key fw-key-map (kbd "b") 'counsel-switch-buffer)
   (define-key fw-key-map (kbd "h") 'mark-whole-buffer)
-  (define-key fw-key-map (kbd "x k") 'fw/kill-this-buffer)
-
-  ;; applications
-  (define-key fw-key-map (kbd "x g") 'magit-status)
-  (define-key fw-key-map (kbd "x b") 'ibuffer)
+  (define-key fw-key-map (kbd "M-k") 'fw/kill-this-buffer)
+  (define-key fw-key-map (kbd "i") 'ibuffer)
 
   ;; navigation
   (define-key fw-key-map (kbd "s") 'swiper)
-  (define-key fw-key-map (kbd "x s") 'counsel-rg)
-  (define-key fw-key-map (kbd "x f") 'counsel-git)
+  (define-key fw-key-map (kbd "M-s") 'counsel-rg)
+  (define-key fw-key-map (kbd ".") 'swiper-isearch-thing-at-point)
+  (define-key fw-key-map (kbd "M-.") 'fw/counsel-rg-thing-at-point)
 
   ;; other
   (define-key fw-key-map (kbd "<return>") 'counsel-M-x)
