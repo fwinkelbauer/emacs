@@ -277,7 +277,8 @@ General org configuration:
 #+BEGIN_SRC emacs-lisp
 (require 'org)
 (setq org-catch-invisible-edits 'smart
-      org-log-into-drawer t)
+      org-log-into-drawer t
+      org-return-follows-link t)
 #+END_SRC
 
 Improve org's source code blocks:
