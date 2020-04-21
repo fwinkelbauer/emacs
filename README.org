@@ -622,7 +622,12 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
   (define-key fw-key-map (kbd "+") 'text-scale-increase)
   (define-key fw-key-map (kbd "-") 'text-scale-decrease)
   (define-key fw-key-map (kbd "g") 'keyboard-escape-quit)
-  (define-key fw-key-map (kbd "q") 'save-buffers-kill-terminal))
+  (define-key fw-key-map (kbd "q") 'save-buffers-kill-terminal)
+
+  ;; copy/paste/cut
+  (define-key fw-key-map (kbd "x") 'kill-region)
+  (define-key fw-key-map (kbd "c") 'kill-ring-save)
+  (define-key fw-key-map (kbd "v") 'yank))
 
 (if fw/is-linux
     (global-set-key (kbd "<menu>") 'fw-key-map))
@@ -639,12 +644,12 @@ keys:
 (if fw/is-linux
     (progn
       (define-key key-translation-map (kbd "<menu> w") (kbd "C-x C-s"))
-      (define-key key-translation-map (kbd "<menu> c") (kbd "C-c"))))
+      (define-key key-translation-map (kbd "<menu> y") (kbd "C-c"))))
 
 (if fw/is-windows
     (progn
       (define-key key-translation-map (kbd "<apps> w") (kbd "C-x C-s"))
-      (define-key key-translation-map (kbd "<apps> c") (kbd "C-c"))))
+      (define-key key-translation-map (kbd "<apps> y") (kbd "C-c"))))
 #+END_SRC
 
 * Custom
