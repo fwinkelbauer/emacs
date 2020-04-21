@@ -620,12 +620,10 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
 
   ;; applications
   (define-key fw-key-map (kbd "x g") 'magit-status)
-  (define-key fw-key-map (kbd "x w") 'elfeed)
   (define-key fw-key-map (kbd "x b") 'ibuffer)
 
   ;; navigation
   (define-key fw-key-map (kbd "s") 'swiper)
-  (define-key fw-key-map (kbd "r") 'swiper-backward)
   (define-key fw-key-map (kbd "x s") 'counsel-rg)
   (define-key fw-key-map (kbd "x f") 'counsel-git)
 
