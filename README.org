@@ -591,39 +591,35 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
 (global-set-key (kbd "<f11>") 'elfeed)
 (global-set-key (kbd "<f12>") 'fw/org-agenda)
 
-(progn
-  (define-prefix-command 'fw-key-map)
+(define-prefix-command 'fw-key-map)
 
-  ;; window management
-  (define-key fw-key-map (kbd "w d d") 'delete-window)
-  (define-key fw-key-map (kbd "w d o") 'delete-other-windows)
-  (define-key fw-key-map (kbd "w s v") 'fw/vsplit-last-buffer)
-  (define-key fw-key-map (kbd "w s h") 'fw/hsplit-last-buffer)
-  (define-key fw-key-map (kbd "w o") 'other-window)
-  (define-key fw-key-map (kbd "w k") 'fw/kill-this-buffer)
+;; window management
+(define-key fw-key-map (kbd "w d w") 'delete-window)
+(define-key fw-key-map (kbd "w d o") 'delete-other-windows)
+(define-key fw-key-map (kbd "w s v") 'fw/vsplit-last-buffer)
+(define-key fw-key-map (kbd "w s h") 'fw/hsplit-last-buffer)
+(define-key fw-key-map (kbd "w o") 'other-window)
+(define-key fw-key-map (kbd "w k") 'fw/kill-this-buffer)
 
-  ;; buffer management/navigation
-  (define-key fw-key-map (kbd "b f") 'counsel-find-file)
-  (define-key fw-key-map (kbd "b g") 'counsel-git)
-  (define-key fw-key-map (kbd "b k") 'kill-this-buffer)
-  (define-key fw-key-map (kbd "b b") 'counsel-switch-buffer)
-  (define-key fw-key-map (kbd "b h") 'mark-whole-buffer)
-  (define-key fw-key-map (kbd "b i") 'ibuffer)
-  (define-key fw-key-map (kbd "b s") 'swiper)
-  (define-key fw-key-map (kbd "b r") 'counsel-rg)
-  (define-key fw-key-map (kbd "b . s") 'swiper-isearch-thing-at-point)
-  (define-key fw-key-map (kbd "b . r") 'fw/counsel-rg-thing-at-point)
-  (define-key fw-key-map (kbd "b x") 'kill-region)
-  (define-key fw-key-map (kbd "b c") 'kill-ring-save)
-  (define-key fw-key-map (kbd "b v") 'yank)
+;; buffer management/navigation
+(define-key fw-key-map (kbd "b f") 'counsel-find-file)
+(define-key fw-key-map (kbd "b g") 'counsel-git)
+(define-key fw-key-map (kbd "b k") 'kill-this-buffer)
+(define-key fw-key-map (kbd "b b") 'counsel-switch-buffer)
+(define-key fw-key-map (kbd "b h") 'mark-whole-buffer)
+(define-key fw-key-map (kbd "b i") 'ibuffer)
+(define-key fw-key-map (kbd "b s") 'swiper)
+(define-key fw-key-map (kbd "b r") 'counsel-rg)
+(define-key fw-key-map (kbd ". s") 'swiper-isearch-thing-at-point)
+(define-key fw-key-map (kbd ". r") 'fw/counsel-rg-thing-at-point)
 
-  ;; other
-  (define-key fw-key-map (kbd "<return>") 'counsel-M-x)
-  (define-key fw-key-map (kbd "SPC") 'company-complete)
-  (define-key fw-key-map (kbd "+") 'text-scale-increase)
-  (define-key fw-key-map (kbd "-") 'text-scale-decrease)
-  (define-key fw-key-map (kbd "g") 'keyboard-escape-quit)
-  (define-key fw-key-map (kbd "q") 'save-buffers-kill-terminal))
+;; other
+(define-key fw-key-map (kbd "<return>") 'counsel-M-x)
+(define-key fw-key-map (kbd "SPC") 'company-complete)
+(define-key fw-key-map (kbd "+") 'text-scale-increase)
+(define-key fw-key-map (kbd "-") 'text-scale-decrease)
+(define-key fw-key-map (kbd "g") 'keyboard-escape-quit)
+(define-key fw-key-map (kbd "q") 'save-buffers-kill-terminal)
 
 (if fw/is-linux
     (global-set-key (kbd "<menu>") 'fw-key-map))
