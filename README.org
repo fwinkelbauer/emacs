@@ -593,31 +593,79 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
 
 (define-prefix-command 'fw-key-map)
 
-;; window management
-(define-key fw-key-map (kbd "w d w") 'delete-window)
-(define-key fw-key-map (kbd "w d o") 'delete-other-windows)
-(define-key fw-key-map (kbd "w s v") 'fw/vsplit-last-buffer)
-(define-key fw-key-map (kbd "w s h") 'fw/hsplit-last-buffer)
-(define-key fw-key-map (kbd "w o") 'other-window)
-(define-key fw-key-map (kbd "w k") 'fw/kill-this-buffer)
+(defhydra fw/hydra-window (:exit t)
+  "Window"
+  ("0" delete-window "Delete this window")
+  ("1" delete-other-windows "Delete other windows")
+  ("2" fw/hsplit-last-buffer "Split right")
+  ("3" fw/vsplit-last-buffer "Split below")
+  ("o" other-window "Go to other window")
+  ("k" fw/kill-this-buffer "Kill this window")
+  ("q" nil "Quit"))
 
-;; buffer management/navigation
-(define-key fw-key-map (kbd "b f") 'counsel-find-file)
-(define-key fw-key-map (kbd "b g") 'counsel-git)
-(define-key fw-key-map (kbd "b k") 'kill-this-buffer)
-(define-key fw-key-map (kbd "b b") 'counsel-switch-buffer)
-(define-key fw-key-map (kbd "b h") 'mark-whole-buffer)
-(define-key fw-key-map (kbd "b i") 'ibuffer)
-(define-key fw-key-map (kbd "b s") 'swiper)
-(define-key fw-key-map (kbd "b r") 'counsel-rg)
-(define-key fw-key-map (kbd ". s") 'swiper-isearch-thing-at-point)
-(define-key fw-key-map (kbd ". r") 'fw/counsel-rg-thing-at-point)
+(define-key fw-key-map (kbd "w") 'fw/hydra-window/body)
 
-;; other
+(defhydra fw/hydra-buffer (:exit t)
+  "Buffer"
+  ("f" counsel-find-file "Find file")
+  ("g" counsel-git "Find file in git")
+  ("k" kill-this-buffer "Kill this buffer")
+  ("b" counsel-switch-buffer "Switch buffer")
+  ("i" ibuffer "Open ibuffer")
+  ("h" mark-whole-buffer "Mark all")
+  ("s" save-buffer "Save buffer")
+  ("q" nil "Quit"))
+
+(define-key fw-key-map (kbd "x") 'fw/hydra-buffer/body)
+
+(defhydra fw/hydra-search (:exit t)
+  "Search"
+  ("x" swiper "Buffer")
+  ("d" counsel-rg "Directory")
+  ("q" nil "Quit"))
+
+(define-key fw-key-map (kbd "s") 'fw/hydra-search/body)
+
+(defhydra fw/hydra-point (:exit t)
+  "Point"
+  ("sx" swiper-isearch-thing-at-point "Search buffer")
+  ("sd" fw/counsel-rg-thing-at-point "Search directory")
+  ("q" nil "Quit"))
+
+(define-key fw-key-map (kbd ".") 'fw/hydra-point/body)
+
+(defhydra fw/hydra-zoom ()
+  "Zoom"
+  ("a" text-scale-increase "+")
+  ("-" text-scale-decrease "-")
+  ("0" (text-scale-adjust 0) "Reset" :exit t)
+  ("q" nil "Quit"))
+
+(define-key fw-key-map (kbd "z") 'fw/hydra-zoom/body)
+
+(defhydra fw/hydra-navigate ()
+  "Select"
+  ("w" previous-line "up")
+  ("a" left-char "left")
+  ("M-a" move-beginning-of-line "beginning of line")
+  ("s" next-line "down")
+  ("d" right-char "right")
+  ("M-d" move-end-of-line "end of line")
+  ("h" mark-whole-buffer "mark all")
+  ("e" scroll-down-command "up")
+  ("r" scroll-up-command "down")
+  ("SPC" set-mark-command "mark")
+  ("x" exchange-point-and-mark "exchange")
+  ("g" keyboard-quit "quit")
+  ("c" kill-ring-save "copy")
+  ("x" kill-region "cut")
+  ("v" yank "paste" :exit t)
+  ("q" nil "exit"))
+
+(define-key fw-key-map (kbd "n") 'fw/hydra-navigate/body)
+
 (define-key fw-key-map (kbd "<return>") 'counsel-M-x)
 (define-key fw-key-map (kbd "SPC") 'company-complete)
-(define-key fw-key-map (kbd "+") 'text-scale-increase)
-(define-key fw-key-map (kbd "-") 'text-scale-decrease)
 (define-key fw-key-map (kbd "g") 'keyboard-escape-quit)
 (define-key fw-key-map (kbd "q") 'save-buffers-kill-terminal)
 
@@ -630,22 +678,16 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
 (global-set-key (kbd "<home>") 'fw-key-map)
 #+END_SRC
 
-~C-x C-s~ and ~C-c~ belong to a set of keybindings for which the bound function
-can change depending on the context. We'll use a trick to bind them to other
-keys:
+The function bount to ~C-c~ changes depending on the context. We'll use a trick
+to bind it to other keys:
 
 #+BEGIN_SRC emacs-lisp
 (if fw/is-linux
-    (progn
-      (define-key key-translation-map (kbd "<menu> b w") (kbd "C-x C-s"))
-      (define-key key-translation-map (kbd "<menu> c") (kbd "C-c"))))
+    (define-key key-translation-map (kbd "<menu> c") (kbd "C-c")))
 
 (if fw/is-windows
-    (progn
-      (define-key key-translation-map (kbd "<apps> b w") (kbd "C-x C-s"))
-      (define-key key-translation-map (kbd "<apps> c") (kbd "C-c"))))
+    (define-key key-translation-map (kbd "<apps> c") (kbd "C-c")))
 
-(define-key key-translation-map (kbd "<home> b w") (kbd "C-x C-s"))
 (define-key key-translation-map (kbd "<home> c") (kbd "C-c"))
 #+END_SRC
 
