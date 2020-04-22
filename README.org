@@ -234,17 +234,15 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
   "Split the selected window into two vertical windows."
   (interactive)
   (split-window-vertically)
-  (other-window 1 nil)
-  (switch-to-next-buffer)
-  (other-window 1 nil))
+  (other-window 1)
+  (switch-to-next-buffer))
 
 (defun fw/hsplit-last-buffer ()
   "Split the selected window into two horizontal windows."
   (interactive)
   (split-window-horizontally)
-  (other-window 1 nil)
-  (switch-to-next-buffer)
-  (other-window 1 nil))
+  (other-window 1)
+  (switch-to-next-buffer))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -593,7 +591,7 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
 
 (define-prefix-command 'fw-key-map)
 
-(defhydra fw/hydra-window (:exit t)
+(defhydra fw/hydra-window (:color teal)
   "Window"
   ("0" delete-window "Delete this window")
   ("1" delete-other-windows "Delete other windows")
@@ -605,7 +603,7 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
 
 (define-key fw-key-map (kbd "w") 'fw/hydra-window/body)
 
-(defhydra fw/hydra-buffer (:exit t)
+(defhydra fw/hydra-buffer (:color teal)
   "Buffer"
   ("f" counsel-find-file "Find file")
   ("g" counsel-git "Find file in git")
@@ -614,11 +612,12 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
   ("i" ibuffer "Open ibuffer")
   ("h" mark-whole-buffer "Mark all")
   ("s" save-buffer "Save buffer")
+  ("c" save-buffers-kill-terminal "Close Emacs")
   ("q" nil "Quit"))
 
 (define-key fw-key-map (kbd "x") 'fw/hydra-buffer/body)
 
-(defhydra fw/hydra-search (:exit t)
+(defhydra fw/hydra-search (:color teal)
   "Search"
   ("x" swiper "Buffer")
   ("d" counsel-rg "Directory")
@@ -626,19 +625,20 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
 
 (define-key fw-key-map (kbd "s") 'fw/hydra-search/body)
 
-(defhydra fw/hydra-point (:exit t)
+(defhydra fw/hydra-point (:color teal)
   "Point"
-  ("sx" swiper-isearch-thing-at-point "Search buffer")
-  ("sd" fw/counsel-rg-thing-at-point "Search directory")
+  ("s x" swiper-isearch-thing-at-point "Search buffer")
+  ("s d" fw/counsel-rg-thing-at-point "Search directory")
+  ("h" highlight-symbol-at-point "Highlight")
   ("q" nil "Quit"))
 
 (define-key fw-key-map (kbd ".") 'fw/hydra-point/body)
 
-(defhydra fw/hydra-zoom ()
+(defhydra fw/hydra-zoom (:color amaranth)
   "Zoom"
-  ("a" text-scale-increase "+")
+  ("+" text-scale-increase "+")
   ("-" text-scale-decrease "-")
-  ("0" (text-scale-adjust 0) "Reset" :exit t)
+  ("0" (text-scale-adjust 0) "Reset" :color blue)
   ("q" nil "Quit"))
 
 (define-key fw-key-map (kbd "z") 'fw/hydra-zoom/body)
@@ -659,7 +659,7 @@ The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app
   ("g" keyboard-quit "quit")
   ("c" kill-ring-save "copy")
   ("x" kill-region "cut")
-  ("v" yank "paste" :exit t)
+  ("v" yank "paste" :color blue)
   ("q" nil "exit"))
 
 (define-key fw-key-map (kbd "n") 'fw/hydra-navigate/body)
