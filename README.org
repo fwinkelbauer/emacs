@@ -440,16 +440,8 @@ with just some minor adjustments:
 
 #+BEGIN_SRC emacs-lisp
 (setq git-commit-summary-max-length 50
-      git-commit-fill-column 72)
-#+END_SRC
-
-[[https://github.com/howardabrams/dot-files/blob/master/emacs.org][Howard Abrams]] wrote a nice snippet which lets ~magit-status~ open in fullscreen:
-
-#+BEGIN_SRC emacs-lisp
-(defadvice magit-status (around magit-fullscreen activate)
-  (window-configuration-to-register :magit-fullscreen)
-  ad-do-it
-  (delete-other-windows))
+      git-commit-fill-column 72
+      magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
 #+END_SRC
 
 I'd like to spellcheck my commit messages:
