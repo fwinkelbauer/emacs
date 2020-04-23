@@ -86,9 +86,9 @@ manager:
 (defun fw/native-file-manager ()
   "Opens the OS native file manager at `vc-root-dir' or `default-directory'."
   (interactive)
-  (if fw/is-linux
+  (when fw/is-linux
       (fw/linux-thunar))
-  (if fw/is-windows
+  (when fw/is-windows
       (fw/windows-explorer)))
 #+END_SRC
 
@@ -111,7 +111,7 @@ Start Emacs in server mode:
 
 #+BEGIN_SRC emacs-lisp
 (require 'server)
-(if (not (server-running-p)) (server-start))
+(unless (server-running-p) (server-start))
 #+END_SRC
 
 * Text
@@ -256,7 +256,7 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
   "Kills this buffer and removes this window when split."
   (interactive)
   (kill-this-buffer)
-  (if (> (length (window-list)) 1)
+  (when (> (length (window-list)) 1)
       (delete-window)))
 #+END_SRC
 
@@ -289,8 +289,9 @@ changes the date format in ~%%(diary.anniversary ...)~:
 (setq calendar-week-start-day 1
       calendar-day-name-array ["Sonntag" "Montag" "Dienstag" "Mittwoch"
                                "Donnerstag" "Freitag" "Samstag"]
-      calendar-month-name-array ["Jänner" "Februar" "März" "April" "Mai"
-                                 "Juni" "Juli" "August" "September" "Oktober" "November" "Dezember"])
+      calendar-month-name-array ["Jänner" "Februar" "März" "April"
+                                 "Mai" "Juni" "Juli" "August" "September"
+                                 "Oktober" "November" "Dezember"])
 
 (setq parse-time-months '(("jän" . 1) ("feb" . 2) ("mär" . 3)
                           ("apr" . 4) ("mai" . 5) ("jun" . 6)
@@ -313,24 +314,23 @@ changes the date format in ~%%(diary.anniversary ...)~:
 I've found this snippet of Austrian holidays in [[https://github.com/novoid/dot-emacs/blob/master/config.org][Karl Void's configuration]]:
 
 #+BEGIN_SRC emacs-lisp
-(setq holiday-austria-holidays '((holiday-fixed  1  1 "Neujahr (frei)")
-                                 (holiday-fixed  1  6 "Heilige Drei Könige (frei)")
-                                 (holiday-easter-etc 1 "Ostermontag (frei)")
-                                 (holiday-easter-etc -46 "Aschermittwoch")
-                                 (holiday-easter-etc -2 "Karfreitag")
-                                 (holiday-fixed  5  1 "Österreichischer Staatsfeiertag (frei)")
-                                 (holiday-easter-etc 39 "Christi Himmelfahrt (frei)")
-                                 (holiday-easter-etc 50 "Pfingstmontag (frei)")
-                                 (holiday-easter-etc 60 "Fronleichnam (frei)")
-                                 (holiday-fixed  8 15 "Mariä Himmelfahrt (frei)")
-                                 (holiday-fixed 10 26 "Nationalfeiertag (frei)")
-                                 (holiday-fixed 11  1 "Allerheiligen (frei)")
-                                 (holiday-fixed 12  8 "Maria Empfängnis (frei)")
-                                 (holiday-fixed 12 24 "Heiliger Abend")
-                                 (holiday-fixed 12 25 "Erster Weihnachtstag (frei)")
-                                 (holiday-fixed 12 26 "Zweiter Weihnachtstag (frei)")))
+(setq holiday-local-holidays '((holiday-fixed  1  1 "Neujahr (frei)")
+                               (holiday-fixed  1  6 "Heilige Drei Könige (frei)")
+                               (holiday-easter-etc 1 "Ostermontag (frei)")
+                               (holiday-easter-etc -46 "Aschermittwoch")
+                               (holiday-easter-etc -2 "Karfreitag")
+                               (holiday-fixed  5  1 "Österreichischer Staatsfeiertag (frei)")
+                               (holiday-easter-etc 39 "Christi Himmelfahrt (frei)")
+                               (holiday-easter-etc 50 "Pfingstmontag (frei)")
+                               (holiday-easter-etc 60 "Fronleichnam (frei)")
+                               (holiday-fixed  8 15 "Mariä Himmelfahrt (frei)")
+                               (holiday-fixed 10 26 "Nationalfeiertag (frei)")
+                               (holiday-fixed 11  1 "Allerheiligen (frei)")
+                               (holiday-fixed 12  8 "Maria Empfängnis (frei)")
+                               (holiday-fixed 12 24 "Heiliger Abend")
+                               (holiday-fixed 12 25 "Erster Weihnachtstag (frei)")
+                               (holiday-fixed 12 26 "Zweiter Weihnachtstag (frei)")))
 
-(setq holiday-local-holidays holiday-austria-holidays)
 (setq calendar-holidays (append holiday-local-holidays holiday-other-holidays))
 #+END_SRC
 
@@ -350,10 +350,10 @@ Basic agenda configuration with a custom agenda view:
                  (org-agenda-todo-ignore-scheduled 'all)))))))
 
 (defun fw/org-agenda ()
-  "Show custom agenda."
+  "Show my custom org-agenda."
   (interactive)
   (delete-other-windows)
-  (if (boundp 'fw/default-inbox)
+  (when (boundp 'fw/default-inbox)
       (find-file fw/default-inbox))
   (org-agenda nil "."))
 #+END_SRC
@@ -540,7 +540,7 @@ Do not show method names in the modeline:
 (add-to-list 'auto-mode-alist '("\\.psm1\\'" . powershell-mode))
 (add-to-list 'auto-mode-alist '("\\.psd1\\'" . powershell-mode))
 
-(if fw/is-windows
+(when fw/is-windows
     (defun fw/ps-pretty-print-buffer ()
       "Pretty prints the current PowerShell buffer. This function needs the PowerShell module PSScriptAnalyzer."
       (interactive)
@@ -583,7 +583,7 @@ In ~prog-mode~ I'd like to switch between ~back-to-indentation~ and
   (interactive)
   (let ((current-point (point)))
     (back-to-indentation)
-    (if (eq current-point (point))
+    (when (eq current-point (point))
         (move-beginning-of-line nil))))
 #+END_SRC
 
