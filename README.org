@@ -661,10 +661,11 @@ _S_ Search directory  _u_ Unhighlight"
   "
 _x_ Buffer  _s_ Search buffer     _<return>_ Execute  _q_ Quit
 _w_ Window  _S_ Search directory  _g_ Abort action
-_._ Point"
+_._ Point   _a_ Avy"
   ("x" fw/hydra-buffer/body)
   ("w" fw/hydra-window/body)
   ("." fw/hydra-point/body)
+  ("a" avy-goto-char-timer)
   ("s" swiper)
   ("S" counsel-rg)
   ("<return>" counsel-M-x)
