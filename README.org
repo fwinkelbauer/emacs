@@ -566,12 +566,6 @@ Do not show method names in the modeline:
 (setq js-indent-level 2)
 #+END_SRC
 
-** Whole Line or Region
-
-#+BEGIN_SRC emacs-lisp
-(whole-line-or-region-global-mode)
-#+END_SRC
-
 * Keybindings
 
 In ~prog-mode~ I'd like to switch between ~back-to-indentation~ and
@@ -660,16 +654,15 @@ _S_ Search directory  _u_ Unhighlight"
                          :color teal)
   "
 _x_ Buffer  _s_ Search buffer     _<return>_ Execute  _q_ Quit
-_w_ Window  _S_ Search directory  _g_ Abort action
-_._ Point   _a_ Avy"
+_w_ Window  _S_ Search directory
+_._ Point   _g_ Avy goto"
   ("x" fw/hydra-buffer/body)
   ("w" fw/hydra-window/body)
   ("." fw/hydra-point/body)
-  ("a" avy-goto-char-timer)
   ("s" swiper)
   ("S" counsel-rg)
+  ("g" avy-goto-char-timer)
   ("<return>" counsel-M-x)
-  ("g" keyboard-escape-quit)
   ("q" nil))
 
 (global-set-key (kbd "<menu>") 'fw/hydra-main/body)
