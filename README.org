@@ -574,6 +574,12 @@ Do not show method names in the modeline:
 (setq js-indent-level 2)
 #+END_SRC
 
+** Whole Line or Region
+
+#+BEGIN_SRC emacs-lisp
+(whole-line-or-region-global-mode)
+#+END_SRC
+
 * Keybindings
 
 In ~prog-mode~ I'd like to switch between ~back-to-indentation~ and
