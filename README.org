@@ -65,7 +65,7 @@ Make scrolling a little bit smoother:
 #+END_SRC
 
 Define a function to open the current/root directory in an external file
-explorer:
+manager:
 
 #+BEGIN_SRC emacs-lisp
 (defun fw/default-or-root-dir ()
@@ -77,13 +77,19 @@ explorer:
 
 (defun fw/linux-thunar ()
   "Opens thunar (Linux XFCE) at `vc-root-dir' or `default-directory'."
-  (interactive)
   (start-process "thunar" nil "thunar" (fw/default-or-root-dir)))
 
 (defun fw/windows-explorer ()
   "Opens Windows explorer at `vc-root-dir' or `default-directory'."
-  (interactive)
   (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (fw/default-or-root-dir))))
+
+(defun fw/native-file-manager ()
+  "Opens the OS native file manager at `vc-root-dir' or `default-directory'."
+  (interactive)
+  (if fw/is-linux
+      (fw/linux-thunar))
+  (if fw/is-windows
+      (fw/windows-explorer)))
 #+END_SRC
 
 I'd like to open a shell buffer in either the current directory, or in the root
@@ -568,134 +574,119 @@ Do not show method names in the modeline:
 (setq js-indent-level 2)
 #+END_SRC
 
-* My Keymap
+* Keybindings
 
-The idea for this keymap is based on [[http://ergoemacs.org/emacs/emacs_menu_app_keys.html][xah's blog post]]:
+In ~prog-mode~ I'd like to switch between ~back-to-indentation~ and
+~move-beginning-of-line~:
 
 #+BEGIN_SRC emacs-lisp
+(defun fw/back-to-indentation-or-move-beginning-of-line ()
+  "Switches between `back-to-indentation' and `move-beginning-of-line'"
+  (interactive)
+  (let ((current-point (point)))
+    (back-to-indentation)
+    (if (eq current-point (point))
+        (move-beginning-of-line nil))))
+#+END_SRC
+
+Change keybindings and add new keybindings:
+
+#+BEGIN_SRC emacs-lisp
+(defhydra fw/hydra-window (:hint nil
+                           :color teal)
+  "
+_0_ Delete this window    _o_ Go to other window  _q_ Quit
+_1_ Delete other windows  _k_ Kill this window
+_2_ Split right
+_3_ Split below"
+  ("0" delete-window)
+  ("1" delete-other-windows)
+  ("2" fw/hsplit-last-buffer)
+  ("3" fw/vsplit-last-buffer)
+  ("o" other-window)
+  ("k" fw/kill-this-buffer)
+  ("q" nil))
+
+(defhydra fw/hydra-rectangle (:hint nil
+                              :color pink
+                              :body-pre (rectangle-mark-mode 1)
+                              :post (deactivate-mark))
+  "
+_i_ Rectangle insert  _q_ Quit
+_d_ Rectangle delete"
+  ("i" string-rectangle :color blue)
+  ("d" delete-rectangle :color blue)
+  ("q" nil))
+
+(defhydra fw/hydra-zoom (:hint nil
+                         :color amaranth)
+  "
+_+_ Increase  _0_ Reset  _q_ Quit
+_-_ Decrease"
+  ("+" text-scale-increase)
+  ("-" text-scale-decrease)
+  ("0" (text-scale-adjust 0))
+  ("q" nil))
+
+(defhydra fw/hydra-buffer (:hint nil
+                           :color teal)
+  "
+_f_ Find file         _s_ Save buffer       _r_ Rectangle  _q_ Quit
+_F_ Find file in git  _k_ Kill this buffer  _z_ Zoom
+^ ^                   _b_ Switch buffer
+^ ^                   _i_ Open ibuffer
+^ ^                   _h_ Mark all"
+  ("f" counsel-find-file)
+  ("F" counsel-git)
+  ("k" kill-this-buffer)
+  ("b" counsel-switch-buffer)
+  ("i" ibuffer)
+  ("h" mark-whole-buffer)
+  ("s" (funcall (key-binding (kbd "C-x C-s"))))
+  ("r" fw/hydra-rectangle/body)
+  ("z" fw/hydra-zoom/body)
+  ("q" nil))
+
+(defhydra fw/hydra-point (:hint nil
+                          :color teal)
+  "
+_s_ Search buffer     _h_ Highlight    _q_ Quit
+_S_ Search directory  _u_ Unhighlight"
+  ("s" swiper-isearch-thing-at-point)
+  ("S" fw/counsel-rg-thing-at-point)
+  ("h" highlight-symbol-at-point)
+  ("u" unhighlight-regexp)
+  ("q" nil))
+
+(defhydra fw/hydra-main (:hint nil
+                         :color teal)
+  "
+_x_ Buffer  _s_ Search buffer     _<return>_ Execute  _q_ Quit
+_w_ Window  _S_ Search directory  _g_ Abort action
+_._ Point"
+  ("x" fw/hydra-buffer/body)
+  ("w" fw/hydra-window/body)
+  ("." fw/hydra-point/body)
+  ("s" swiper)
+  ("S" counsel-rg)
+  ("<return>" counsel-M-x)
+  ("g" keyboard-escape-quit)
+  ("q" nil))
+
+(global-set-key (kbd "<menu>") 'fw/hydra-main/body)
+(global-set-key (kbd "<apps>") 'fw/hydra-main/body)
+
+(define-key prog-mode-map (kbd "C-a") 'fw/back-to-indentation-or-move-beginning-of-line)
+
 (global-set-key (kbd "C-z") 'undo)
 
 (global-set-key (kbd "<f8>") 'neotree-toggle)
 (global-set-key (kbd "S-<f8>") 'fw/neotree-dir)
-
-(if fw/is-linux
-    (global-set-key (kbd "<f9>") 'fw/linux-thunar))
-
-(if fw/is-windows
-    (global-set-key (kbd "<f9>") 'fw/windows-explorer))
-
+(global-set-key (kbd "<f9>") 'fw/native-file-manager)
 (global-set-key (kbd "S-<f9>") 'fw/shell)
 (global-set-key (kbd "<f10>") 'magit-status)
 (global-set-key (kbd "<f11>") 'elfeed)
 (global-set-key (kbd "<f12>") 'fw/org-agenda)
-
-(define-prefix-command 'fw-key-map)
-
-(defhydra fw/hydra-window (:color teal)
-  "Window"
-  ("0" delete-window "Delete this window")
-  ("1" delete-other-windows "Delete other windows")
-  ("2" fw/hsplit-last-buffer "Split right")
-  ("3" fw/vsplit-last-buffer "Split below")
-  ("o" other-window "Go to other window")
-  ("k" fw/kill-this-buffer "Kill this window")
-  ("q" nil "Quit"))
-
-(define-key fw-key-map (kbd "w") 'fw/hydra-window/body)
-
-(defhydra fw/hydra-buffer (:color teal)
-  "Buffer"
-  ("f" counsel-find-file "Find file")
-  ("g" counsel-git "Find file in git")
-  ("k" kill-this-buffer "Kill this buffer")
-  ("b" counsel-switch-buffer "Switch buffer")
-  ("i" ibuffer "Open ibuffer")
-  ("h" mark-whole-buffer "Mark all")
-  ("s" save-buffer "Save buffer")
-  ("c" save-buffers-kill-terminal "Close Emacs")
-  ("q" nil "Quit"))
-
-(define-key fw-key-map (kbd "x") 'fw/hydra-buffer/body)
-
-(defhydra fw/hydra-search (:color teal)
-  "Search"
-  ("x" swiper "Buffer")
-  ("d" counsel-rg "Directory")
-  ("q" nil "Quit"))
-
-(define-key fw-key-map (kbd "s") 'fw/hydra-search/body)
-
-(defhydra fw/hydra-point (:color teal)
-  "Point"
-  ("s x" swiper-isearch-thing-at-point "Search buffer")
-  ("s d" fw/counsel-rg-thing-at-point "Search directory")
-  ("h" highlight-symbol-at-point "Highlight")
-  ("q" nil "Quit"))
-
-(define-key fw-key-map (kbd ".") 'fw/hydra-point/body)
-
-(defhydra fw/hydra-zoom (:color amaranth)
-  "Zoom"
-  ("+" text-scale-increase "+")
-  ("-" text-scale-decrease "-")
-  ("0" (text-scale-adjust 0) "Reset" :color blue)
-  ("q" nil "Quit"))
-
-(define-key fw-key-map (kbd "z") 'fw/hydra-zoom/body)
-
-(defhydra fw/hydra-navigate (:color amaranth)
-  "Navigate"
-  ("w" previous-line "Up")
-  ("M-w" scroll-down-command "Scroll up")
-  ("a" left-char "Left")
-  ("C-a" left-word "Left word")
-  ("M-a" move-beginning-of-line "Beginning of line")
-  ("s" next-line "Down")
-  ("M-s" scroll-up-command "Scroll down")
-  ("d" right-char "Right")
-  ("C-d" right-word "Right word")
-  ("M-d" move-end-of-line "End of line")
-  ("<" back-to-indentation "Beginning of indent")
-  ("h" mark-whole-buffer "Mark all")
-  ("SPC" set-mark-command "Set mark")
-  ("x" exchange-point-and-mark "Exchange mark")
-  ("g" keyboard-quit "Clear mark")
-  ("<delete>" delete-forward-char "Delete forward")
-  ("<backspace>" delete-backward-char "Delete backward")
-  ("r SPC" rectangle-mark-mode "Rectangle set mark")
-  ("r i" string-rectangle "Rectangle string")
-  ("r d" delete-rectangle "Rectangle delete")
-  ("c" kill-ring-save "Copy")
-  ("x" kill-region "Cut")
-  ("v" yank "Paste")
-  ("q" nil "Quit"))
-
-(define-key fw-key-map (kbd "n") 'fw/hydra-navigate/body)
-
-(define-key fw-key-map (kbd "<return>") 'counsel-M-x)
-(define-key fw-key-map (kbd "SPC") 'company-complete)
-(define-key fw-key-map (kbd "g") 'keyboard-escape-quit)
-
-(if fw/is-linux
-    (global-set-key (kbd "<menu>") 'fw-key-map))
-
-(if fw/is-windows
-    (global-set-key (kbd "<apps>") 'fw-key-map))
-
-(global-set-key (kbd "<home>") 'fw-key-map)
-#+END_SRC
-
-The function bount to ~C-c~ changes depending on the context. We'll use a trick
-to bind it to other keys:
-
-#+BEGIN_SRC emacs-lisp
-(if fw/is-linux
-    (define-key key-translation-map (kbd "<menu> c") (kbd "C-c")))
-
-(if fw/is-windows
-    (define-key key-translation-map (kbd "<apps> c") (kbd "C-c")))
-
-(define-key key-translation-map (kbd "<home> c") (kbd "C-c"))
 #+END_SRC
 
 * Custom
