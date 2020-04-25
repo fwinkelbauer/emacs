@@ -583,21 +583,6 @@ In ~prog-mode~ I'd like to switch between ~back-to-indentation~ and
 Change keybindings and add new keybindings:
 
 #+BEGIN_SRC emacs-lisp
-(defhydra fw/hydra-window (:hint nil
-                           :color teal)
-  "
-_0_ Delete this window    _o_ Go to other window  _q_ Quit
-_1_ Delete other windows  _k_ Kill this window
-_2_ Split right
-_3_ Split below"
-  ("0" delete-window)
-  ("1" delete-other-windows)
-  ("2" fw/hsplit-last-buffer)
-  ("3" fw/vsplit-last-buffer)
-  ("o" other-window)
-  ("k" fw/kill-this-buffer)
-  ("q" nil))
-
 (defhydra fw/hydra-rectangle (:hint nil
                               :color pink
                               :body-pre (rectangle-mark-mode 1)
@@ -622,11 +607,12 @@ _-_ Decrease"
 (defhydra fw/hydra-buffer (:hint nil
                            :color teal)
   "
-_f_ Find file         _s_ Save buffer       _r_ Rectangle  _q_ Quit
-_F_ Find file in git  _k_ Kill this buffer  _z_ Zoom
-^ ^                   _b_ Switch buffer
-^ ^                   _i_ Open ibuffer
-^ ^                   _h_ Mark all"
+_f_ Find file         _s_ Save buffer       _0_ Delete window         _r_ Rectangle  _q_ Quit
+_F_ Find file in git  _k_ Kill this buffer  _1_ Delete other windows  _z_ Zoom
+^ ^                   _b_ Switch buffer     _2_ Split window below
+^ ^                   _i_ Open ibuffer      _3_ Split window right
+^ ^                   _h_ Mark all          _o_ Goto other window
+^ ^                   ^ ^                   _K_ Kill this window"
   ("f" counsel-find-file)
   ("F" counsel-git)
   ("k" kill-this-buffer)
@@ -634,6 +620,12 @@ _F_ Find file in git  _k_ Kill this buffer  _z_ Zoom
   ("i" ibuffer)
   ("h" mark-whole-buffer)
   ("s" (funcall (key-binding (kbd "C-x C-s"))))
+  ("0" delete-window)
+  ("1" delete-other-windows)
+  ("2" fw/hsplit-last-buffer)
+  ("3" fw/vsplit-last-buffer)
+  ("o" other-window)
+  ("K" fw/kill-this-buffer)
   ("r" fw/hydra-rectangle/body)
   ("z" fw/hydra-zoom/body)
   ("q" nil))
@@ -653,10 +645,9 @@ _S_ Search directory  _u_ Unhighlight"
                          :color teal)
   "
 _x_ Buffer  _s_ Search buffer     _<return>_ Execute  _q_ Quit
-_w_ Window  _S_ Search directory
-_._ Point   _g_ Avy goto"
+_._ Point   _S_ Search directory
+^ ^         _g_ Avy goto"
   ("x" fw/hydra-buffer/body)
-  ("w" fw/hydra-window/body)
   ("." fw/hydra-point/body)
   ("s" swiper)
   ("S" counsel-rg)
