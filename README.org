@@ -607,19 +607,24 @@ _-_ Decrease"
 (defhydra fw/hydra-buffer (:hint nil
                            :color teal)
   "
-_f_ Find file         _s_ Save buffer       _0_ Delete window         _r_ Rectangle  _q_ Quit
+_f_ Find file         _w_ Save buffer       _0_ Delete window         _r_ Rectangle       _q_ Quit
 _F_ Find file in git  _k_ Kill this buffer  _1_ Delete other windows  _z_ Zoom
-^ ^                   _b_ Switch buffer     _2_ Split window below
-^ ^                   _i_ Open ibuffer      _3_ Split window right
-^ ^                   _h_ Mark all          _o_ Goto other window
-^ ^                   ^ ^                   _K_ Kill this window"
+_s_ Search buffer     _b_ Switch buffer     _2_ Split window below    _<return>_ Execute
+_S_ Search directory  _B_ Open ibuffer      _3_ Split window right
+_g_ Avy goto          _h_ Mark all          _o_ Goto other window
+_._ Point             ^ ^                   _K_ Kill this window"
   ("f" counsel-find-file)
   ("F" counsel-git)
+  ("." fw/hydra-point/body)
+  ("s" swiper)
+  ("S" counsel-rg)
+  ("g" avy-goto-char-timer)
+  ("<return>" counsel-M-x)
   ("k" kill-this-buffer)
   ("b" counsel-switch-buffer)
-  ("i" ibuffer)
+  ("B" ibuffer)
   ("h" mark-whole-buffer)
-  ("s" (funcall (key-binding (kbd "C-x C-s"))))
+  ("w" (funcall (key-binding (kbd "C-x C-s"))))
   ("0" delete-window)
   ("1" delete-other-windows)
   ("2" fw/hsplit-last-buffer)
@@ -641,22 +646,8 @@ _S_ Search directory  _u_ Unhighlight"
   ("u" unhighlight-regexp)
   ("q" nil))
 
-(defhydra fw/hydra-main (:hint nil
-                         :color teal)
-  "
-_x_ Buffer  _s_ Search buffer     _<return>_ Execute  _q_ Quit
-_._ Point   _S_ Search directory
-^ ^         _g_ Avy goto"
-  ("x" fw/hydra-buffer/body)
-  ("." fw/hydra-point/body)
-  ("s" swiper)
-  ("S" counsel-rg)
-  ("g" avy-goto-char-timer)
-  ("<return>" counsel-M-x)
-  ("q" nil))
-
-(global-set-key (kbd "<menu>") 'fw/hydra-main/body)
-(global-set-key (kbd "<apps>") 'fw/hydra-main/body)
+(global-set-key (kbd "<menu>") 'fw/hydra-buffer/body)
+(global-set-key (kbd "<apps>") 'fw/hydra-buffer/body)
 
 (define-key prog-mode-map (kbd "C-a") 'fw/back-to-indentation-or-move-beginning-of-line)
 
