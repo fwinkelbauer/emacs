@@ -595,7 +595,7 @@ _d_ Rectangle delete"
   ("q" nil))
 
 (defhydra fw/hydra-zoom (:hint nil
-                         :color amaranth)
+                         :color blue)
   "
 _+_ Increase  _0_ Reset  _q_ Quit
 _-_ Decrease"
@@ -605,7 +605,7 @@ _-_ Decrease"
   ("q" nil))
 
 (defhydra fw/hydra-buffer (:hint nil
-                           :color teal)
+                           :color blue)
   "
 _f_ Find file         _w_ Save buffer       _0_ Delete window         _r_ Rectangle       _q_ Quit
 _F_ Find file in git  _k_ Kill this buffer  _1_ Delete other windows  _z_ Zoom
@@ -636,7 +636,7 @@ _._ Point             ^ ^                   _K_ Kill this window"
   ("q" nil))
 
 (defhydra fw/hydra-point (:hint nil
-                          :color teal)
+                          :color blue)
   "
 _s_ Search buffer     _h_ Highlight    _q_ Quit
 _S_ Search directory  _u_ Unhighlight"
