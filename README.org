@@ -594,8 +594,7 @@ _d_ Rectangle delete"
   ("d" delete-rectangle :color blue)
   ("q" nil))
 
-(defhydra fw/hydra-zoom (:hint nil
-                         :color blue)
+(defhydra fw/hydra-zoom (:hint nil)
   "
 _+_ Increase  _0_ Reset  _q_ Quit
 _-_ Decrease"
