@@ -100,9 +100,8 @@ directory of a project in version control:
   "Opens a shell at `vc-root-dir' or `default-directory'."
   (interactive)
   (delete-other-windows)
-  (let ((default-directory (fw/default-or-root-dir))
-        (shell-buffer-name (concat "*shell (" default-directory ")*")))
-    (shell shell-buffer-name)))
+  (let ((default-directory (fw/default-or-root-dir)))
+    (shell (concat "*shell (" default-directory ")*"))))
 #+END_SRC
 
 * Server
