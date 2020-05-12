@@ -567,19 +567,6 @@ Do not show method names in the modeline:
 
 * Keybindings
 
-In ~prog-mode~ I'd like to switch between ~back-to-indentation~ and
-~move-beginning-of-line~:
-
-#+BEGIN_SRC emacs-lisp
-(defun fw/back-to-indentation-or-move-beginning-of-line ()
-  "Switches between `back-to-indentation' and `move-beginning-of-line'"
-  (interactive)
-  (let ((current-point (point)))
-    (back-to-indentation)
-    (when (eq current-point (point))
-        (move-beginning-of-line nil))))
-#+END_SRC
-
 Change keybindings and add new keybindings:
 
 #+BEGIN_SRC emacs-lisp
@@ -647,8 +634,6 @@ _S_ Search directory  _u_ Unhighlight"
 
 (global-set-key (kbd "<menu>") 'fw/hydra-buffer/body)
 (global-set-key (kbd "<apps>") 'fw/hydra-buffer/body)
-
-(define-key prog-mode-map (kbd "C-a") 'fw/back-to-indentation-or-move-beginning-of-line)
 
 (global-set-key (kbd "C-z") 'undo)
 
