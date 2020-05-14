@@ -97,11 +97,13 @@ directory of a project in version control:
 
 #+BEGIN_SRC emacs-lisp
 (defun fw/shell ()
-  "Opens a shell at `vc-root-dir' or `default-directory'."
+  "Opens or dismisses a shell at `vc-root-dir' or `default-directory'."
   (interactive)
-  (delete-other-windows)
-  (let ((default-directory (fw/default-or-root-dir)))
-    (shell (concat "*shell (" default-directory ")*"))))
+  (let ((default-directory (fw/default-or-root-dir))
+        (shell-buffer-name (concat "*shell (" (fw/default-or-root-dir) ")*")))
+    (if (string= (buffer-name) shell-buffer-name)
+        (delete-window)
+      (shell shell-buffer-name))))
 #+END_SRC
 
 * Server
@@ -632,8 +634,8 @@ _S_ Search directory  _u_ Unhighlight"
 
 (global-set-key (kbd "<f8>") 'neotree-toggle)
 (global-set-key (kbd "S-<f8>") 'fw/neotree-dir)
-(global-set-key (kbd "<f9>") 'fw/native-file-manager)
-(global-set-key (kbd "S-<f9>") 'fw/shell)
+(global-set-key (kbd "<f9>") 'fw/shell)
+(global-set-key (kbd "S-<f9>") 'fw/native-file-manager)
 (global-set-key (kbd "<f10>") 'magit-status)
 (global-set-key (kbd "<f11>") 'elfeed)
 (global-set-key (kbd "<f12>") 'fw/org-agenda)
