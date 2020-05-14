@@ -571,9 +571,11 @@ Change keybindings and add new keybindings:
                               :post (deactivate-mark))
   "
 _i_ Rectangle insert  _q_ Quit
-_d_ Rectangle delete"
-  ("i" string-rectangle :color blue)
-  ("d" delete-rectangle :color blue)
+_d_ Rectangle delete
+_SPC> Mark"
+  ("i" string-rectangle)
+  ("d" delete-rectangle)
+  ("SPC" (rectangle-mark-mode 1))
   ("q" nil))
 
 (defhydra fw/hydra-zoom (:hint nil)
