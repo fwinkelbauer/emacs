@@ -69,8 +69,9 @@ manager:
 
 #+BEGIN_SRC emacs-lisp
 (defun fw/default-or-root-dir ()
-  "Returns `vc-root-dir' or `default-directory'."
-  (let ((root-dir (vc-root-dir)))
+  "Returns `magit-toplevel' or `default-directory'."
+  (require 'magit)
+  (let ((root-dir (magit-toplevel)))
     (expand-file-name (if root-dir
         root-dir
       default-directory))))
