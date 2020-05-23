@@ -595,14 +595,14 @@ _f_ Find file         _w_ Save buffer       _0_ Delete window         _r_ Rectan
 _F_ Find file in git  _k_ Kill this buffer  _1_ Delete other windows  _z_ Zoom
 _s_ Search buffer     _b_ Switch buffer     _2_ Split window below    _<return>_ Execute
 _S_ Search directory  _B_ Open ibuffer      _3_ Split window right
-_g_ Avy goto          _h_ Mark all          _o_ Goto other window
+_g_ Goto line         _h_ Mark all          _o_ Goto other window
 _._ Point             ^ ^                   _K_ Kill this window"
   ("f" counsel-find-file)
   ("F" counsel-git)
   ("." fw/hydra-point/body)
   ("s" swiper)
   ("S" counsel-rg)
-  ("g" avy-goto-char-timer)
+  ("g" goto-line)
   ("<return>" counsel-M-x)
   ("k" kill-this-buffer)
   ("b" counsel-switch-buffer)
