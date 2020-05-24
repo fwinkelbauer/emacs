@@ -77,15 +77,15 @@ manager:
       default-directory))))
 
 (defun fw/linux-thunar ()
-  "Opens thunar (Linux XFCE) at `vc-root-dir' or `default-directory'."
+  "Opens thunar (Linux XFCE) in `magit-toplevel' or `default-directory'."
   (start-process "thunar" nil "thunar" (fw/default-or-root-dir)))
 
 (defun fw/windows-explorer ()
-  "Opens Windows explorer at `vc-root-dir' or `default-directory'."
+  "Opens Windows explorer in `magit-toplevel' or `default-directory'."
   (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (fw/default-or-root-dir))))
 
 (defun fw/native-file-manager ()
-  "Opens the OS native file manager at `vc-root-dir' or `default-directory'."
+  "Opens the OS native file manager in `magit-toplevel' or `default-directory'."
   (interactive)
   (when fw/is-linux
       (fw/linux-thunar))
@@ -98,13 +98,24 @@ directory of a project in version control:
 
 #+BEGIN_SRC emacs-lisp
 (defun fw/shell ()
-  "Opens or dismisses a shell at `vc-root-dir' or `default-directory'."
+  "Opens or dismisses a shell in `magit-toplevel' or `default-directory'."
   (interactive)
   (let ((default-directory (fw/default-or-root-dir))
         (shell-buffer-name (concat "*shell (" (fw/default-or-root-dir) ")*")))
     (if (string= (buffer-name) shell-buffer-name)
         (delete-window)
       (shell shell-buffer-name))))
+#+END_SRC
+
+Run ~compile~ in the current/root directory:
+
+#+BEGIN_SRC emacs-lisp
+(defun fw/compile ()
+  "Run `compile' in `magit-toplevel' or `default-directory'."
+  (interactive)
+  (let ((default-directory (fw/default-or-root-dir)))
+    (call-interactively #'compile))
+  (pop-to-buffer (get-buffer "*compilation*")))
 #+END_SRC
 
 * Server
@@ -430,7 +441,7 @@ with just some minor adjustments:
 
 #+BEGIN_SRC emacs-lisp
 (defun fw/neotree-dir ()
-  "Open neotree at `vc-root-dir' or `default-directory'."
+  "Open neotree in `magit-toplevel' or `default-directory'."
   (interactive)
   (neotree-dir (fw/default-or-root-dir)))
 
@@ -637,7 +648,7 @@ _c_ Compile         _q_ Quit
 _s_ Shell
 _f_ File manager
 _w_ Show whitepsace"
-  ("c" compile)
+  ("c" fw/compile)
   ("s" fw/shell)
   ("f" fw/native-file-manager)
   ("w" whitespace-mode)
