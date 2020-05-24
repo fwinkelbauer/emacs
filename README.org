@@ -571,9 +571,9 @@ Change keybindings and add new keybindings:
                               :body-pre (rectangle-mark-mode 1)
                               :post (deactivate-mark))
   "
-_i_ Rectangle insert  _q_ Quit
-_d_ Rectangle delete
-_SPC> Mark"
+_i_   Rectangle insert  _q_ Quit
+_d_   Rectangle delete
+_SPC_ Mark"
   ("i" string-rectangle)
   ("d" delete-rectangle)
   ("SPC" (rectangle-mark-mode 1))
@@ -588,8 +588,8 @@ _-_ Decrease"
   ("0" (text-scale-adjust 0))
   ("q" nil))
 
-(defhydra fw/hydra-buffer (:hint nil
-                           :color blue)
+(defhydra fw/hydra-main (:hint nil
+                         :color blue)
   "
 _f_ Find file         _w_ Save buffer       _0_ Delete window         _r_ Rectangle       _q_ Quit
 _F_ Find file in git  _k_ Kill this buffer  _1_ Delete other windows  _z_ Zoom
@@ -630,8 +630,9 @@ _S_ Search directory  _u_ Unhighlight"
   ("u" unhighlight-regexp)
   ("q" nil))
 
-(global-set-key (kbd "<menu>") 'fw/hydra-buffer/body)
-(global-set-key (kbd "<apps>") 'fw/hydra-buffer/body)
+(global-set-key (kbd "<menu>") 'fw/hydra-main/body)
+(global-set-key (kbd "<apps>") 'fw/hydra-main/body)
+(global-set-key (kbd "<f5>") 'fw/hydra-main/body)
 
 (global-set-key (kbd "C-z") 'undo)
 
