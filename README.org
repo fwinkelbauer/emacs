@@ -110,6 +110,8 @@ directory of a project in version control:
 Run ~compile~ in the current/root directory:
 
 #+BEGIN_SRC emacs-lisp
+(setq compilation-scroll-output t)
+
 (defun fw/compile ()
   "Run `compile' in `magit-toplevel' or `default-directory'."
   (interactive)
@@ -582,8 +584,8 @@ Change keybindings and add new keybindings:
                               :body-pre (rectangle-mark-mode 1)
                               :post (deactivate-mark))
   "
-_i_   Rectangle insert  _q_ Quit
-_d_   Rectangle delete
+_i_ Rectangle insert  _q_ Quit
+_d_ Rectangle delete
 _SPC_ Mark"
   ("i" string-rectangle)
   ("d" delete-rectangle)
