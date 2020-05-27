@@ -118,6 +118,13 @@ Run ~compile~ in the current/root directory:
   (let ((default-directory (fw/default-or-root-dir)))
     (call-interactively #'compile))
   (pop-to-buffer (get-buffer "*compilation*")))
+
+(defun fw/recompile ()
+  "Run `recompile' in `magit-toplevel' or `default-directory'."
+  (interactive)
+  (let ((default-directory (fw/default-or-root-dir)))
+    (call-interactively #'recompile))
+  (pop-to-buffer (get-buffer "*compilation*")))
 #+END_SRC
 
 * Server
@@ -645,10 +652,12 @@ _S_ Search directory  _u_ Unhighlight"
                                 :color blue)
   "
 _c_ Compile         _q_ Quit
+_r_ Recompile
 _s_ Shell
 _f_ File manager
 _w_ Show whitepsace"
   ("c" fw/compile)
+  ("r" fw/recompile)
   ("s" fw/shell)
   ("f" fw/native-file-manager)
   ("w" whitespace-mode)
