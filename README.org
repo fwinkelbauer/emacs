@@ -231,9 +231,7 @@ Highlight current line:
 (setq-default ibuffer-saved-filter-groups
               `(("Default"
                  ("Temporary" (name . "\*.*\*"))
-                 ("Magit" (name . "^magit"))
-                 ("Dired" (mode . dired-mode))
-                 )))
+                 ("Magit" (name . "^magit")))))
 
 (add-hook 'ibuffer-mode-hook
           (lambda ()
@@ -373,8 +371,8 @@ Basic agenda configuration with a custom agenda view:
 #+END_SRC
 
 I don't want to see repeating TODOs in my calendar. The variable name to change
-this behavior is different depending on version of org-mode is running, so I'll
-set them both:
+this behavior is different depending on which version of org-mode is running, so
+I'll set them both:
 
 #+BEGIN_SRC emacs-lisp
 (setq org-agenda-show-future-repeats nil
@@ -422,7 +420,8 @@ I like to use [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light
 with just some minor adjustments:
 
 #+BEGIN_SRC emacs-lisp
-(set-face-attribute 'org-agenda-structure nil :inherit 'default :height 1.25)
+(set-face-attribute 'org-agenda-structure nil :height 1.25)
+(set-face-attribute 'org-agenda-date-today nil :slant 'normal)
 #+END_SRC
 
 ** Markdown
@@ -432,7 +431,6 @@ with just some minor adjustments:
   "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("CHANGELOG\\.md\\'" . markdown-mode))
 
 (autoload 'gfm-mode "markdown-mode"
   "Major mode for editing GitHub Flavored Markdown files" t)
