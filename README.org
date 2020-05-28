@@ -655,12 +655,16 @@ _c_ Compile         _q_ Quit
 _r_ Recompile
 _s_ Shell
 _f_ File manager
-_w_ Show whitepsace"
+_w_ Show whitepsace
+_m_ Magit dispatch
+_l_ Literally"
   ("c" fw/compile)
   ("r" fw/recompile)
   ("s" fw/shell)
   ("f" fw/native-file-manager)
   ("w" whitespace-mode)
+  ("m" magit-file-dispatch)
+  ("l" fw/find-file-or-find-file-literally)
   ("q" nil))
 
 (global-set-key (kbd "<menu>") 'fw/hydra-main/body)
