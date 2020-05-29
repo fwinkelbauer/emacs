@@ -653,17 +653,11 @@ _S_ Search directory  _u_ Unhighlight"
   "
 _c_ Compile         _q_ Quit
 _r_ Recompile
-_s_ Shell
-_f_ File manager
 _w_ Show whitepsace
-_m_ Magit dispatch
 _l_ Literally"
   ("c" fw/compile)
   ("r" fw/recompile)
-  ("s" fw/shell)
-  ("f" fw/native-file-manager)
   ("w" whitespace-mode)
-  ("m" magit-file-dispatch)
   ("l" fw/find-file-or-find-file-literally)
   ("q" nil))
 
@@ -676,7 +670,10 @@ _l_ Literally"
 
 (global-set-key (kbd "<f8>") 'neotree-toggle)
 (global-set-key (kbd "S-<f8>") 'fw/neotree-dir)
+(global-set-key (kbd "<f9>") 'fw/shell)
+(global-set-key (kbd "S-<f9>") 'fw/native-file-manager)
 (global-set-key (kbd "<f10>") 'magit-status)
+(global-set-key (kbd "S-<f10>") 'magit-file-dispatch)
 (global-set-key (kbd "<f11>") 'elfeed)
 (global-set-key (kbd "<f12>") 'fw/org-agenda)
 #+END_SRC
