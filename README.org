@@ -584,82 +584,55 @@ Do not show method names in the modeline:
 Change keybindings and add new keybindings:
 
 #+BEGIN_SRC emacs-lisp
-(defhydra fw/hydra-rectangle (:hint nil
-                              :color pink
+(defhydra fw/hydra-rectangle (:color pink
                               :body-pre (rectangle-mark-mode 1)
                               :post (deactivate-mark))
-  "
-_i_ Rectangle insert  _q_ Quit
-_d_ Rectangle delete
-_SPC_ Mark"
-  ("i" string-rectangle)
-  ("d" delete-rectangle)
-  ("SPC" (rectangle-mark-mode 1))
-  ("q" nil))
+  ("i" string-rectangle "Insert" :column "Rectangle")
+  ("d" delete-rectangle "Delete")
+  ("SPC" (rectangle-mark-mode 1) "Mark")
+  ("q" nil "Quit" :column ""))
 
-(defhydra fw/hydra-zoom (:hint nil)
-  "
-_+_ Increase  _0_ Reset  _q_ Quit
-_-_ Decrease"
-  ("+" text-scale-increase)
-  ("-" text-scale-decrease)
-  ("0" (text-scale-adjust 0))
-  ("q" nil))
+(defhydra fw/hydra-zoom ()
+  ("+" text-scale-increase "Increase" :column "Zoom")
+  ("-" text-scale-decrease "Decrease")
+  ("0" (text-scale-adjust 0) "Reset")
+  ("q" nil "Quit" :column ""))
 
-(defhydra fw/hydra-main (:hint nil
-                         :color blue)
-  "
-_f_ Find file         _w_ Save buffer       _0_ Delete window         _r_ Rectangle       _q_ Quit
-_F_ Find file in git  _k_ Kill this buffer  _1_ Delete other windows  _z_ Zoom
-_s_ Search buffer     _K_ kill this window  _2_ Split window below    _<return>_ Execute
-_S_ Search directory  _b_ Switch buffer     _3_ Split window right
-_g_ Goto line         _B_ Open ibuffer      _o_ Goto other window
-_._ Point             _h_ Mark all"
-  ("f" counsel-find-file)
-  ("F" counsel-git)
-  ("." fw/hydra-point/body)
-  ("s" swiper)
-  ("S" counsel-rg)
-  ("g" goto-line)
-  ("<return>" counsel-M-x)
-  ("k" kill-this-buffer)
-  ("b" counsel-switch-buffer)
-  ("B" ibuffer)
-  ("h" mark-whole-buffer)
-  ("w" (funcall (key-binding (kbd "C-x C-s"))))
-  ("0" delete-window)
-  ("1" delete-other-windows)
-  ("2" fw/vsplit-last-buffer)
-  ("3" fw/hsplit-last-buffer)
-  ("o" other-window)
-  ("K" fw/kill-this-buffer)
-  ("r" fw/hydra-rectangle/body)
-  ("z" fw/hydra-zoom/body)
-  ("q" nil))
+(defhydra fw/hydra-main (:color blue)
+  ("f" counsel-find-file "Find file" :column "Search")
+  ("F" counsel-git "Find file in git")
+  ("s" swiper "Search buffer")
+  ("S" counsel-rg "Search directory")
+  ("g" goto-line "Goto line")
+  ("." fw/hydra-point/body "Point")
+  ("w" (funcall (key-binding (kbd "C-x C-s"))) "Save buffer" :column "Buffer")
+  ("k" kill-this-buffer "Kill this buffer")
+  ("K" fw/kill-this-buffer "Kill this window")
+  ("b" counsel-switch-buffer "Switch buffer")
+  ("B" ibuffer "Open ibuffer")
+  ("h" mark-whole-buffer "Mark all")
+  ("0" delete-window "Delete window" :column "Window")
+  ("1" delete-other-windows "Delete other windows")
+  ("2" fw/vsplit-last-buffer "Split window below")
+  ("3" fw/hsplit-last-buffer "Split window right")
+  ("o" other-window "Goto other window")
+  ("r" fw/hydra-rectangle/body "Rectangle" :column "Misc")
+  ("z" fw/hydra-zoom/body "Zoom")
+  ("<return>" counsel-M-x "Execute")
+  ("q" nil "Quit" :column ""))
 
-(defhydra fw/hydra-point (:hint nil
-                          :color blue)
-  "
-_s_ Search buffer     _h_ Highlight    _q_ Quit
-_S_ Search directory  _u_ Unhighlight"
-  ("s" swiper-isearch-thing-at-point)
-  ("S" fw/counsel-rg-thing-at-point)
-  ("h" highlight-symbol-at-point)
-  ("u" unhighlight-regexp)
-  ("q" nil))
+(defhydra fw/hydra-point (:color blue)
+  ("s" swiper-isearch-thing-at-point "Search buffer" :column "Search")  ("S" fw/counsel-rg-thing-at-point "Search directory")
+  ("h" highlight-symbol-at-point "Highlight" :column "Highlight")
+  ("u" unhighlight-regexp "Unhighlight")
+  ("q" nil "Quit" :column ""))
 
-(defhydra fw/hydra-programming (:hint nil
-                                :color blue)
-  "
-_c_ Compile         _q_ Quit
-_r_ Recompile
-_w_ Show whitepsace
-_l_ Literally"
-  ("c" fw/compile)
-  ("r" fw/recompile)
-  ("w" whitespace-mode)
-  ("l" fw/find-file-or-find-file-literally)
-  ("q" nil))
+(defhydra fw/hydra-programming (:color blue)
+  ("c" fw/compile "Compile" :column "Programming")
+  ("r" fw/recompile "Recompile")
+  ("w" whitespace-mode "Show whitespace")
+  ("l" fw/find-file-or-find-file-literally "Find literally")
+  ("q" nil "Quit" :column ""))
 
 (global-set-key (kbd "<menu>") 'fw/hydra-main/body)
 (global-set-key (kbd "<apps>") 'fw/hydra-main/body)
