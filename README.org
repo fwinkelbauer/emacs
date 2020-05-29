@@ -64,69 +64,6 @@ Make scrolling a little bit smoother:
 (setq mouse-wheel-progressive-speed nil)
 #+END_SRC
 
-Define a function to open the current/root directory in an external file
-manager:
-
-#+BEGIN_SRC emacs-lisp
-(defun fw/default-or-root-dir ()
-  "Returns `magit-toplevel' or `default-directory'."
-  (require 'magit)
-  (let ((root-dir (magit-toplevel)))
-    (expand-file-name (if root-dir
-        root-dir
-      default-directory))))
-
-(defun fw/linux-thunar ()
-  "Opens thunar (Linux XFCE) in `magit-toplevel' or `default-directory'."
-  (start-process "thunar" nil "thunar" (fw/default-or-root-dir)))
-
-(defun fw/windows-explorer ()
-  "Opens Windows explorer in `magit-toplevel' or `default-directory'."
-  (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (fw/default-or-root-dir))))
-
-(defun fw/native-file-manager ()
-  "Opens the OS native file manager in `magit-toplevel' or `default-directory'."
-  (interactive)
-  (when fw/is-linux
-      (fw/linux-thunar))
-  (when fw/is-windows
-      (fw/windows-explorer)))
-#+END_SRC
-
-I'd like to open a shell buffer in either the current directory, or in the root
-directory of a project in version control:
-
-#+BEGIN_SRC emacs-lisp
-(defun fw/shell ()
-  "Opens or dismisses a shell in `magit-toplevel' or `default-directory'."
-  (interactive)
-  (let ((default-directory (fw/default-or-root-dir))
-        (shell-buffer-name (concat "*shell (" (fw/default-or-root-dir) ")*")))
-    (if (string= (buffer-name) shell-buffer-name)
-        (delete-window)
-      (shell shell-buffer-name))))
-#+END_SRC
-
-Run ~compile~ in the current/root directory:
-
-#+BEGIN_SRC emacs-lisp
-(setq compilation-scroll-output t)
-
-(defun fw/compile ()
-  "Run `compile' in `magit-toplevel' or `default-directory'."
-  (interactive)
-  (let ((default-directory (fw/default-or-root-dir)))
-    (call-interactively #'compile))
-  (pop-to-buffer (get-buffer "*compilation*")))
-
-(defun fw/recompile ()
-  "Run `recompile' in `magit-toplevel' or `default-directory'."
-  (interactive)
-  (let ((default-directory (fw/default-or-root-dir)))
-    (call-interactively #'recompile))
-  (pop-to-buffer (get-buffer "*compilation*")))
-#+END_SRC
-
 * Server
 
 Start Emacs in server mode:
@@ -271,6 +208,9 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
   (switch-to-next-buffer))
 #+END_SRC
 
+In a split screenscenario it is sometimes conveniant to delete the window while
+killing a buffer:
+
 #+BEGIN_SRC emacs-lisp
 (defun fw/kill-this-buffer ()
   "Kills this buffer and removes this window when split."
@@ -402,6 +342,71 @@ Thanks to [[https://www.reddit.com/r/orgmode/comments/fg1im8/calendar_notificati
 (add-hook 'org-agenda-finalize-hook 'fw/org-agenda-to-appt)
 #+END_SRC
 
+* Directory Functions
+
+Define a function to open the current/root directory in an external file
+manager:
+
+#+BEGIN_SRC emacs-lisp
+(defun fw/default-or-root-dir ()
+  "Returns `magit-toplevel' or `default-directory'."
+  (require 'magit)
+  (let ((root-dir (magit-toplevel)))
+    (expand-file-name (if root-dir
+        root-dir
+      default-directory))))
+
+(defun fw/linux-thunar ()
+  "Opens thunar (Linux XFCE) in `magit-toplevel' or `default-directory'."
+  (start-process "thunar" nil "thunar" (fw/default-or-root-dir)))
+
+(defun fw/windows-explorer ()
+  "Opens Windows explorer in `magit-toplevel' or `default-directory'."
+  (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (fw/default-or-root-dir))))
+
+(defun fw/native-file-manager ()
+  "Opens the OS native file manager in `magit-toplevel' or `default-directory'."
+  (interactive)
+  (when fw/is-linux
+      (fw/linux-thunar))
+  (when fw/is-windows
+      (fw/windows-explorer)))
+#+END_SRC
+
+I'd like to open a shell buffer in either the current directory, or in the root
+directory of a project in version control:
+
+#+BEGIN_SRC emacs-lisp
+(defun fw/shell ()
+  "Opens or dismisses a shell in `magit-toplevel' or `default-directory'."
+  (interactive)
+  (let ((default-directory (fw/default-or-root-dir))
+        (shell-buffer-name (concat "*shell (" (fw/default-or-root-dir) ")*")))
+    (if (string= (buffer-name) shell-buffer-name)
+        (delete-window)
+      (shell shell-buffer-name))))
+#+END_SRC
+
+Run ~compile~ in the current/root directory:
+
+#+BEGIN_SRC emacs-lisp
+(setq compilation-scroll-output t)
+
+(defun fw/compile ()
+  "Run `compile' in `magit-toplevel' or `default-directory'."
+  (interactive)
+  (let ((default-directory (fw/default-or-root-dir)))
+    (call-interactively #'compile))
+  (pop-to-buffer (get-buffer "*compilation*")))
+
+(defun fw/recompile ()
+  "Run `recompile' in `magit-toplevel' or `default-directory'."
+  (interactive)
+  (let ((default-directory (fw/default-or-root-dir)))
+    (call-interactively #'recompile))
+  (pop-to-buffer (get-buffer "*compilation*")))
+#+END_SRC
+
 * External Packages
 
 ** Compilation
@@ -434,14 +439,9 @@ with just some minor adjustments:
 ** Markdown
 
 #+BEGIN_SRC emacs-lisp
-(autoload 'markdown-mode "markdown-mode"
-  "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
 (autoload 'gfm-mode "markdown-mode"
   "Major mode for editing GitHub Flavored Markdown files" t)
-(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
 #+END_SRC
 
 ** Neotree
