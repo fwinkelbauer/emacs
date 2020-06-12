@@ -622,7 +622,8 @@ Change keybindings and add new keybindings:
   ("q" nil "Quit" :column ""))
 
 (defhydra fw/hydra-point (:color blue)
-  ("s" swiper-isearch-thing-at-point "Search buffer" :column "Search")  ("S" fw/counsel-rg-thing-at-point "Search directory")
+  ("s" swiper-isearch-thing-at-point "Search buffer" :column "Search")
+  ("S" fw/counsel-rg-thing-at-point "Search directory")
   ("h" highlight-symbol-at-point "Highlight" :column "Highlight")
   ("u" unhighlight-regexp "Unhighlight")
   ("q" nil "Quit" :column ""))
