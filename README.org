@@ -641,6 +641,7 @@ Change keybindings and add new keybindings:
 (global-set-key (kbd "<f6>") 'fw/hydra-programming/body)
 
 (global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-x s") 'save-buffer)
 
 (global-set-key (kbd "<f8>") 'neotree-toggle)
 (global-set-key (kbd "S-<f8>") 'fw/neotree-dir)
