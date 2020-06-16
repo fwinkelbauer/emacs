@@ -407,6 +407,17 @@ Run ~compile~ in the current/root directory:
   (pop-to-buffer (get-buffer "*compilation*")))
 #+END_SRC
 
+Create an alternative to ~find-file~ which includes subdirectories:
+
+#+BEGIN_SRC emacs-lisp
+(defun fw/file-jump ()
+  "Run `counsel-git' or `counsel-file-jump'"
+  (interactive)
+  (if (eq (magit-toplevel) nil)
+      (counsel-file-jump)
+    (counsel-git)))
+#+END_SRC
+
 * External Packages
 
 ** Compilation
@@ -600,7 +611,7 @@ Change keybindings and add new keybindings:
 
 (defhydra fw/hydra-main (:color blue)
   ("f" counsel-find-file "Find file" :column "Search")
-  ("F" counsel-git "Find file in git")
+  ("F" fw/file-jump "Find file recursive")
   ("s" swiper "Search buffer")
   ("S" counsel-rg "Search directory")
   ("g" goto-line "Goto line")
