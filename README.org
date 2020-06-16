@@ -344,28 +344,20 @@ Thanks to [[https://www.reddit.com/r/orgmode/comments/fg1im8/calendar_notificati
 
 * Directory Functions
 
-Define a function to open the current/root directory in an external file
+Define a function to open the current directory in an external file
 manager:
 
 #+BEGIN_SRC emacs-lisp
-(defun fw/default-or-root-dir ()
-  "Returns `magit-toplevel' or `default-directory'."
-  (require 'magit)
-  (let ((root-dir (magit-toplevel)))
-    (expand-file-name (if root-dir
-        root-dir
-      default-directory))))
-
 (defun fw/linux-thunar ()
-  "Opens thunar (Linux XFCE) in `magit-toplevel' or `default-directory'."
-  (start-process "thunar" nil "thunar" (fw/default-or-root-dir)))
+  "Opens thunar (Linux XFCE) in `default-directory'."
+  (start-process "thunar" nil "thunar" default-directory))
 
 (defun fw/windows-explorer ()
-  "Opens Windows explorer in `magit-toplevel' or `default-directory'."
-  (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (fw/default-or-root-dir))))
+  "Opens Windows explorer in `default-directory'."
+  (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" default-directory)))
 
 (defun fw/native-file-manager ()
-  "Opens the OS native file manager in `magit-toplevel' or `default-directory'."
+  "Opens the OS native file manager in `default-directory'."
   (interactive)
   (when fw/is-linux
       (fw/linux-thunar))
@@ -377,6 +369,14 @@ I'd like to open a shell buffer in either the current directory, or in the root
 directory of a project in version control:
 
 #+BEGIN_SRC emacs-lisp
+(defun fw/default-or-root-dir ()
+  "Returns `magit-toplevel' or `default-directory'."
+  (require 'magit)
+  (let ((root-dir (magit-toplevel)))
+    (expand-file-name (if root-dir
+        root-dir
+      default-directory))))
+
 (defun fw/shell ()
   "Opens or dismisses a shell in `magit-toplevel' or `default-directory'."
   (interactive)
