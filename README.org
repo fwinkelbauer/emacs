@@ -413,6 +413,7 @@ Create an alternative to ~find-file~ which includes subdirectories:
 (defun fw/file-jump ()
   "Run `counsel-git' or `counsel-file-jump'"
   (interactive)
+  (require 'magit)
   (if (eq (magit-toplevel) nil)
       (counsel-file-jump)
     (counsel-git)))
