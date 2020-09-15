@@ -481,6 +481,19 @@ I'd like to spellcheck my commit messages:
 (add-hook 'git-commit-mode-hook 'flyspell-mode)
 #+END_SRC
 
+Add a custom function to pull from all repositories:
+
+#+BEGIN_SRC emacs-lisp
+(defun fw/git-pull-all ()
+  "Runs `vc-git-pull' for every repository found in `magit-list-repos'"
+  (interactive)
+  (require 'magit)
+  (if magit-repository-directories
+      (dolist (path (magit-list-repos))
+        (let ((default-directory path))
+          (vc-git-pull nil)))))
+#+END_SRC
+
 ** Elfeed
 
 Let's extend elfeed's UI so that I can use ~youtube-dl~ to download RSS video
@@ -645,6 +658,8 @@ Change keybindings and add new keybindings:
   ("r" fw/recompile "Recompile")
   ("w" whitespace-mode "Show whitespace")
   ("l" fw/find-file-or-find-file-literally "Find literally")
+  ("f" magit-file-dispatch "File dispatch" :column "Magit")
+  ("p" fw/git-pull-all "Pull all")
   ("q" nil "Quit" :column ""))
 
 (global-set-key (kbd "<menu>") 'fw/hydra-main/body)
@@ -660,7 +675,6 @@ Change keybindings and add new keybindings:
 (global-set-key (kbd "<f9>") 'fw/shell)
 (global-set-key (kbd "S-<f9>") 'fw/native-file-manager)
 (global-set-key (kbd "<f10>") 'magit-status)
-(global-set-key (kbd "S-<f10>") 'magit-file-dispatch)
 (global-set-key (kbd "<f11>") 'elfeed)
 (global-set-key (kbd "<f12>") 'fw/org-agenda)
 #+END_SRC
