@@ -420,6 +420,18 @@ Create an alternative to ~find-file~ which includes subdirectories:
     (counsel-git)))
 #+END_SRC
 
+Taken from [[https://blog.sumtypeofway.com/posts/emacs-config.html][here]]:
+
+#+BEGIN_SRC emacs-lisp
+(defun fw/copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode) default-directory (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
+#+END_SRC
+
 * External Packages
 
 ** Compilation
@@ -659,7 +671,8 @@ Change keybindings and add new keybindings:
   ("r" fw/recompile "Recompile")
   ("w" whitespace-mode "Show whitespace")
   ("l" fw/find-file-or-find-file-literally "Find literally")
-  ("f" magit-file-dispatch "File dispatch" :column "Magit")
+  ("f" fw/copy-file-name-to-clipboard "Copy file name")
+  ("m" magit-file-dispatch "File dispatch" :column "Magit")
   ("p" fw/git-pull-all "Pull all")
   ("q" nil "Quit" :column ""))
 
