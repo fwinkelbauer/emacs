@@ -271,7 +271,7 @@ changes the date format in ~%%(diary.anniversary ...)~:
                             ("samstag" . 6)))
 #+END_SRC
 
-I've found this snippet of Austrian holidays in [[https://github.com/novoid/dot-emacs/blob/master/config.org][Karl Void's configuration]]:
+I've found this snippet of Austrian holidays in [[https://github.com/novoid/dot-emacs/blob/master/config.org][Karl Voit's configuration]]:
 
 #+BEGIN_SRC emacs-lisp
 (setq holiday-local-holidays '((holiday-fixed  1  1 "Neujahr (frei)")
@@ -319,8 +319,8 @@ Basic agenda configuration with a custom agenda view:
 #+END_SRC
 
 I don't want to see repeating TODOs in my calendar. The variable name to change
-this behavior is different depending on which version of org-mode is running, so
-I'll set them both:
+this behavior is different depending on the current version of org-mode, so I'll
+set them both:
 
 #+BEGIN_SRC emacs-lisp
 (setq org-agenda-show-future-repeats nil
@@ -343,7 +343,7 @@ Thanks to [[https://www.reddit.com/r/orgmode/comments/fg1im8/calendar_notificati
 (add-hook 'org-agenda-finalize-hook 'fw/org-agenda-to-appt)
 #+END_SRC
 
-* Directory Functions
+* Directory/File Functions
 
 Define a function to open the current directory in an external file
 manager:
@@ -420,7 +420,7 @@ Create an alternative to ~find-file~ which includes subdirectories:
     (counsel-git)))
 #+END_SRC
 
-Taken from [[https://blog.sumtypeofway.com/posts/emacs-config.html][here]]:
+Put the file name of the current buffer onto the clipborad. Taken from [[https://blog.sumtypeofway.com/posts/emacs-config.html][here]]:
 
 #+BEGIN_SRC emacs-lisp
 (defun fw/copy-file-name-to-clipboard ()
