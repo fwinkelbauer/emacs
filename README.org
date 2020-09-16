@@ -26,11 +26,12 @@ Reload a file if it changed on disk:
 (global-auto-revert-mode t)
 #+END_SRC
 
-Disable backup and auto save files:
+Disable backup, auto save and lock files:
 
 #+BEGIN_SRC emacs-lisp
 (setq backup-inhibited t
-      auto-save-default nil)
+      auto-save-default nil
+      create-lockfiles nil)
 #+END_SRC
 
 Disable audio bell:
