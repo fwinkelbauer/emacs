@@ -500,6 +500,7 @@ Add a custom function to pull from all repositories:
 (defun fw/git-pull-all ()
   "Runs `vc-git-pull' for every repository found in `magit-list-repos'"
   (interactive)
+  (require 'vc-git)
   (require 'magit)
   (if magit-repository-directories
       (dolist (path (magit-list-repos))
