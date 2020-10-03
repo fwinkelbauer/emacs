@@ -209,7 +209,7 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
   (switch-to-next-buffer))
 #+END_SRC
 
-In a split screenscenario it is sometimes conveniant to delete the window while
+In a split screenscenario it is sometimes convenient to delete the window while
 killing a buffer:
 
 #+BEGIN_SRC emacs-lisp
