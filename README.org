@@ -420,16 +420,32 @@ Create an alternative to ~find-file~ which includes subdirectories:
     (counsel-git)))
 #+END_SRC
 
-Put the file name of the current buffer onto the clipborad. Taken from [[https://blog.sumtypeofway.com/posts/emacs-config.html][here]]:
+Put the file name of the current buffer onto the clipborad. Adapted from [[https://blog.sumtypeofway.com/posts/emacs-config.html][here]]:
 
 #+BEGIN_SRC emacs-lisp
-(defun fw/copy-file-name-to-clipboard ()
-  "Copy the current buffer file name to the clipboard."
+(defun fw/buffer-file-name ()
+  "Returns the absolute file name of the current buffer"
+  (if (equal major-mode 'dired-mode)
+      default-directory
+    (buffer-file-name)))
+
+(defun fw/copy-to-clipboard (value)
+  "Copy `value' to the clipboard and show a `message'."
+  (when value
+    (kill-new value)
+    (message "Copied '%s' to the clipboard" value)))
+
+(defun fw/copy-absolute-buffer-name-to-clipboard ()
+  "Copy the absolute file name of the current buffer to the
+clipboard."
   (interactive)
-  (let ((filename (if (equal major-mode 'dired-mode) default-directory (buffer-file-name))))
-    (when filename
-      (kill-new filename)
-      (message "Copied buffer file name '%s' to the clipboard." filename))))
+  (fw/copy-to-clipboard (fw/buffer-file-name)))
+
+(defun fw/copy-relative-buffer-name-to-clipboard ()
+  "Copy the relative file name of the current buffer to the
+clipboard."
+  (interactive)
+  (fw/copy-to-clipboard (file-relative-name (fw/buffer-file-name))))
 #+END_SRC
 
 * External Packages
@@ -672,7 +688,8 @@ Change keybindings and add new keybindings:
   ("r" fw/recompile "Recompile")
   ("w" whitespace-mode "Show whitespace")
   ("l" fw/find-file-or-find-file-literally "Find literally")
-  ("f" fw/copy-file-name-to-clipboard "Copy file name")
+  ("f" fw/copy-relative-buffer-name-to-clipboard "Copy relative file name")
+  ("F" fw/copy-absolute-buffer-name-to-clipboard "Copy absolute file name")
   ("m" magit-file-dispatch "File dispatch" :column "Magit")
   ("p" fw/git-pull-all "Pull all")
   ("q" nil "Quit" :column ""))
