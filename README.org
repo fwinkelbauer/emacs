@@ -671,6 +671,7 @@ Change keybindings and add new keybindings:
   ("2" fw/vsplit-last-buffer "Split window below")
   ("3" fw/hsplit-last-buffer "Split window right")
   ("o" other-window "Goto other window")
+  ("x" window-swap-states "Swap window states")
   ("r" fw/hydra-rectangle/body "Rectangle" :column "Misc")
   ("z" fw/hydra-zoom/body "Zoom")
   ("<return>" counsel-M-x "Execute")
