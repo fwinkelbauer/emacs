@@ -448,6 +448,12 @@ clipboard."
   (fw/copy-to-clipboard (file-relative-name (fw/buffer-file-name))))
 #+END_SRC
 
+* File Major Modes
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.editorconfig\\'" . conf-mode))
+#+END_SRC
+
 * External Packages
 
 ** Compilation
