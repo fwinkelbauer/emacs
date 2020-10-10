@@ -275,22 +275,23 @@ changes the date format in ~%%(diary.anniversary ...)~:
 I've found this snippet of Austrian holidays in [[https://github.com/novoid/dot-emacs/blob/master/config.org][Karl Voit's configuration]]:
 
 #+BEGIN_SRC emacs-lisp
-(setq holiday-local-holidays '((holiday-fixed  1  1 "Neujahr (frei)")
-                               (holiday-fixed  1  6 "Heilige Drei Könige (frei)")
-                               (holiday-easter-etc 1 "Ostermontag (frei)")
-                               (holiday-easter-etc -46 "Aschermittwoch")
-                               (holiday-easter-etc -2 "Karfreitag")
-                               (holiday-fixed  5  1 "Österreichischer Staatsfeiertag (frei)")
-                               (holiday-easter-etc 39 "Christi Himmelfahrt (frei)")
-                               (holiday-easter-etc 50 "Pfingstmontag (frei)")
-                               (holiday-easter-etc 60 "Fronleichnam (frei)")
-                               (holiday-fixed  8 15 "Mariä Himmelfahrt (frei)")
-                               (holiday-fixed 10 26 "Nationalfeiertag (frei)")
-                               (holiday-fixed 11  1 "Allerheiligen (frei)")
-                               (holiday-fixed 12  8 "Maria Empfängnis (frei)")
-                               (holiday-fixed 12 24 "Heiliger Abend")
-                               (holiday-fixed 12 25 "Erster Weihnachtstag (frei)")
-                               (holiday-fixed 12 26 "Zweiter Weihnachtstag (frei)")))
+(setq holiday-local-holidays
+      '((holiday-fixed  1  1 "Neujahr (frei)")
+        (holiday-fixed  1  6 "Heilige Drei Könige (frei)")
+        (holiday-easter-etc 1 "Ostermontag (frei)")
+        (holiday-easter-etc -46 "Aschermittwoch")
+        (holiday-easter-etc -2 "Karfreitag")
+        (holiday-fixed  5  1 "Österreichischer Staatsfeiertag (frei)")
+        (holiday-easter-etc 39 "Christi Himmelfahrt (frei)")
+        (holiday-easter-etc 50 "Pfingstmontag (frei)")
+        (holiday-easter-etc 60 "Fronleichnam (frei)")
+        (holiday-fixed  8 15 "Mariä Himmelfahrt (frei)")
+        (holiday-fixed 10 26 "Nationalfeiertag (frei)")
+        (holiday-fixed 11  1 "Allerheiligen (frei)")
+        (holiday-fixed 12  8 "Maria Empfängnis (frei)")
+        (holiday-fixed 12 24 "Heiliger Abend")
+        (holiday-fixed 12 25 "Erster Weihnachtstag (frei)")
+        (holiday-fixed 12 26 "Zweiter Weihnachtstag (frei)")))
 
 (setq calendar-holidays (append holiday-local-holidays holiday-other-holidays))
 #+END_SRC
@@ -298,8 +299,9 @@ I've found this snippet of Austrian holidays in [[https://github.com/novoid/dot-
 Setup org-capture:
 
 #+BEGIN_SRC emacs-lisp
-(setq fw/default-inbox "~/org/inbox.org"
-      org-capture-templates
+(setq fw/default-inbox "~/org/inbox.org")
+
+(setq org-capture-templates
       '(("i" "Inbox" entry (file fw/default-inbox)
          "* %?" :empty-lines-before 1)))
 
