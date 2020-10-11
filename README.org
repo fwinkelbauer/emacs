@@ -546,6 +546,18 @@ Add a custom function to pull from all repositories:
           (vc-git-pull nil)))))
 #+END_SRC
 
+Running ~magit-status~ with a prefix argument shows all repositories defined in
+~magit-repository-directories~, even if I am already in a git repository. Since
+I don't like to press ~C-u~, I'll define a function to do it for me:
+
+#+BEGIN_SRC emacs-lisp
+(defun fw/prefix-magit-status ()
+  "Runs C-u `magit-status'"
+  (interactive)
+  (setq current-prefix-arg '(4))
+  (call-interactively 'magit-status))
+#+END_SRC
+
 ** Elfeed
 
 Let's extend elfeed's UI so that I can use ~youtube-dl~ to download RSS video
@@ -740,6 +752,7 @@ Change keybindings and add new keybindings:
 (global-set-key (kbd "<f9>") 'fw/shell)
 (global-set-key (kbd "S-<f9>") 'fw/native-file-manager)
 (global-set-key (kbd "<f10>") 'magit-status)
+(global-set-key (kbd "S-<f10>") 'fw/prefix-magit-status)
 (global-set-key (kbd "<f11>") 'elfeed)
 (global-set-key (kbd "<f12>") 'fw/org-agenda)
 (global-set-key (kbd "S-<f12>") 'fw/hydra-org/body)
