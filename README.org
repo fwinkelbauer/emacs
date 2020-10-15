@@ -711,7 +711,8 @@ Change keybindings and add new keybindings:
   ("r" fw/hydra-rectangle/body "Rectangle" :column "Misc")
   ("z" fw/hydra-zoom/body "Zoom")
   ("<return>" counsel-M-x "Execute")
-  ("q" nil "Quit" :column ""))
+  ("q" nil "Quit" :column "")
+  ("Q" save-buffers-kill-terminal "Exit Emacs"))
 
 (defhydra fw/hydra-point (:color blue)
   ("s" swiper-isearch-thing-at-point "Search buffer" :column "Search")
