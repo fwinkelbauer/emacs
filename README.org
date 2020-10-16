@@ -688,8 +688,8 @@ Change keybindings and add new keybindings:
   ("q" nil "Quit" :column ""))
 
 (defhydra fw/hydra-main (:color blue)
-  ("f" counsel-find-file "Find file" :column "Search")
-  ("F" fw/file-jump "Find file recursive")
+  ("f" fw/file-jump "Find file recursive" :column "Search")
+  ("F" counsel-find-file "Find file")
   ("s" swiper "Search buffer")
   ("S" counsel-rg "Search directory")
   ("." fw/hydra-point/body "Point")
@@ -709,6 +709,7 @@ Change keybindings and add new keybindings:
   ("o" other-window "Goto other window")
   ("O" window-swap-states "Swap other window")
   ("r" fw/hydra-rectangle/body "Rectangle" :column "Misc")
+  ("SPC" set-mark-command "Set mark")
   ("z" fw/hydra-zoom/body "Zoom")
   ("<return>" counsel-M-x "Execute")
   ("q" nil "Quit" :column "")
@@ -729,6 +730,7 @@ Change keybindings and add new keybindings:
   ("o" fw/find-file-or-find-file-literally "Open with(out) encoding")
   ("f" fw/copy-relative-buffer-name-to-clipboard "Copy relative file name")
   ("F" fw/copy-absolute-buffer-name-to-clipboard "Copy absolute file name")
+  ("e" eval-last-sexp "Eval expression")
   ("i" fw/org-capture-inbox "Inbox" :column "Org")
   ("l" org-insert-link "Link")
   ("t" org-todo "Todo")
@@ -756,6 +758,10 @@ Change keybindings and add new keybindings:
 (global-set-key (kbd "S-<f10>") 'fw/prefix-magit-status)
 (global-set-key (kbd "<f11>") 'elfeed)
 (global-set-key (kbd "<f12>") 'fw/org-agenda)
+
+(global-unset-key (kbd "C-a"))
+(global-unset-key (kbd "C-e"))
+(global-unset-key (kbd "C-SPC"))
 #+END_SRC
 
 * Custom
