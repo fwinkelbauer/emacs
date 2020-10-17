@@ -688,8 +688,8 @@ Change keybindings and add new keybindings:
   ("q" nil "Quit" :column ""))
 
 (defhydra fw/hydra-main (:color blue)
-  ("f" fw/file-jump "Find file recursive" :column "Search")
-  ("F" counsel-find-file "Find file")
+  ("f" counsel-find-file "Find file" :column "Search")
+  ("F" fw/file-jump "Find file recursive")
   ("s" swiper "Search buffer")
   ("S" counsel-rg "Search directory")
   ("." fw/hydra-point/body "Point")
