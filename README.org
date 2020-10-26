@@ -324,6 +324,7 @@ Basic agenda configuration with a custom agenda view:
                 ((org-agenda-overriding-header "\nOffen\n")
                  (org-agenda-block-separator nil)
                  (org-agenda-sorting-strategy '(todo-state-up))
+                 (org-agenda-todo-ignore-deadlines 'all)
                  (org-agenda-todo-ignore-scheduled 'all)))))))
 
 (defun fw/org-agenda ()
@@ -735,6 +736,7 @@ Change keybindings and add new keybindings:
   ("l" org-insert-link "Link")
   ("t" org-todo "Todo")
   ("s" org-schedule "Schedule")
+  ("d" org-deadline "Deadline")
   ("." org-time-stamp "Timestamp")
   ("#" org-insert-structure-template "Template")
   ("b" org-babel-tangle "Babel")
