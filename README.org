@@ -209,7 +209,7 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
   (switch-to-next-buffer))
 #+END_SRC
 
-In a split screenscenario it is sometimes convenient to delete the window while
+In a split screen scenario it is sometimes convenient to delete the window while
 killing a buffer:
 
 #+BEGIN_SRC emacs-lisp
@@ -671,7 +671,8 @@ Do not show method names in the modeline:
 
 * Keybindings
 
-Change keybindings and add new keybindings:
+A post by [[http://xahlee.info/kbd/whats_the_use_of_the_menu_app_key.html][Xah Lee]] gave me the idea to create alternative keybindings using
+hydras and the apps/menu key:
 
 #+BEGIN_SRC emacs-lisp
 (defhydra fw/hydra-rectangle (:color pink
