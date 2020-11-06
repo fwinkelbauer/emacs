@@ -733,6 +733,7 @@ hydras and the apps/menu key:
   ("f" fw/copy-relative-buffer-name-to-clipboard "Copy relative file name")
   ("F" fw/copy-absolute-buffer-name-to-clipboard "Copy absolute file name")
   ("e" eval-last-sexp "Eval expression")
+  ("E" eval-buffer "Eval buffer")
   ("i" fw/org-capture-inbox "Inbox" :column "Org")
   ("l" org-insert-link "Link")
   ("t" org-todo "Todo")
