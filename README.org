@@ -706,12 +706,6 @@ hydras and the apps/menu key:
   ("SPC" (rectangle-mark-mode 1) "Mark")
   ("q" nil "Quit" :column ""))
 
-(defhydra fw/hydra-zoom ()
-  ("+" text-scale-increase "Increase" :column "Zoom")
-  ("-" text-scale-decrease "Decrease")
-  ("0" (text-scale-adjust 0) "Reset")
-  ("q" nil "Quit" :column ""))
-
 (defhydra fw/hydra-main (:color blue)
   ("f" counsel-find-file "Find file" :column "Search")
   ("F" fw/file-jump "Find file recursive")
@@ -735,7 +729,6 @@ hydras and the apps/menu key:
   ("O" window-swap-states "Swap other window")
   ("r" fw/hydra-rectangle/body "Rectangle" :column "Misc")
   ("SPC" set-mark-command "Set mark")
-  ("z" fw/hydra-zoom/body "Zoom")
   ("<return>" counsel-M-x "Execute")
   ("q" nil "Quit" :column "")
   ("Q" save-buffers-kill-terminal "Exit Emacs"))
