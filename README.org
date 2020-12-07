@@ -482,10 +482,10 @@ The below snippet is based on [[https://emacsredux.com/blog/2013/03/27/indent-re
     (if (region-active-p)
         (progn
           (indent-region (region-beginning) (region-end))
-          (message "Indented selected region."))
+          (message "Indented selected region"))
       (progn
         (fw/indent-buffer)
-        (message "Indented buffer.")))))
+        (message "Indented buffer")))))
 #+END_SRC
 
 * File Major Modes
