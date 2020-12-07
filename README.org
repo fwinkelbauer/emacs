@@ -488,6 +488,19 @@ The below snippet is based on [[https://emacsredux.com/blog/2013/03/27/indent-re
         (message "Indented buffer")))))
 #+END_SRC
 
+* Browser Functions
+
+I like to use [[https://dict.leo.org][dict.leo.org]] English/German dictionary:
+
+#+BEGIN_SRC emacs-lisp
+(defun fw/browser-query-leo ()
+  (interactive)
+  (browse-url
+   (concat
+    "https://dict.leo.org/german-english/?side=both&search="
+    (read-string "Lookup on dict.leo: "))))
+#+END_SRC
+
 * File Major Modes
 
 #+BEGIN_SRC emacs-lisp
@@ -726,6 +739,7 @@ hydras and the apps/menu key:
   ("o" other-window "Goto other window")
   ("O" window-swap-states "Swap other window")
   ("r" fw/hydra-rectangle/body "Rectangle" :column "Misc")
+  ("d" fw/browser-query-leo "dict.leo.org")
   ("SPC" set-mark-command "Set mark")
   ("<return>" counsel-M-x "Execute")
   ("q" nil "Quit" :column "")
