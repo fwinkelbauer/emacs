@@ -465,29 +465,6 @@ clipboard."
   (fw/copy-to-clipboard (file-relative-name (fw/buffer-file-name))))
 #+END_SRC
 
-* Buffer Functions
-
-The below snippet is based on [[https://emacsredux.com/blog/2013/03/27/indent-region-or-buffer/][this blog post]]:
-
-#+BEGIN_SRC emacs-lisp
-(defun fw/indent-buffer ()
-  "Indent the currently visited buffer."
-  (interactive)
-  (indent-region (point-min) (point-max)))
-
-(defun fw/indent-region-or-buffer ()
-  "Indent a region if selected, otherwise the whole buffer."
-  (interactive)
-  (save-excursion
-    (if (region-active-p)
-        (progn
-          (indent-region (region-beginning) (region-end))
-          (message "Indented selected region"))
-      (progn
-        (fw/indent-buffer)
-        (message "Indented buffer")))))
-#+END_SRC
-
 * File Major Modes
 
 #+BEGIN_SRC emacs-lisp
