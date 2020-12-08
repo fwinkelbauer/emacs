@@ -696,19 +696,12 @@ A post by [[http://xahlee.info/kbd/whats_the_use_of_the_menu_app_key.html][Xah L
 hydras and the apps/menu key:
 
 #+BEGIN_SRC emacs-lisp
-(defhydra fw/hydra-rectangle (:color pink
-                              :body-pre (rectangle-mark-mode 1)
-                              :post (deactivate-mark))
-  ("i" string-rectangle "Insert" :column "Rectangle")
-  ("d" delete-rectangle "Delete")
-  ("SPC" (rectangle-mark-mode 1) "Mark")
-  ("q" nil "Quit" :column ""))
-
 (defhydra fw/hydra-main (:color blue)
   ("f" counsel-find-file "Find file" :column "Search")
   ("F" fw/file-jump "Find file recursive")
   ("s" swiper "Search buffer")
   ("S" counsel-rg "Search directory")
+  ("g" goto-line "Goto line")
   ("." fw/hydra-point/body "Point")
   ("w" (funcall (key-binding (kbd "C-x C-s"))) "Save buffer" :column "Buffer")
   ("k" kill-this-buffer "Kill this buffer")
@@ -731,6 +724,14 @@ hydras and the apps/menu key:
   ("q" nil "Quit" :column "")
   ("Q" save-buffers-kill-terminal "Exit Emacs"))
 
+(defhydra fw/hydra-rectangle (:color pink
+                              :body-pre (rectangle-mark-mode 1)
+                              :post (deactivate-mark))
+  ("i" string-rectangle "Insert" :column "Rectangle")
+  ("d" delete-rectangle "Delete")
+  ("SPC" (rectangle-mark-mode 1) "Mark")
+  ("q" nil "Quit" :column ""))
+
 (defhydra fw/hydra-point (:color blue)
   ("s" swiper-isearch-thing-at-point "Search buffer" :column "Search")
   ("S" fw/counsel-rg-thing-at-point "Search directory")
@@ -738,18 +739,23 @@ hydras and the apps/menu key:
   ("u" unhighlight-regexp "Unhighlight")
   ("q" nil "Quit" :column ""))
 
-(defhydra fw/hydra-misc (:color blue)
-  ("c" fw/compile "Compile" :column "Programming")
-  ("r" fw/recompile "Recompile")
-  ("g" goto-line "Goto line")
-  ("w" whitespace-mode "Show whitespace")
-  ("o" fw/find-file-or-find-file-literally "Open with(out) encoding")
-  ("f" fw/copy-relative-buffer-name-to-clipboard "Copy relative file name")
-  ("F" fw/copy-absolute-buffer-name-to-clipboard "Copy absolute file name")
-  ("e" eval-last-sexp "Eval expression")
-  ("E" eval-buffer "Eval buffer")
-  ("<tab>" fw/indent-region-or-buffer "Indent buffer")
-  ("i" fw/org-capture-inbox "Inbox" :column "Org")
+(defhydra fw/hydra-project (:color blue)
+  ("s" fw/shell "Shell" :column "Applications")
+  ("f" fw/native-file-manager "File manager")
+  ("c" fw/recompile "Recompile" :column "Programming")
+  ("C" fw/compile "Compile")
+  ("q" nil "Quit" :column ""))
+
+(defhydra fw/hydra-magit (:color blue)
+  ("g" magit-status "Status" :column "Magit")
+  ("o" fw/prefix-magit-status "Open repository")
+  ("f" magit-file-dispatch "File dispatch")
+  ("p" fw/git-pull-all "Pull all repositories")
+  ("q" nil "Quit" :column ""))
+
+(defhydra fw/hydra-org (:color blue)
+  ("a" fw/org-agenda "Agenda" :column "Org")
+  ("i" fw/org-capture-inbox "Inbox")
   ("l" org-insert-link "Link")
   ("t" org-todo "Todo")
   ("s" org-schedule "Schedule")
@@ -757,26 +763,28 @@ hydras and the apps/menu key:
   ("." org-time-stamp "Timestamp")
   ("#" org-insert-structure-template "Template")
   ("b" org-babel-tangle "Babel")
-  ("m" magit-file-dispatch "File dispatch" :column "Magit")
-  ("p" fw/git-pull-all "Pull all")
   ("q" nil "Quit" :column ""))
 
 (global-set-key (kbd "<menu>") 'fw/hydra-main/body)
 (global-set-key (kbd "<apps>") 'fw/hydra-main/body)
 (global-set-key (kbd "<f5>") 'fw/hydra-main/body)
-(global-set-key (kbd "<f6>") 'fw/hydra-misc/body)
+
+(global-set-key (kbd "<f8>") 'neotree-toggle)
+(global-set-key (kbd "<S-f8>") 'fw/neotree-dir)
+
+(global-set-key (kbd "<f9>") 'fw/shell)
+(global-set-key (kbd "<S-f9>") 'fw/hydra-project/body)
+
+(global-set-key (kbd "<f10>") 'magit-status)
+(global-set-key (kbd "<S-f10>") 'fw/hydra-magit/body)
+
+(global-set-key (kbd "<f11>") 'elfeed)
+
+(global-set-key (kbd "<f12>") 'fw/org-agenda)
+(global-set-key (kbd "<S-f12>") 'fw/hydra-org/body)
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-x s") 'save-buffer)
-
-(global-set-key (kbd "<f8>") 'neotree-toggle)
-(global-set-key (kbd "S-<f8>") 'fw/neotree-dir)
-(global-set-key (kbd "<f9>") 'fw/shell)
-(global-set-key (kbd "S-<f9>") 'fw/native-file-manager)
-(global-set-key (kbd "<f10>") 'magit-status)
-(global-set-key (kbd "S-<f10>") 'fw/prefix-magit-status)
-(global-set-key (kbd "<f11>") 'elfeed)
-(global-set-key (kbd "<f12>") 'fw/org-agenda)
 
 (global-unset-key (kbd "C-a"))
 (global-unset-key (kbd "C-e"))
