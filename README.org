@@ -734,7 +734,7 @@ hydras and the apps/menu key:
   ("q" nil "Quit" :column ""))
 
 (defhydra fw/hydra-org (:color blue)
-  ("a" fw/org-agenda "Agenda" :column "Org")
+  ("o" fw/org-agenda "Agenda" :column "Org")
   ("i" fw/org-capture-inbox "Inbox")
   ("l" org-insert-link "Link")
   ("t" org-todo "Todo")
@@ -747,8 +747,8 @@ hydras and the apps/menu key:
 
 (defhydra fw/hydra-meta (:color blue)
   ("x" fw/hydra-common/body "Common" :column "Meta")
-  ("n" fw/hydra-neotree/body "Neotree")
-  ("p" fw/hydra-project/body "Project")
+  ("t" fw/hydra-neotree/body "Neotree")
+  ("f" fw/hydra-project/body "Project")
   ("g" fw/hydra-magit/body "Magit")
   ("e" elfeed "Elfeed")
   ("o" fw/hydra-org/body "Org")
