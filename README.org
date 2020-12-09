@@ -673,7 +673,7 @@ A post by [[http://xahlee.info/kbd/whats_the_use_of_the_menu_app_key.html][Xah L
 hydras and the apps/menu key:
 
 #+BEGIN_SRC emacs-lisp
-(defhydra fw/hydra-main (:color blue)
+(defhydra fw/hydra-common (:color blue)
   ("f" counsel-find-file "Find file" :column "Search")
   ("F" fw/file-jump "Find file recursive")
   ("s" swiper "Search buffer")
@@ -720,6 +720,12 @@ hydras and the apps/menu key:
   ("C" fw/compile "Compile")
   ("q" nil "Quit" :column ""))
 
+(defhydra fw/hydra-neotree (:color blue)
+  ("t" neotree-toggle "Toggle" :column "Neotree")
+  ("d" fw/neotree-dir "Directory")
+  ("f" neotree-find "Find")
+  ("q" nil "Quit" :column ""))
+
 (defhydra fw/hydra-magit (:color blue)
   ("g" magit-status "Status" :column "Magit")
   ("o" fw/prefix-magit-status "Open repository")
@@ -739,12 +745,26 @@ hydras and the apps/menu key:
   ("b" org-babel-tangle "Babel")
   ("q" nil "Quit" :column ""))
 
-(global-set-key (kbd "<menu>") 'fw/hydra-main/body)
-(global-set-key (kbd "<apps>") 'fw/hydra-main/body)
-(global-set-key (kbd "<f5>") 'fw/hydra-main/body)
+(defhydra fw/hydra-meta (:color blue)
+  ("x" fw/hydra-common/body "Common" :column "Meta")
+  ("n" fw/hydra-neotree/body "Neotree")
+  ("p" fw/hydra-project/body "Project")
+  ("g" fw/hydra-magit/body "Magit")
+  ("e" elfeed "Elfeed")
+  ("o" fw/hydra-org/body "Org")
+  ("q" nil "Quit" :column ""))
+
+(global-set-key (kbd "<menu>") 'fw/hydra-common/body)
+(global-set-key (kbd "<S-menu>") 'fw/hydra-meta/body)
+
+(global-set-key (kbd "<apps>") 'fw/hydra-common/body)
+(global-set-key (kbd "<S-apps>") 'fw/hydra-meta/body)
+
+(global-set-key (kbd "<f5>") 'fw/hydra-common/body)
+(global-set-key (kbd "<S-f5>") 'fw/hydra-meta/body)
 
 (global-set-key (kbd "<f8>") 'neotree-toggle)
-(global-set-key (kbd "<S-f8>") 'fw/neotree-dir)
+(global-set-key (kbd "<S-f8>") 'fw/hydra-neotree/body)
 
 (global-set-key (kbd "<f9>") 'fw/shell)
 (global-set-key (kbd "<S-f9>") 'fw/hydra-project/body)
