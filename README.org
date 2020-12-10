@@ -519,6 +519,17 @@ with just some minor adjustments:
 (setq neo-autorefresh nil)
 #+END_SRC
 
+Fix ~neotree-open-file-in-system-application~ on Windows. Based on [[https://stackoverflow.com/questions/43129522/emacs-neotree-open-file-at-point-in-external-application][this blog
+post]]:
+
+#+BEGIN_SRC emacs-lisp
+(when fw/is-windows
+  (require 'neotree)
+  (defun neotree-open-file-in-system-application ()
+    (interactive)
+    (shell-command (concat "start " (neo-buffer--get-filename-current-line)))))
+#+END_SRC
+
 ** Magit
 
 #+BEGIN_SRC emacs-lisp
