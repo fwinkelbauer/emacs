@@ -311,6 +311,18 @@ Setup org-capture:
   (org-capture nil "i"))
 #+END_SRC
 
+Create a function to show a simple diary file:
+
+#+BEGIN_SRC emacs-lisp
+(setq fw/default-diary-directory "~/org/diary")
+
+(defun fw/org-diary ()
+  "Opens a diary file with the current date"
+  (interactive)
+  (find-file (concat (file-name-as-directory fw/default-diary-directory)
+                     (format-time-string "%Y-%m-%d") ".org")))
+#+END_SRC
+
 Basic agenda configuration with a custom agenda view:
 
 #+BEGIN_SRC emacs-lisp
@@ -746,10 +758,11 @@ hydras and the apps/menu key:
 (defhydra fw/hydra-org (:color blue)
   ("o" fw/org-agenda "Agenda" :column "Org")
   ("i" fw/org-capture-inbox "Inbox")
+  ("d" fw/org-diary "Diary")
   ("l" org-insert-link "Link")
   ("t" org-todo "Todo")
   ("s" org-schedule "Schedule")
-  ("d" org-deadline "Deadline")
+  ("e" org-deadline "Deadline")
   ("." org-time-stamp "Timestamp")
   ("#" org-insert-structure-template "Template")
   ("b" org-babel-tangle "Babel")
