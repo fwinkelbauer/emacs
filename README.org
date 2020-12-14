@@ -372,6 +372,15 @@ Thanks to [[https://www.reddit.com/r/orgmode/comments/fg1im8/calendar_notificati
 (add-hook 'org-agenda-finalize-hook 'fw/org-agenda-to-appt)
 #+END_SRC
 
+Define a function to make my org-agenda pretty. Based on [[https://old.reddit.com/r/emacs/comments/hnf3cw/my_orgmode_agenda_much_better_now_with_category/][this reddit post]]:
+
+#+BEGIN_SRC emacs-lisp
+(defun fw/org-agenda-category-icon (category icon)
+  "Returns an `org-agenda-category-icon-alist' entry using an
+`all-the-icons-material' icon"
+  `(,category ,(list (all-the-icons-material icon)) nil nil :ascent center))
+#+END_SRC
+
 * Directory/File Functions
 
 Define a function to open the current directory in an external file
