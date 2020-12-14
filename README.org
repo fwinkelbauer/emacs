@@ -125,20 +125,6 @@ Delete trailing whitespace on save:
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
-It's useful to open a file without any encoding:
-
-#+BEGIN_SRC emacs-lisp
-(defun fw/find-file-or-find-file-literally ()
-  "Kills the current buffer and opens it via `find-file' or`find-file-literally'."
-  (interactive)
-  (let ((current-file-name buffer-file-name)
-        (current-is-literal (string= buffer-file-coding-system "no-conversion")))
-    (kill-this-buffer)
-    (if current-is-literal
-        (find-file current-file-name)
-      (find-file-literally current-file-name))))
-#+END_SRC
-
 * Styling
 
 Hide toolbar:
@@ -486,12 +472,6 @@ clipboard."
   (fw/copy-to-clipboard (file-relative-name (fw/buffer-file-name))))
 #+END_SRC
 
-* File Major Modes
-
-#+BEGIN_SRC emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.editorconfig\\'" . conf-mode))
-#+END_SRC
-
 * External Packages
 
 ** Compilation
@@ -744,6 +724,12 @@ hydras and the apps/menu key:
   ("u" unhighlight-regexp "Unhighlight")
   ("q" nil "Quit" :column ""))
 
+(defhydra fw/hydra-neotree (:color blue)
+  ("t" neotree-toggle "Toggle" :column "Neotree")
+  ("d" fw/neotree-dir "Directory")
+  ("f" neotree-find "Find")
+  ("q" nil "Quit" :column ""))
+
 (defhydra fw/hydra-project (:color blue)
   ("s" fw/shell "Shell" :column "Applications")
   ("f" fw/native-file-manager "File manager")
@@ -751,15 +737,9 @@ hydras and the apps/menu key:
   ("C" fw/compile "Compile")
   ("q" nil "Quit" :column ""))
 
-(defhydra fw/hydra-neotree (:color blue)
-  ("t" neotree-toggle "Toggle" :column "Neotree")
-  ("d" fw/neotree-dir "Directory")
-  ("f" neotree-find "Find")
-  ("q" nil "Quit" :column ""))
-
 (defhydra fw/hydra-magit (:color blue)
   ("g" magit-status "Status" :column "Magit")
-  ("o" fw/prefix-magit-status "Open repository")
+  ("G" fw/prefix-magit-status "Open repository")
   ("f" magit-file-dispatch "File dispatch")
   ("p" fw/git-pull-all "Pull all repositories")
   ("q" nil "Quit" :column ""))
