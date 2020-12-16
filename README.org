@@ -791,10 +791,6 @@ hydras and the apps/menu key:
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-x s") 'save-buffer)
-
-(global-unset-key (kbd "C-a"))
-(global-unset-key (kbd "C-e"))
-(global-unset-key (kbd "C-SPC"))
 #+END_SRC
 
 * Custom
