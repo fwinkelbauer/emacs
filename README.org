@@ -796,7 +796,7 @@ hydras and the apps/menu key:
 * Custom
 
 Additional configuration that is only relevant on a particular machine should be
-stored in ~/.emacs.d/custom.el~.
+stored in a ~custom.el~ file:
 
 #+BEGIN_SRC emacs-lisp
 (when (file-exists-p "~/.emacs.d/custom.el")
