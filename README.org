@@ -707,6 +707,7 @@ hydras and the apps/menu key:
   ("g" fw/hydra-project/body "Project")
   ("e" elfeed "Elfeed")
   ("o" fw/hydra-org/body "Org")
+  ("i" fw/hydra-modes/body "Modes")
   ("SPC" set-mark-command "Set mark" :column "Misc")
   ("<return>" counsel-M-x "Execute")
   ("q" nil "Quit" :column "")
@@ -752,6 +753,13 @@ hydras and the apps/menu key:
   ("." org-time-stamp "Timestamp")
   ("#" org-insert-structure-template "Template")
   ("b" org-babel-tangle "Babel")
+  ("q" nil "Quit" :column ""))
+
+(defhydra fw/hydra-modes (:color blue)
+  ("i" ispell-word "Check word" :column "Spelling")
+  ("f" flyspell-mode "Flyspell mode")
+  ("b" flyspell-buffer "Flyspell buffer")
+  ("w" whitespace-mode "Whitespace mode")
   ("q" nil "Quit" :column ""))
 
 (global-set-key (kbd "<menu>") 'fw/hydra-main/body)
