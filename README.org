@@ -710,6 +710,8 @@ hydras and the apps/menu key:
   ("i" fw/hydra-modes/body "Modes")
   ("SPC" set-mark-command "Set mark" :column "Misc")
   ("<return>" counsel-M-x "Execute")
+  ("z" fw/copy-relative-buffer-name-to-clipboard "Copy relative")
+  ("Z" fw/copy-absolute-buffer-name-to-clipboard "Copy absolute")
   ("q" nil "Quit" :column "")
   ("Q" save-buffers-kill-terminal "Exit Emacs"))
 
