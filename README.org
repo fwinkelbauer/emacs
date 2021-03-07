@@ -709,7 +709,7 @@ A post by [[http://xahlee.info/kbd/whats_the_use_of_the_menu_app_key.html][Xah L
 hydras and the apps/menu key:
 
 #+BEGIN_SRC emacs-lisp
-(defhydra fw/hydra-main (:color blue)
+(defhydra fw/hydra-main (:color teal)
   ("f" counsel-find-file "Find file" :column "Search")
   ("F" fw/file-jump "Find file recursive")
   ("s" swiper "Search buffer")
@@ -748,14 +748,14 @@ hydras and the apps/menu key:
   ("SPC" (rectangle-mark-mode 1) "Mark")
   ("q" nil "Quit" :column ""))
 
-(defhydra fw/hydra-point (:color blue)
+(defhydra fw/hydra-point (:color teal)
   ("s" swiper-isearch-thing-at-point "Search buffer" :column "Search")
   ("S" fw/counsel-rg-thing-at-point "Search directory")
   ("h" highlight-symbol-at-point "Highlight" :column "Highlight")
   ("u" unhighlight-regexp "Unhighlight")
   ("q" nil "Quit" :column ""))
 
-(defhydra fw/hydra-project (:color blue)
+(defhydra fw/hydra-project (:color teal)
   ("g" magit-status "Status" :column "Magit")
   ("o" fw/prefix-magit-status "Open repository")
   ("f" magit-file-dispatch "File dispatch")
@@ -769,7 +769,7 @@ hydras and the apps/menu key:
   ("l" neotree-find "Find")
   ("q" nil "Quit" :column ""))
 
-(defhydra fw/hydra-org (:color blue)
+(defhydra fw/hydra-org (:color teal)
   ("o" fw/org-agenda "Agenda" :column "Org")
   ("i" fw/org-capture-inbox "Inbox")
   ("d" fw/org-diary "Diary")
@@ -783,7 +783,7 @@ hydras and the apps/menu key:
   ("B" org-babel-tangle "Babel")
   ("q" nil "Quit" :column ""))
 
-(defhydra fw/hydra-modes (:color blue)
+(defhydra fw/hydra-modes (:color teal)
   ("i" ispell-word "Check word" :column "Spelling")
   ("f" flyspell-mode "Flyspell mode")
   ("b" flyspell-buffer "Flyspell buffer")
