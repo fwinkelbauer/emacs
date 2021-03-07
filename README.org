@@ -7,127 +7,127 @@ I am currently running GNU Emacs 26.3.
 
 * OS Detection
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq fw/is-linux (eq system-type 'gnu/linux)
       fw/is-windows (eq system-type 'windows-nt))
-#+END_SRC
+#+end_src
 
 * General
 
 Simplify confirmation:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
-#+END_SRC
+#+end_src
 
 Reload a file if it changed on disk:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (global-auto-revert-mode t)
-#+END_SRC
+#+end_src
 
 Disable backup, auto save and lock files:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq backup-inhibited t
       auto-save-default nil
       create-lockfiles nil)
-#+END_SRC
+#+end_src
 
 Disable audio bell:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq visible-bell t)
-#+END_SRC
+#+end_src
 
 Hide startup message and show an empty scratch buffer:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq inhibit-startup-message t
       initial-scratch-message nil)
-#+END_SRC
+#+end_src
 
 Increase the garbage collection threshold:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq gc-cons-threshold 20000000)
-#+END_SRC
+#+end_src
 
 Always start in fullscreen:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
-#+END_SRC
+#+end_src
 
 Make scrolling a little bit smoother:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq mouse-wheel-progressive-speed nil)
-#+END_SRC
+#+end_src
 
 * Server
 
 Start Emacs in server mode:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (require 'server)
 (unless (server-running-p) (server-start))
-#+END_SRC
+#+end_src
 
 * Text
 
 Prefer UTF-8:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (prefer-coding-system 'utf-8)
-#+END_SRC
+#+end_src
 
 Set default line length:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq-default fill-column 80)
-#+END_SRC
+#+end_src
 
 Overwrite selected text when typing:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (delete-selection-mode t)
-#+END_SRC
+#+end_src
 
 Ensure that files end with a new line:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq require-final-newline t)
-#+END_SRC
+#+end_src
 
 Mark matching pairs of parentheses:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (show-paren-mode t)
 (setq show-paren-delay 0.0)
-#+END_SRC
+#+end_src
 
 Spaces > Tabs:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq-default indent-tabs-mode nil)
-#+END_SRC
+#+end_src
 
 Use single space after a sentence:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq sentence-end-double-space nil)
-#+END_SRC
+#+end_src
 
 Delete trailing whitespace on save:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-#+END_SRC
+#+end_src
 
 It's useful to open a file without any encoding:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/find-file-or-find-file-literally ()
   "Kills the current buffer and opens it via `find-file' or`find-file-literally'."
   (interactive)
@@ -137,42 +137,42 @@ It's useful to open a file without any encoding:
     (if current-is-literal
         (find-file current-file-name)
       (find-file-literally current-file-name))))
-#+END_SRC
+#+end_src
 
 * Styling
 
 Hide toolbar:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (tool-bar-mode -1)
-#+END_SRC
+#+end_src
 
 Set the default font:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (set-face-attribute 'default nil
                     :family "Roboto Mono Medium"
                     :height 120
                     :weight 'normal
                     :width 'normal)
-#+END_SRC
+#+end_src
 
 Enable column numbers:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq column-number-mode t)
-#+END_SRC
+#+end_src
 
 Highlight current line:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (when window-system
   (global-hl-line-mode))
-#+END_SRC
+#+end_src
 
 * Ibuffer
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq-default ibuffer-saved-filter-groups
               `(("Default"
                  ("Temporary" (name . "\*.*\*"))
@@ -185,7 +185,7 @@ Highlight current line:
 
 (setq ibuffer-show-empty-filter-groups nil
       ibuffer-expert t)
-#+END_SRC
+#+end_src
 
 * Window
 
@@ -193,7 +193,7 @@ By default, ~split-window-vertically~ and ~split-window-horizontally~ display
 the current buffer twice. Most of the time I'll change the buffer in the second
 window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_tips_and_tricks/chldury/][this snippet]] looks really handy:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/vsplit-last-buffer ()
   "Split the selected window into two vertical windows."
   (interactive)
@@ -207,44 +207,44 @@ window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_
   (split-window-horizontally)
   (other-window 1)
   (switch-to-next-buffer))
-#+END_SRC
+#+end_src
 
 In a split screen scenario it is sometimes convenient to delete the window while
 killing a buffer:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/kill-this-buffer ()
   "Kills this buffer and removes this window when split."
   (interactive)
   (kill-this-buffer)
   (when (> (length (window-list)) 1)
       (delete-window)))
-#+END_SRC
+#+end_src
 
 * Org
 
 General org configuration:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (require 'org)
 (setq org-catch-invisible-edits 'smart
       org-log-into-drawer t
       org-capture-bookmark nil)
-#+END_SRC
+#+end_src
 
 Improve org's source code blocks:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq org-src-fontify-natively t
       org-src-tab-acts-natively t
       org-src-window-setup 'current-window
       org-edit-src-content-indentation 0)
-#+END_SRC
+#+end_src
 
 The calendar should use my native language. The ~calendar-set-date-style~ line
 changes the date format in ~%%(diary.anniversary ...)~:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (require 'calendar)
 (calendar-set-date-style 'iso)
 (setq calendar-week-start-day 1
@@ -270,11 +270,11 @@ changes the date format in ~%%(diary.anniversary ...)~:
                             ("dienstag" . 2) ("mittwoch" . 3)
                             ("donnerstag" . 4) ("freitag" . 5)
                             ("samstag" . 6)))
-#+END_SRC
+#+end_src
 
 I've found this snippet of Austrian holidays in [[https://github.com/novoid/dot-emacs/blob/master/config.org][Karl Voit's configuration]]:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq holiday-local-holidays
       '((holiday-fixed  1  1 "Neujahr (frei)")
         (holiday-fixed  1  6 "Heilige Drei Könige (frei)")
@@ -294,11 +294,11 @@ I've found this snippet of Austrian holidays in [[https://github.com/novoid/dot-
         (holiday-fixed 12 26 "Zweiter Weihnachtstag (frei)")))
 
 (setq calendar-holidays (append holiday-local-holidays holiday-other-holidays))
-#+END_SRC
+#+end_src
 
 Setup org-capture:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq fw/default-inbox "~/org/inbox.org")
 
 (setq org-capture-templates
@@ -309,11 +309,11 @@ Setup org-capture:
   "Opens my inbox `org-capture' template"
   (interactive)
   (org-capture nil "i"))
-#+END_SRC
+#+end_src
 
 Create a function to show a simple diary file:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq fw/default-diary-directory "~/org/diary")
 
 (defun fw/org-diary ()
@@ -321,11 +321,11 @@ Create a function to show a simple diary file:
   (interactive)
   (find-file (concat (file-name-as-directory fw/default-diary-directory)
                      (format-time-string "%Y-%m-%d") ".org")))
-#+END_SRC
+#+end_src
 
 Basic agenda configuration with a custom agenda view:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq org-agenda-skip-scheduled-if-done t)
 
 (setq org-agenda-custom-commands
@@ -345,20 +345,20 @@ Basic agenda configuration with a custom agenda view:
   (delete-other-windows)
   (find-file fw/default-inbox)
   (org-agenda nil "."))
-#+END_SRC
+#+end_src
 
 I don't want to see repeating TODOs in my calendar. The variable name to change
 this behavior is different depending on the current version of org-mode, so I'll
 set them both:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq org-agenda-show-future-repeats nil
       org-agenda-repeating-timestamp-show-all nil)
-#+END_SRC
+#+end_src
 
 Thanks to [[https://www.reddit.com/r/orgmode/comments/fg1im8/calendar_notifications_on_windows_10/][this reddit post]] I can now get calendar notifications using org:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (require 'appt)
 (appt-activate t)
 
@@ -370,34 +370,34 @@ Thanks to [[https://www.reddit.com/r/orgmode/comments/fg1im8/calendar_notificati
 
 (fw/org-agenda-to-appt)
 (add-hook 'org-agenda-finalize-hook 'fw/org-agenda-to-appt)
-#+END_SRC
+#+end_src
 
 Define a function to make my org-agenda pretty. Based on [[https://old.reddit.com/r/emacs/comments/hnf3cw/my_orgmode_agenda_much_better_now_with_category/][this reddit post]]:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/org-agenda-category-icon (category icon)
   "Returns an `org-agenda-category-icon-alist' entry using an
 `all-the-icons-material' icon"
   `(,category ,(list (all-the-icons-material icon)) nil nil :ascent center))
-#+END_SRC
+#+end_src
 
 Add a convenient way to enter/exit source blocks:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/org-edit-src ()
   "Calls `org-edit-special' or `org-edit-src-exit'"
   (interactive)
   (if (bound-and-true-p org-src-mode)
       (org-edit-src-exit)
     (org-edit-special)))
-#+END_SRC
+#+end_src
 
 * Directory/File Functions
 
 Define a function to open the current directory in an external file
 manager:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/linux-thunar ()
   "Opens thunar (Linux XFCE) in `default-directory'."
   (start-process "thunar" nil "thunar" default-directory))
@@ -413,12 +413,12 @@ manager:
       (fw/linux-thunar))
   (when fw/is-windows
       (fw/windows-explorer)))
-#+END_SRC
+#+end_src
 
 I'd like to open a shell buffer in either the current directory, or in the root
 directory of a project in version control:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/default-or-root-dir ()
   "Returns `magit-toplevel' or `default-directory'."
   (require 'magit)
@@ -435,11 +435,11 @@ directory of a project in version control:
     (if (string= (buffer-name) shell-buffer-name)
         (delete-window)
       (shell shell-buffer-name))))
-#+END_SRC
+#+end_src
 
 Run ~compile~ in the current/root directory:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq compilation-scroll-output t)
 
 (defun fw/compile ()
@@ -455,11 +455,11 @@ Run ~compile~ in the current/root directory:
   (let ((default-directory (fw/default-or-root-dir)))
     (call-interactively #'recompile))
   (pop-to-buffer (get-buffer "*compilation*")))
-#+END_SRC
+#+end_src
 
 Create an alternative to ~find-file~ which includes subdirectories:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/file-jump ()
   "Run `counsel-git' or `counsel-file-jump'"
   (interactive)
@@ -467,11 +467,11 @@ Create an alternative to ~find-file~ which includes subdirectories:
   (if (eq (magit-toplevel) nil)
       (counsel-file-jump)
     (counsel-git)))
-#+END_SRC
+#+end_src
 
 Put the file name of the current buffer onto the clipborad. Adapted from [[https://blog.sumtypeofway.com/posts/emacs-config.html][here]]:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/buffer-file-name ()
   "Returns the absolute file name of the current buffer"
   (if (equal major-mode 'dired-mode)
@@ -495,7 +495,7 @@ clipboard."
 clipboard."
   (interactive)
   (fw/copy-to-clipboard (file-relative-name (fw/buffer-file-name))))
-#+END_SRC
+#+end_src
 
 * External Packages
 
@@ -504,74 +504,74 @@ clipboard."
 I have excluded ~*.elc~ files in this git repository, which is why I need a
 function to compile new packages:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/compile-elpa-dir ()
   "Byte-compile all elpa packages."
   (interactive)
   (byte-recompile-directory (concat user-emacs-directory "elpa") 0))
-#+END_SRC
+#+end_src
 
 ** Themes
 
 I like to use [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light themes]]:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (load-theme 'sanityinc-tomorrow-day t)
-#+END_SRC
+#+end_src
 
 with just some minor adjustments:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (set-face-attribute 'org-agenda-structure nil :height 1.25)
 (set-face-attribute 'org-agenda-date-today nil :slant 'normal)
-#+END_SRC
+#+end_src
 
 ** Markdown
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (autoload 'gfm-mode "markdown-mode"
   "Major mode for editing GitHub Flavored Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
-#+END_SRC
+#+end_src
 
 ** Neotree
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/neotree-dir ()
   "Open neotree in `magit-toplevel' or `default-directory'."
   (interactive)
   (neotree-dir (fw/default-or-root-dir)))
 
 (setq neo-autorefresh nil)
-#+END_SRC
+#+end_src
 
 Fix ~neotree-open-file-in-system-application~ on Windows:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (when fw/is-windows
   (require 'neotree)
   (defun neotree-open-file-in-system-application ()
     (interactive)
     (shell-command (concat "start " (neo-buffer--get-filename-current-line)))))
-#+END_SRC
+#+end_src
 
 ** Magit
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq git-commit-summary-max-length 50
       git-commit-fill-column 72
       magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
-#+END_SRC
+#+end_src
 
 I'd like to spellcheck my commit messages:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (add-hook 'git-commit-mode-hook 'flyspell-mode)
-#+END_SRC
+#+end_src
 
 Add a custom function to pull from all repositories:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/git-pull-all ()
   "Runs `vc-git-pull' for every repository found in `magit-list-repos'"
   (interactive)
@@ -581,26 +581,26 @@ Add a custom function to pull from all repositories:
       (dolist (path (magit-list-repos))
         (let ((default-directory path))
           (vc-git-pull nil)))))
-#+END_SRC
+#+end_src
 
 Running ~magit-status~ with a prefix argument shows all repositories defined in
 ~magit-repository-directories~, even if I am already in a git repository. Since
 I don't like to press ~C-u~, I'll define a function to do it for me:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/prefix-magit-status ()
   "Runs C-u `magit-status'"
   (interactive)
   (setq current-prefix-arg '(4))
   (call-interactively 'magit-status))
-#+END_SRC
+#+end_src
 
 ** Elfeed
 
 Let's extend elfeed's UI so that I can use ~youtube-dl~ to download RSS video
 feeds. This snippet is based on code I found [[https://github.com/skeeto/.emacs.d/blob/master/etc/feed-setup.el][here]] and [[https://codingquark.com/emacs/2019/05/16/emacs-elfeed-youtube.html][here]]:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (require 'elfeed)
 
 (defun fw/youtube-dl (url)
@@ -620,21 +620,21 @@ feeds. This snippet is based on code I found [[https://github.com/skeeto/.emacs.
 
 (define-key elfeed-show-mode-map "d" 'fw/elfeed-search-youtube-dl)
 (define-key elfeed-search-mode-map "d" 'fw/elfeed-search-youtube-dl)
-#+END_SRC
+#+end_src
 
 ** Ivy, Counsel & Swiper
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (ivy-mode 1)
 (counsel-mode 1)
 (setq ivy-count-format "%d/%d ")
-#+END_SRC
+#+end_src
 
 [[https://oremacs.com/2019/07/20/ivy-0.12.0/][Ivy 0.12.0]] did add some command extensions such as ~swiper-thing-at-point~,
 which are based on ~ivy-thing-at-point~. I'd like to use ~counsel-rg~ through
 ~ivy-thing-at-point~:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/counsel-rg-thing-at-point ()
   "`counsel-rg' with `ivy-thing-at-point'."
   (interactive)
@@ -642,51 +642,51 @@ which are based on ~ivy-thing-at-point~. I'd like to use ~counsel-rg~ through
     (when (use-region-p)
       (deactivate-mark))
     (counsel-rg (regexp-quote thing))))
-#+END_SRC
+#+end_src
 
 ** Company
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq company-idle-delay 0.1
       company-minimum-prefix-length 3
       company-show-numbers t)
 
 (global-company-mode t)
-#+END_SRC
+#+end_src
 
 The dabbrev backend has some inconvenient default settings (e.g. its suggestions
 get downcased, even if notations such as camel casing are used):
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq company-dabbrev-downcase nil
       company-dabbrev-ignore-case nil)
-#+END_SRC
+#+end_src
 
 ** Doom Modeline
 
 This modeline uses ~all-the-icons~, which can be installed by running the
 command ~M-x all-the-icons-install-fonts~.
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (doom-modeline-mode 1)
-#+END_SRC
+#+end_src
 
 Do not show method names in the modeline:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq which-func-modes nil)
-#+END_SRC
+#+end_src
 
 ** PowerShell
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (add-to-list 'auto-mode-alist '("\\.psm1\\'" . powershell-mode))
 (add-to-list 'auto-mode-alist '("\\.psd1\\'" . powershell-mode))
-#+END_SRC
+#+end_src
 
 ** C Sharp
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defun fw/csharp-mode-setup ()
   (setq c-syntactic-indentation t)
   (c-set-style "ellemtel")
@@ -695,20 +695,20 @@ Do not show method names in the modeline:
 
 (add-hook 'csharp-mode-hook 'fw/csharp-mode-setup t)
 (add-to-list 'auto-mode-alist '("\\.csproj\\'" . nxml-mode))
-#+END_SRC
+#+end_src
 
 ** JavaScript
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (setq js-indent-level 2)
-#+END_SRC
+#+end_src
 
 * Keybindings
 
 A post by [[http://xahlee.info/kbd/whats_the_use_of_the_menu_app_key.html][Xah Lee]] gave me the idea to create alternative keybindings using
 hydras and the apps/menu key:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (defhydra fw/hydra-main (:color teal)
   ("f" counsel-find-file "Find file" :column "Search")
   ("F" fw/file-jump "Find file recursive")
@@ -797,14 +797,14 @@ hydras and the apps/menu key:
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-x s") 'save-buffer)
-#+END_SRC
+#+end_src
 
 * Custom
 
 Additional configuration that is only relevant on a particular machine should be
 stored in a ~custom.el~ file:
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (when (file-exists-p "~/.emacs.d/custom.el")
   (load-file "~/.emacs.d/custom.el"))
-#+END_SRC
+#+end_src
