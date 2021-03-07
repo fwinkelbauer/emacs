@@ -125,6 +125,20 @@ Delete trailing whitespace on save:
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
+It's useful to open a file without any encoding:
+
+#+BEGIN_SRC emacs-lisp
+(defun fw/find-file-or-find-file-literally ()
+  "Kills the current buffer and opens it via `find-file' or`find-file-literally'."
+  (interactive)
+  (let ((current-file-name buffer-file-name)
+        (current-is-literal (string= buffer-file-coding-system "no-conversion")))
+    (kill-this-buffer)
+    (if current-is-literal
+        (find-file current-file-name)
+      (find-file-literally current-file-name))))
+#+END_SRC
+
 * Styling
 
 Hide toolbar:
@@ -761,7 +775,8 @@ hydras and the apps/menu key:
   ("i" ispell-word "Check word" :column "Spelling")
   ("f" flyspell-mode "Flyspell mode")
   ("b" flyspell-buffer "Flyspell buffer")
-  ("w" whitespace-mode "Whitespace mode")
+  ("w" whitespace-mode "Whitespace mode" :column "Misc")
+  ("v" fw/find-file-or-find-file-literally "Open literally")
   ("q" nil "Quit" :column ""))
 
 (global-set-key (kbd "<menu>") 'fw/hydra-main/body)
