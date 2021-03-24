@@ -697,12 +697,6 @@ Do not show method names in the modeline:
 (add-to-list 'auto-mode-alist '("\\.csproj\\'" . nxml-mode))
 #+end_src
 
-** JavaScript
-
-#+begin_src emacs-lisp
-(setq js-indent-level 2)
-#+end_src
-
 * Keybindings
 
 A post by [[http://xahlee.info/kbd/whats_the_use_of_the_menu_app_key.html][Xah Lee]] gave me the idea to create alternative keybindings using
