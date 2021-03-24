@@ -3,7 +3,7 @@
 
 * Introduction
 
-I am currently running GNU Emacs 26.3.
+I am currently running GNU Emacs 27.1.
 
 * OS Detection
 
