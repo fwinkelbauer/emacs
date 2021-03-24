@@ -734,12 +734,10 @@ hydras and the apps/menu key:
   ("q" nil "Quit" :column "")
   ("Q" save-buffers-kill-terminal "Exit Emacs"))
 
-(defhydra fw/hydra-rectangle (:color pink
-                              :body-pre (rectangle-mark-mode 1)
-                              :post (deactivate-mark))
-  ("i" string-rectangle "Insert" :column "Rectangle")
+(defhydra fw/hydra-rectangle (:color teal)
+  ("r" (rectangle-mark-mode 1) "Mark" :column "Rectangle")
+  ("i" string-rectangle "Insert")
   ("d" delete-rectangle "Delete")
-  ("SPC" (rectangle-mark-mode 1) "Mark")
   ("q" nil "Quit" :column ""))
 
 (defhydra fw/hydra-point (:color teal)
