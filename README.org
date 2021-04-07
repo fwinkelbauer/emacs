@@ -381,17 +381,6 @@ Define a function to make my org-agenda pretty. Based on [[https://old.reddit.co
   `(,category ,(list (all-the-icons-material icon)) nil nil :ascent center))
 #+end_src
 
-Add a convenient way to enter/exit source blocks:
-
-#+begin_src emacs-lisp
-(defun fw/org-edit-src ()
-  "Calls `org-edit-special' or `org-edit-src-exit'"
-  (interactive)
-  (if (bound-and-true-p org-src-mode)
-      (org-edit-src-exit)
-    (org-edit-special)))
-#+end_src
-
 * Directory/File Functions
 
 Define a function to open the current directory in an external file
@@ -773,7 +762,7 @@ hydras and the apps/menu key:
   ("e" org-deadline "Deadline")
   ("." org-time-stamp "Timestamp")
   ("#" org-insert-structure-template "Template")
-  ("b" fw/org-edit-src "Source")
+  ("b" (funcall (key-binding (kbd "C-c '"))) "Source")
   ("B" org-babel-tangle "Babel")
   ("q" nil "Quit" :column ""))
 
