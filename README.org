@@ -714,7 +714,7 @@ hydras and the apps/menu key:
   ("<down>" windmove-down "Down")
   ("." fw/hydra-point/body "Point" :column "Hydras")
   ("r" fw/hydra-rectangle/body "Rectangle")
-  ("g" fw/hydra-project/body "Project")
+  ("j" fw/hydra-project/body "Project")
   ("e" elfeed "Elfeed")
   ("o" fw/hydra-org/body "Org")
   ("i" fw/hydra-modes/body "Modes")
@@ -722,6 +722,8 @@ hydras and the apps/menu key:
   ("<return>" counsel-M-x "Execute")
   ("z" fw/copy-relative-buffer-name-to-clipboard "Copy relative")
   ("Z" fw/copy-absolute-buffer-name-to-clipboard "Copy absolute")
+  ("g" (funcall (key-binding (kbd "C-g"))) "Keyboard quit")
+  ("G" (funcall (key-binding (kbd "ESC ESC ESC"))) "Keyboard escape")
   ("q" nil "Quit" :column "")
   ("Q" save-buffers-kill-terminal "Exit Emacs"))
 
@@ -739,7 +741,7 @@ hydras and the apps/menu key:
   ("q" nil "Quit" :column ""))
 
 (defhydra fw/hydra-project (:color teal)
-  ("g" magit-status "Status" :column "Magit")
+  ("j" magit-status "Status" :column "Magit")
   ("o" fw/prefix-magit-status "Open repository")
   ("f" magit-file-dispatch "File dispatch")
   ("p" fw/git-pull-all "Pull all")
