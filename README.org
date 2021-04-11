@@ -404,60 +404,6 @@ manager:
       (fw/windows-explorer)))
 #+end_src
 
-I'd like to open a shell buffer in either the current directory, or in the root
-directory of a project in version control:
-
-#+begin_src emacs-lisp
-(defun fw/default-or-root-dir ()
-  "Returns `magit-toplevel' or `default-directory'."
-  (require 'magit)
-  (let ((root-dir (magit-toplevel)))
-    (expand-file-name (if root-dir
-        root-dir
-      default-directory))))
-
-(defun fw/shell ()
-  "Opens or dismisses a shell in `magit-toplevel' or `default-directory'."
-  (interactive)
-  (let ((default-directory (fw/default-or-root-dir))
-        (shell-buffer-name (concat "*shell (" (fw/default-or-root-dir) ")*")))
-    (if (string= (buffer-name) shell-buffer-name)
-        (delete-window)
-      (shell shell-buffer-name))))
-#+end_src
-
-Run ~compile~ in the current/root directory:
-
-#+begin_src emacs-lisp
-(setq compilation-scroll-output t)
-
-(defun fw/compile ()
-  "Run `compile' in `magit-toplevel' or `default-directory'."
-  (interactive)
-  (let ((default-directory (fw/default-or-root-dir)))
-    (call-interactively #'compile))
-  (pop-to-buffer (get-buffer "*compilation*")))
-
-(defun fw/recompile ()
-  "Run `recompile' in `magit-toplevel' or `default-directory'."
-  (interactive)
-  (let ((default-directory (fw/default-or-root-dir)))
-    (call-interactively #'recompile))
-  (pop-to-buffer (get-buffer "*compilation*")))
-#+end_src
-
-Create an alternative to ~find-file~ which includes subdirectories:
-
-#+begin_src emacs-lisp
-(defun fw/file-jump ()
-  "Run `counsel-git' or `counsel-file-jump'"
-  (interactive)
-  (require 'magit)
-  (if (eq (magit-toplevel) nil)
-      (counsel-file-jump)
-    (counsel-git)))
-#+end_src
-
 Put the file name of the current buffer onto the clipborad. Adapted from [[https://blog.sumtypeofway.com/posts/emacs-config.html][here]]:
 
 #+begin_src emacs-lisp
@@ -582,6 +528,60 @@ I don't like to press ~C-u~, I'll define a function to do it for me:
   (interactive)
   (setq current-prefix-arg '(4))
   (call-interactively 'magit-status))
+#+end_src
+
+I'd like to open a shell buffer in either the current directory, or in the root
+directory of a project in version control:
+
+#+begin_src emacs-lisp
+(defun fw/default-or-root-dir ()
+  "Returns `magit-toplevel' or `default-directory'."
+  (require 'magit)
+  (let ((root-dir (magit-toplevel)))
+    (expand-file-name (if root-dir
+        root-dir
+      default-directory))))
+
+(defun fw/shell ()
+  "Opens or dismisses a shell in `magit-toplevel' or `default-directory'."
+  (interactive)
+  (let ((default-directory (fw/default-or-root-dir))
+        (shell-buffer-name (concat "*shell (" (fw/default-or-root-dir) ")*")))
+    (if (string= (buffer-name) shell-buffer-name)
+        (delete-window)
+      (shell shell-buffer-name))))
+#+end_src
+
+Run ~compile~ in the current/root directory:
+
+#+begin_src emacs-lisp
+(setq compilation-scroll-output t)
+
+(defun fw/compile ()
+  "Run `compile' in `magit-toplevel' or `default-directory'."
+  (interactive)
+  (let ((default-directory (fw/default-or-root-dir)))
+    (call-interactively #'compile))
+  (pop-to-buffer (get-buffer "*compilation*")))
+
+(defun fw/recompile ()
+  "Run `recompile' in `magit-toplevel' or `default-directory'."
+  (interactive)
+  (let ((default-directory (fw/default-or-root-dir)))
+    (call-interactively #'recompile))
+  (pop-to-buffer (get-buffer "*compilation*")))
+#+end_src
+
+Create an alternative to ~find-file~ which includes subdirectories:
+
+#+begin_src emacs-lisp
+(defun fw/file-jump ()
+  "Run `counsel-git' or `counsel-file-jump'"
+  (interactive)
+  (require 'magit)
+  (if (eq (magit-toplevel) nil)
+      (counsel-file-jump)
+    (counsel-git)))
 #+end_src
 
 ** Elfeed
