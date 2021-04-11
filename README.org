@@ -572,18 +572,6 @@ Run ~compile~ in the current/root directory:
   (pop-to-buffer (get-buffer "*compilation*")))
 #+end_src
 
-Create an alternative to ~find-file~ which includes subdirectories:
-
-#+begin_src emacs-lisp
-(defun fw/file-jump ()
-  "Run `counsel-git' or `counsel-file-jump'"
-  (interactive)
-  (require 'magit)
-  (if (eq (magit-toplevel) nil)
-      (counsel-file-jump)
-    (counsel-git)))
-#+end_src
-
 ** Elfeed
 
 Let's extend elfeed's UI so that I can use ~youtube-dl~ to download RSS video
@@ -694,7 +682,7 @@ hydras and the apps/menu key:
 #+begin_src emacs-lisp
 (defhydra fw/hydra-main (:color teal)
   ("f" counsel-find-file "Find file" :column "Search")
-  ("F" fw/file-jump "Find file recursive")
+  ("F" counsel-git "Find file recursive")
   ("s" swiper "Search buffer")
   ("S" counsel-rg "Search directory")
   ("l" goto-line "Goto line")
