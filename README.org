@@ -432,6 +432,31 @@ clipboard."
   (fw/copy-to-clipboard (file-relative-name (fw/buffer-file-name))))
 #+end_src
 
+* Browser Functions
+
+#+begin_src emacs-lisp
+(defun fw/browse-query (url name)
+  "Search text input using `url'"
+  (browse-url
+   (concat
+    url
+    (read-string (concat "Browse " name ": ")))))
+
+(defun fw/browse-leo ()
+  "Search text input using https://dict.leo.org"
+  (interactive)
+  (fw/browse-query
+   "https://dict.leo.org/german-english/?side=both&search="
+   "dict.leo.org"))
+
+(defun fw/browse-chocolatey ()
+  "Search text input using https://chocolatey.org"
+  (interactive)
+  (fw/browse-query
+   "https://community.chocolatey.org/packages?q="
+   "chocolatey.org"))
+#+end_src
+
 * External Packages
 
 ** Compilation
@@ -585,6 +610,11 @@ feeds. This snippet is based on code I found [[https://github.com/skeeto/.emacs.
   (async-shell-command (concat "youtube-dl " url)
                        (concat "*youtube-dl " url "*")))
 
+(defun fw/youtube-dl-prompt ()
+  "Prompts the user for an URL to download using youtube-dl"
+  (interactive)
+  (fw/youtube-dl (read-string "YouTube URL: ")))
+
 (defun fw/elfeed-search-youtube-dl ()
   "Downloads an elfeed entry using youtube-dl"
   (interactive)
@@ -706,6 +736,7 @@ hydras and the apps/menu key:
   ("e" elfeed "Elfeed")
   ("o" fw/hydra-org/body "Org")
   ("i" fw/hydra-modes/body "Modes")
+  ("a" fw/hydra-apps/body "Apps")
   ("SPC" set-mark-command "Set mark" :column "Misc")
   ("<return>" counsel-M-x "Execute")
   ("z" fw/copy-relative-buffer-name-to-clipboard "Copy relative")
@@ -760,6 +791,12 @@ hydras and the apps/menu key:
   ("b" flyspell-buffer "Flyspell buffer")
   ("w" whitespace-mode "Whitespace mode" :column "Misc")
   ("v" fw/find-file-or-find-file-literally "Open literally")
+  ("q" nil "Quit" :column ""))
+
+(defhydra fw/hydra-apps (:color teal)
+  ("l" fw/browse-leo "dict.leo.org" :column "Browse")
+  ("c" fw/browse-chocolatey "chocolatey.org")
+  ("y" fw/youtube-dl-prompt "youtube-dl" :column "Download")
   ("q" nil "Quit" :column ""))
 
 (global-set-key (kbd "<menu>") 'fw/hydra-main/body)
