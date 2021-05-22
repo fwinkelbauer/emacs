@@ -567,14 +567,16 @@ directory of a project in version control:
         root-dir
       default-directory))))
 
-(defun fw/shell ()
-  "Opens or dismisses a shell in `magit-toplevel' or `default-directory'."
+(setq eshell-scroll-to-bottom-on-input t)
+
+(defun fw/eshell ()
+  "Opens `eshell' in `magit-toplevel' or `default-directory'."
   (interactive)
   (let ((default-directory (fw/default-or-root-dir))
-        (shell-buffer-name (concat "*shell (" (fw/default-or-root-dir) ")*")))
-    (if (string= (buffer-name) shell-buffer-name)
-        (delete-window)
-      (shell shell-buffer-name))))
+        (eshell-buffer-name (concat "*eshell (" (fw/default-or-root-dir) ")*")))
+    (if (string= (buffer-name) eshell-buffer-name)
+        (bury-buffer)
+      (eshell))))
 #+end_src
 
 Run ~compile~ in the current/root directory:
@@ -762,7 +764,7 @@ hydras and the apps/menu key:
   ("o" fw/prefix-magit-status "Open repository")
   ("f" magit-file-dispatch "File dispatch")
   ("p" fw/git-pull-all "Pull all")
-  ("s" fw/shell "Shell" :column "Applications")
+  ("s" fw/eshell "Shell" :column "Applications")
   ("e" fw/native-file-manager "File manager")
   ("r" fw/recompile "Recompile" :column "Programming")
   ("c" fw/compile "Compile")
