@@ -494,27 +494,6 @@ with just some minor adjustments:
 (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
 #+end_src
 
-** Neotree
-
-#+begin_src emacs-lisp
-(defun fw/neotree-dir ()
-  "Open neotree in `magit-toplevel' or `default-directory'."
-  (interactive)
-  (neotree-dir (fw/default-or-root-dir)))
-
-(setq neo-autorefresh nil)
-#+end_src
-
-Fix ~neotree-open-file-in-system-application~ on Windows:
-
-#+begin_src emacs-lisp
-(when fw/is-windows
-  (require 'neotree)
-  (defun neotree-open-file-in-system-application ()
-    (interactive)
-    (shell-command (concat "start " (neo-buffer--get-filename-current-line)))))
-#+end_src
-
 ** Magit
 
 #+begin_src emacs-lisp
@@ -768,9 +747,6 @@ hydras and the apps/menu key:
   ("e" fw/native-file-manager "File manager")
   ("r" fw/recompile "Recompile" :column "Programming")
   ("c" fw/compile "Compile")
-  ("t" neotree-toggle "Toggle" :column "Neotree")
-  ("d" fw/neotree-dir "Directory")
-  ("l" neotree-find "Find")
   ("q" nil "Quit" :column ""))
 
 (defhydra fw/hydra-org (:color teal)
