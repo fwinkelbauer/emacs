@@ -487,18 +487,17 @@ I'd like to spellcheck my commit messages:
 (add-hook 'git-commit-mode-hook 'flyspell-mode)
 #+end_src
 
-Add a custom function to pull from all repositories:
+Add a custom function to fetch from all repositories:
 
 #+begin_src emacs-lisp
-(defun fw/git-pull-all ()
-  "Runs `vc-git-pull' for every repository found in `magit-list-repos'"
+(defun fw/git-fetch-all ()
+  "Runs git fetch for every repository found in `magit-list-repos'"
   (interactive)
-  (require 'vc-git)
   (require 'magit)
   (if magit-repository-directories
-      (dolist (path (magit-list-repos))
-        (let ((default-directory path))
-          (vc-git-pull nil)))))
+      (dolist (default-directory (magit-list-repos))
+        (async-shell-command "git fetch --all"
+                             (concat "*git-fetch " default-directory "*")))))
 #+end_src
 
 Running ~magit-status~ with a prefix argument shows all repositories defined in
@@ -741,8 +740,8 @@ hydras and the apps/menu key:
 (defhydra fw/hydra-project (:color teal)
   ("g" magit-status "Status" :column "Magit")
   ("o" fw/prefix-magit-status "Open repository")
-  ("f" magit-file-dispatch "File dispatch")
-  ("p" fw/git-pull-all "Pull all")
+  ("d" magit-file-dispatch "File dispatch")
+  ("f" fw/git-fetch-all "Fetch all")
   ("s" fw/eshell "Shell" :column "Applications")
   ("e" fw/native-file-manager "File manager")
   ("r" fw/recompile "Recompile" :column "Programming")
