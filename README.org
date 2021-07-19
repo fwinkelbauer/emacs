@@ -496,7 +496,7 @@ Add a custom function to fetch from all repositories:
   (require 'magit)
   (if magit-repository-directories
       (dolist (default-directory (magit-list-repos))
-        (async-shell-command "git fetch --all"
+        (async-shell-command "git fetch --all --verbose"
                              (concat "*git-fetch " default-directory "*")))))
 #+end_src
 
