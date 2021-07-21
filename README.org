@@ -187,40 +187,6 @@ Highlight current line:
       ibuffer-expert t)
 #+end_src
 
-* Window
-
-By default, ~split-window-vertically~ and ~split-window-horizontally~ display
-the current buffer twice. Most of the time I'll change the buffer in the second
-window, which is why [[https://www.reddit.com/r/emacs/comments/25v0eo/you_emacs_tips_and_tricks/chldury/][this snippet]] looks really handy:
-
-#+begin_src emacs-lisp
-(defun fw/vsplit-last-buffer ()
-  "Split the selected window into two vertical windows."
-  (interactive)
-  (split-window-vertically)
-  (other-window 1)
-  (switch-to-next-buffer))
-
-(defun fw/hsplit-last-buffer ()
-  "Split the selected window into two horizontal windows."
-  (interactive)
-  (split-window-horizontally)
-  (other-window 1)
-  (switch-to-next-buffer))
-#+end_src
-
-In a split screen scenario it is sometimes convenient to delete the window while
-killing a buffer:
-
-#+begin_src emacs-lisp
-(defun fw/kill-this-buffer ()
-  "Kills this buffer and removes this window when split."
-  (interactive)
-  (kill-this-buffer)
-  (when (> (length (window-list)) 1)
-      (delete-window)))
-#+end_src
-
 * Org
 
 General org configuration:
@@ -698,14 +664,13 @@ hydras and the apps/menu key:
   ("l" goto-line "Goto line")
   ("w" (funcall (key-binding (kbd "C-x C-s"))) "Save buffer" :column "Buffer")
   ("k" kill-this-buffer "Kill this buffer")
-  ("K" fw/kill-this-buffer "Kill this window")
   ("b" counsel-switch-buffer "Switch buffer")
   ("B" ibuffer "Open ibuffer")
   ("h" mark-whole-buffer "Mark all")
   ("0" delete-window "Delete window" :column "Window")
   ("1" delete-other-windows "Delete other windows")
-  ("2" fw/vsplit-last-buffer "Split window below")
-  ("3" fw/hsplit-last-buffer "Split window right")
+  ("2" split-window-vertically "Split window below")
+  ("3" split-window-horizontally "Split window right")
   ("<right>" windmove-right "Right")
   ("<left>" windmove-left "Left")
   ("<up>" windmove-up "Up")
