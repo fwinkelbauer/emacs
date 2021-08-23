@@ -337,16 +337,14 @@ Define a function to make my org-agenda pretty. Based on [[https://old.reddit.co
 (defun fw/browse-leo ()
   "Search text input using https://dict.leo.org"
   (interactive)
-  (fw/browse-query
-   "https://dict.leo.org/german-english/?side=both&search="
-   "dict.leo.org"))
+  (fw/browse-query "https://dict.leo.org/german-english/?side=both&search="
+                   "dict.leo.org"))
 
 (defun fw/browse-chocolatey ()
   "Search text input using https://chocolatey.org"
   (interactive)
-  (fw/browse-query
-   "https://community.chocolatey.org/packages?q="
-   "chocolatey.org"))
+  (fw/browse-query "https://community.chocolatey.org/packages?q="
+                   "chocolatey.org"))
 #+end_src
 
 * External Packages
@@ -433,9 +431,10 @@ directory of a project in version control:
   "Returns `magit-toplevel' or `default-directory'."
   (require 'magit)
   (let ((root-dir (magit-toplevel)))
-    (expand-file-name (if root-dir
-        root-dir
-      default-directory))))
+    (expand-file-name
+     (if root-dir
+         root-dir
+       default-directory))))
 
 (setq eshell-scroll-to-bottom-on-input t)
 
