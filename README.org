@@ -9,7 +9,8 @@ I am currently running GNU Emacs 27.1.
 
 #+begin_src emacs-lisp
 (setq fw/is-linux (eq system-type 'gnu/linux)
-      fw/is-windows (eq system-type 'windows-nt))
+      fw/is-windows (eq system-type 'windows-nt)
+      fw/is-raspberry (string-prefix-p "arm" system-configuration))
 #+end_src
 
 * General
@@ -136,11 +137,13 @@ Hide toolbar:
 Set the default font:
 
 #+begin_src emacs-lisp
-(set-face-attribute 'default nil
-                    :family "Roboto Mono Medium"
-                    :height 120
-                    :weight 'normal
-                    :width 'normal)
+(if (version< emacs-version "27.1")
+    (set-default-font "Roboto Mono 12" nil t)
+  (set-face-attribute 'default nil
+                      :family "Roboto Mono Medium"
+                      :height 120
+                      :weight 'normal
+                      :width 'normal))
 #+end_src
 
 Enable column numbers:
@@ -450,6 +453,10 @@ Define a function to open the current/root directory in an external file
 manager:
 
 #+begin_src emacs-lisp
+(defun fw/linux-pcmanfm ()
+  "Opens pcmanfm (Raspbian) in `fw/default-or-root-dir'."
+  (start-process "pcmanfm" nil "pcmanfm" (fw/default-or-root-dir)))
+
 (defun fw/linux-thunar ()
   "Opens thunar (Linux XFCE) in `fw/default-or-root-dir'."
   (start-process "thunar" nil "thunar" (fw/default-or-root-dir)))
@@ -462,7 +469,9 @@ manager:
   "Opens the OS native file manager in `fw/default-or-root-dir'."
   (interactive)
   (when fw/is-linux
-      (fw/linux-thunar))
+    (if fw/is-raspberry
+        (fw/linux-pcmanfm)
+      (fw/linux-thunar)))
   (when fw/is-windows
       (fw/windows-explorer)))
 #+end_src
