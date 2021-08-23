@@ -321,36 +321,6 @@ Define a function to make my org-agenda pretty. Based on [[https://old.reddit.co
   `(,category ,(list (all-the-icons-material icon)) nil nil :ascent center))
 #+end_src
 
-* Directory/File Functions
-
-Put the file name of the current buffer onto the clipborad. Adapted from [[https://blog.sumtypeofway.com/posts/emacs-config.html][here]]:
-
-#+begin_src emacs-lisp
-(defun fw/buffer-file-name ()
-  "Returns the absolute file name of the current buffer"
-  (if (equal major-mode 'dired-mode)
-      default-directory
-    (buffer-file-name)))
-
-(defun fw/copy-to-clipboard (value)
-  "Copy `value' to the clipboard and show a `message'."
-  (when value
-    (kill-new value)
-    (message "Copied '%s' to the clipboard" value)))
-
-(defun fw/copy-absolute-buffer-name-to-clipboard ()
-  "Copy the absolute file name of the current buffer to the
-clipboard."
-  (interactive)
-  (fw/copy-to-clipboard (fw/buffer-file-name)))
-
-(defun fw/copy-relative-buffer-name-to-clipboard ()
-  "Copy the relative file name of the current buffer to the
-clipboard."
-  (interactive)
-  (fw/copy-to-clipboard (file-relative-name (fw/buffer-file-name))))
-#+end_src
-
 * Browser Functions
 
 #+begin_src emacs-lisp
@@ -515,6 +485,38 @@ Run ~compile~ in the current/root directory:
   (let ((default-directory (fw/default-or-root-dir)))
     (call-interactively #'recompile))
   (pop-to-buffer (get-buffer "*compilation*")))
+#+end_src
+
+Put the file name of the current buffer onto the clipborad. Adapted from [[https://blog.sumtypeofway.com/posts/emacs-config.html][here]]:
+
+#+begin_src emacs-lisp
+(defun fw/buffer-file-name ()
+  "Returns the absolute file name of the current buffer"
+  (if (equal major-mode 'dired-mode)
+      default-directory
+    (buffer-file-name)))
+
+(defun fw/copy-to-clipboard (value)
+  "Copy `value' to the clipboard and show a `message'."
+  (when value
+    (kill-new value)
+    (message "Copied '%s' to the clipboard" value)))
+
+(defun fw/copy-absolute-buffer-name-to-clipboard ()
+  "Copy the absolute file name of the current buffer to the
+clipboard."
+  (interactive)
+  (fw/copy-to-clipboard (fw/buffer-file-name)))
+
+(defun fw/copy-relative-buffer-name-to-clipboard ()
+  "Copy the relative file name (based on
+`fw/default-or-root-dir') of the current buffer to the
+clipboard."
+  (interactive)
+  (fw/copy-to-clipboard
+   (file-relative-name
+    (fw/buffer-file-name)
+    (fw/default-or-root-dir))))
 #+end_src
 
 ** Elfeed
