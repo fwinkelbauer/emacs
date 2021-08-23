@@ -125,20 +125,6 @@ Delete trailing whitespace on save:
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
 
-It's useful to open a file without any encoding:
-
-#+begin_src emacs-lisp
-(defun fw/find-file-or-find-file-literally ()
-  "Kills the current buffer and opens it via `find-file' or`find-file-literally'."
-  (interactive)
-  (let ((current-file-name buffer-file-name)
-        (current-is-literal (string= buffer-file-coding-system "no-conversion")))
-    (kill-this-buffer)
-    (if current-is-literal
-        (find-file current-file-name)
-      (find-file-literally current-file-name))))
-#+end_src
-
 * Styling
 
 Hide toolbar:
@@ -275,18 +261,6 @@ Setup org-capture:
   "Opens my inbox `org-capture' template"
   (interactive)
   (org-capture nil "i"))
-#+end_src
-
-Create a function to show a simple diary file:
-
-#+begin_src emacs-lisp
-(setq fw/default-diary-directory "~/org/diary")
-
-(defun fw/org-diary ()
-  "Opens a diary file with the current date"
-  (interactive)
-  (find-file (concat (file-name-as-directory fw/default-diary-directory)
-                     (format-time-string "%Y-%m-%d") ".org")))
 #+end_src
 
 Basic agenda configuration with a custom agenda view:
@@ -716,11 +690,10 @@ hydras and the apps/menu key:
 (defhydra fw/hydra-org (:color teal)
   ("o" fw/org-agenda "Agenda" :column "Org")
   ("i" fw/org-capture-inbox "Inbox")
-  ("d" fw/org-diary "Diary")
   ("l" org-insert-link "Link")
   ("t" org-todo "Todo")
   ("s" org-schedule "Schedule")
-  ("e" org-deadline "Deadline")
+  ("d" org-deadline "Deadline")
   ("." org-time-stamp "Timestamp")
   ("#" org-insert-structure-template "Template")
   ("b" (funcall (key-binding (kbd "C-c '"))) "Source")
@@ -732,7 +705,6 @@ hydras and the apps/menu key:
   ("f" flyspell-mode "Flyspell mode")
   ("b" flyspell-buffer "Flyspell buffer")
   ("w" whitespace-mode "Whitespace mode" :column "Misc")
-  ("v" fw/find-file-or-find-file-literally "Open literally")
   ("q" nil "Quit" :column ""))
 
 (defhydra fw/hydra-apps (:color teal)
