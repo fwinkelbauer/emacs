@@ -637,95 +637,148 @@ Do not show method names in the modeline:
 * Keybindings
 
 A post by [[http://xahlee.info/kbd/whats_the_use_of_the_menu_app_key.html][Xah Lee]] gave me the idea to create alternative keybindings using
-hydras and the apps/menu key:
+transients and the apps/menu key:
 
 #+begin_src emacs-lisp
-(defhydra fw/hydra-main (:color teal)
-  ("f" counsel-find-file "Find file" :column "Search")
-  ("F" counsel-git "Find file recursive")
-  ("s" swiper "Search buffer")
-  ("S" counsel-rg "Search directory")
-  ("l" goto-line "Goto line")
-  ("w" (funcall (key-binding (kbd "C-x C-s"))) "Save buffer" :column "Buffer")
-  ("k" kill-this-buffer "Kill this buffer")
-  ("b" counsel-switch-buffer "Switch buffer")
-  ("B" ibuffer "Open ibuffer")
-  ("h" mark-whole-buffer "Mark all")
-  ("0" delete-window "Delete window" :column "Window")
-  ("1" delete-other-windows "Delete other windows")
-  ("2" split-window-vertically "Split window below")
-  ("3" split-window-horizontally "Split window right")
-  ("<right>" windmove-right "Right")
-  ("<left>" windmove-left "Left")
-  ("<up>" windmove-up "Up")
-  ("<down>" windmove-down "Down")
-  ("." fw/hydra-point/body "Point" :column "Hydras")
-  ("r" fw/hydra-rectangle/body "Rectangle")
-  ("g" fw/hydra-project/body "Project")
-  ("e" elfeed "Elfeed")
-  ("o" fw/hydra-org/body "Org")
-  ("i" fw/hydra-modes/body "Modes")
-  ("a" fw/hydra-apps/body "Apps")
-  ("SPC" set-mark-command "Set mark" :column "Misc")
-  ("<return>" counsel-M-x "Execute")
-  ("z" fw/copy-relative-buffer-name-to-clipboard "Copy relative")
-  ("Z" fw/copy-absolute-buffer-name-to-clipboard "Copy absolute")
-  ("q" nil "Quit" :column "")
-  ("Q" save-buffers-kill-terminal "Exit Emacs"))
+(require 'transient)
 
-(defhydra fw/hydra-rectangle (:color teal)
-  ("r" (rectangle-mark-mode 1) "Mark" :column "Rectangle")
-  ("i" string-rectangle "Insert")
-  ("d" delete-rectangle "Delete")
-  ("q" nil "Quit" :column ""))
+(defun fw/save ()
+  "Runs the keybinding C-x C-s"
+  (interactive)
+  (funcall (key-binding (kbd "C-x C-s"))))
 
-(defhydra fw/hydra-point (:color teal)
-  ("s" swiper-isearch-thing-at-point "Search buffer" :column "Search")
-  ("S" fw/counsel-rg-thing-at-point "Search directory")
-  ("h" highlight-symbol-at-point "Highlight" :column "Highlight")
-  ("u" unhighlight-regexp "Unhighlight")
-  ("q" nil "Quit" :column ""))
+(defun fw/org-edit ()
+  "Runs the keybinding C-c '"
+  (interactive)
+  (funcall (key-binding (kbd "C-c '"))))
 
-(defhydra fw/hydra-project (:color teal)
-  ("g" magit-status "Status" :column "Magit")
-  ("o" fw/prefix-magit-status "Open repository")
-  ("d" magit-file-dispatch "File dispatch")
-  ("f" fw/git-fetch-all "Fetch all")
-  ("s" fw/eshell "Shell" :column "Applications")
-  ("e" fw/native-file-manager "File manager")
-  ("r" fw/recompile "Recompile" :column "Programming")
-  ("c" fw/compile "Compile")
-  ("q" nil "Quit" :column ""))
+(transient-define-prefix fw/transient-main ()
+  "fw/transient-main"
+  [["Search"
+    ("f" "Find file" counsel-find-file)
+    ("F" "Find file recursive" counsel-git)
+    ("s" "Search buffer" swiper)
+    ("S" "Search directory" counsel-rg)
+    ("l" "Goto line" goto-line)]
 
-(defhydra fw/hydra-org (:color teal)
-  ("o" fw/org-agenda "Agenda" :column "Org")
-  ("i" fw/org-capture-inbox "Inbox")
-  ("l" org-insert-link "Link")
-  ("t" org-todo "Todo")
-  ("s" org-schedule "Schedule")
-  ("d" org-deadline "Deadline")
-  ("." org-time-stamp "Timestamp")
-  ("#" org-insert-structure-template "Template")
-  ("b" (funcall (key-binding (kbd "C-c '"))) "Source")
-  ("B" org-babel-tangle "Babel")
-  ("q" nil "Quit" :column ""))
+   ["Buffer"
+    ("w" "Save buffer" fw/save)
+    ("k" "Kill this buffer" kill-this-buffer)
+    ("b" "Switch buffer" counsel-switch-buffer)
+    ("B" "Open ibuffer" ibuffer)
+    ("h" "Mark all" mark-whole-buffer)
+    ("z" "Copy relative" fw/copy-relative-buffer-name-to-clipboard)
+    ("Z" "Copy absolute" fw/copy-absolute-buffer-name-to-clipboard)
+    ("SPC" "Set mark" set-mark-command)]
 
-(defhydra fw/hydra-modes (:color teal)
-  ("i" ispell-word "Check word" :column "Spelling")
-  ("f" flyspell-mode "Flyspell mode")
-  ("b" flyspell-buffer "Flyspell buffer")
-  ("w" whitespace-mode "Whitespace mode" :column "Misc")
-  ("q" nil "Quit" :column ""))
+   ["Window"
+    ("0" "Delete window" delete-window)
+    ("1" "Delete other windows" delete-other-windows)
+    ("2" "Split window below" split-window-vertically)
+    ("3" "Split window right" split-window-horizontally)
+    ("<right>" "Right" windmove-right)
+    ("<left>" "Left" windmove-left)
+    ("<up>" "Up" windmove-up)
+    ("<down>" "Down" windmove-down)]
 
-(defhydra fw/hydra-apps (:color teal)
-  ("l" fw/browse-leo "dict.leo.org" :column "Browse")
-  ("c" fw/browse-chocolatey "chocolatey.org")
-  ("y" fw/youtube-dl-prompt "youtube-dl" :column "Download")
-  ("q" nil "Quit" :column ""))
+   ["More"
+    ("." "Point" fw/transient-point :transient nil)
+    ("r" "Rectangle" fw/transient-rectangle :transient nil)
+    ("g" "Project" fw/transient-project :transient nil)
+    ("e" "Elfeed" elfeed)
+    ("o" "Org" fw/transient-org :transient nil)
+    ("i" "Modes" fw/transient-modes :transient nil)
+    ("a" "Apps" fw/transient-apps :transient nil)
+    ("<return>" "Execute" counsel-M-x)]
 
-(global-set-key (kbd "<menu>") 'fw/hydra-main/body)
-(global-set-key (kbd "<apps>") 'fw/hydra-main/body)
-(global-set-key (kbd "<f5>") 'fw/hydra-main/body)
+   ["Quit"
+    ("q" "Quit" transient-quit-one)
+    ("Q" "Exit Emacs" save-buffers-kill-terminal)]])
+
+(transient-define-prefix fw/transient-rectangle ()
+  "fw/transient-rectangle"
+  [["Rectangle"
+    ("r" "Mark" rectangle-mark-mode)
+    ("i" "Insert" string-rectangle)
+    ("d" "Delete" delete-rectangle)]
+
+   ["Quit"
+    ("q" "Quit" transient-quit-one)]])
+
+(transient-define-prefix fw/transient-point ()
+  "fw/transient-point"
+  [["Search"
+    ("s" "Search buffer" swiper-isearch-thing-at-point)
+    ("S" "Search directory" fw/counsel-rg-thing-at-point)]
+
+   ["Highlight"
+    ("h" "Highlight" highlight-symbol-at-point)
+    ("u" "Unhighlight" unhighlight-regexp)]
+
+   ["Quit"
+    ("q" "Quit" transient-quit-one)]])
+
+(transient-define-prefix fw/transient-project ()
+  [["Magit"
+    ("g" "Status" magit-status)
+    ("o" "Open repository" fw/prefix-magit-status)
+    ("d" "File dispatch" magit-file-dispatch)
+    ("f" "Fetch all" fw/git-fetch-all)]
+
+   ["OS"
+    ("s" "Shell" fw/eshell)
+    ("e" "File manager" fw/native-file-manager)]
+
+   ["Programming"
+    ("r" "Recompile" fw/recompile)
+    ("c" "Compile" fw/compile)]
+
+   ["Quit"
+    ("q" "Quit" transient-quit-one)]])
+
+(transient-define-prefix fw/transient-org ()
+  [["Org"
+    ("o" "Agenda" fw/org-agenda)
+    ("i" "Inbox" fw/org-capture-inbox)
+    ("l" "Link" org-insert-link)
+    ("t" "Todo" org-todo)
+    ("s" "Schedule" org-schedule)
+    ("d" "Deadline" org-deadline)
+    ("." "Timestamp" org-time-stamp)
+    ("#" "Template" org-insert-structure-template)
+    ("b" "Source" fw/org-edit)
+    ("B" "Babel" org-babel-tangle)]
+
+   ["Quit"
+    ("q" "Quit" transient-quit-one)]])
+
+(transient-define-prefix fw/transient-modes ()
+  [["Spelling"
+    ("i" "Check word" ispell-word)
+    ("f" "Flyspell mode" flyspell-mode)
+    ("b" "Flyspell buffer" flyspell-buffer)]
+
+   ["Other"
+    ("w" "Whitespace mode" whitespace-mode)]
+
+   ["Quit"
+    ("q" "Quit" transient-quit-one)]])
+
+(transient-define-prefix fw/transient-apps ()
+  "fw/transient-apps"
+  [["Browse"
+    ("l" "dict.leo.org" fw/browse-leo)
+    ("c" "chocolatey.org" fw/browse-chocolatey)]
+
+   ["Download"
+    ("y" "youtube-dl" fw/youtube-dl-prompt)]
+
+   ["Quit"
+    ("q" "Quit" transient-quit-one)]])
+
+(global-set-key (kbd "<menu>") 'fw/transient-main)
+(global-set-key (kbd "<apps>") 'fw/transient-main)
+(global-set-key (kbd "<f5>") 'fw/transient-main)
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-x s") 'save-buffer)
