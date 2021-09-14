@@ -692,18 +692,14 @@ transients and the apps/menu key:
     ("<return>" "Execute" counsel-M-x)]
 
    ["Quit"
-    ("q" "Quit" transient-quit-one)
-    ("Q" "Exit Emacs" save-buffers-kill-terminal)]])
+    ("q" "Exit Emacs" save-buffers-kill-terminal)]])
 
 (transient-define-prefix fw/transient-rectangle ()
   "fw/transient-rectangle"
   [["Rectangle"
     ("r" "Mark" rectangle-mark-mode)
     ("i" "Insert" string-rectangle)
-    ("d" "Delete" delete-rectangle)]
-
-   ["Quit"
-    ("q" "Quit" transient-quit-one)]])
+    ("d" "Delete" delete-rectangle)]])
 
 (transient-define-prefix fw/transient-point ()
   "fw/transient-point"
@@ -713,10 +709,7 @@ transients and the apps/menu key:
 
    ["Highlight"
     ("h" "Highlight" highlight-symbol-at-point)
-    ("u" "Unhighlight" unhighlight-regexp)]
-
-   ["Quit"
-    ("q" "Quit" transient-quit-one)]])
+    ("u" "Unhighlight" unhighlight-regexp)]])
 
 (transient-define-prefix fw/transient-project ()
   [["Magit"
@@ -731,10 +724,7 @@ transients and the apps/menu key:
 
    ["Programming"
     ("r" "Recompile" fw/recompile)
-    ("c" "Compile" fw/compile)]
-
-   ["Quit"
-    ("q" "Quit" transient-quit-one)]])
+    ("c" "Compile" fw/compile)]])
 
 (transient-define-prefix fw/transient-org ()
   [["Org"
@@ -747,10 +737,7 @@ transients and the apps/menu key:
     ("." "Timestamp" org-time-stamp)
     ("#" "Template" org-insert-structure-template)
     ("b" "Source" fw/org-edit)
-    ("B" "Babel" org-babel-tangle)]
-
-   ["Quit"
-    ("q" "Quit" transient-quit-one)]])
+    ("B" "Babel" org-babel-tangle)]])
 
 (transient-define-prefix fw/transient-text ()
   [["Spelling"
@@ -759,10 +746,7 @@ transients and the apps/menu key:
     ("b" "Flyspell buffer" flyspell-buffer)]
 
    ["Layout"
-    ("w" "Whitespace mode" whitespace-mode)]
-
-   ["Quit"
-    ("q" "Quit" transient-quit-one)]])
+    ("w" "Whitespace mode" whitespace-mode)]])
 
 (transient-define-prefix fw/transient-apps ()
   "fw/transient-apps"
@@ -771,10 +755,7 @@ transients and the apps/menu key:
     ("c" "chocolatey.org" fw/browse-chocolatey)]
 
    ["Download"
-    ("y" "youtube-dl" fw/youtube-dl-prompt)]
-
-   ["Quit"
-    ("q" "Quit" transient-quit-one)]])
+    ("y" "youtube-dl" fw/youtube-dl-prompt)]])
 
 (global-set-key (kbd "<menu>") 'fw/transient-main)
 (global-set-key (kbd "<apps>") 'fw/transient-main)
@@ -782,6 +763,12 @@ transients and the apps/menu key:
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-x s") 'save-buffer)
+#+end_src
+
+Change all transients so that I can use q to close them:
+
+#+begin_src emacs-lisp
+(transient-bind-q-to-quit)
 #+end_src
 
 * Custom
