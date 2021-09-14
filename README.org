@@ -659,7 +659,7 @@ transients and the apps/menu key:
     ("F" "Find file recursive" counsel-git)
     ("s" "Search buffer" swiper)
     ("S" "Search directory" counsel-rg)
-    ("l" "Goto line" goto-line)]
+    ("j" "Goto line" goto-line)]
 
    ["Buffer"
     ("w" "Save buffer" fw/save)
@@ -687,7 +687,7 @@ transients and the apps/menu key:
     ("g" "Project" fw/transient-project :transient nil)
     ("e" "Elfeed" elfeed)
     ("o" "Org" fw/transient-org :transient nil)
-    ("i" "Modes" fw/transient-modes :transient nil)
+    ("t" "Text" fw/transient-text :transient nil)
     ("a" "Apps" fw/transient-apps :transient nil)
     ("<return>" "Execute" counsel-M-x)]
 
@@ -752,13 +752,13 @@ transients and the apps/menu key:
    ["Quit"
     ("q" "Quit" transient-quit-one)]])
 
-(transient-define-prefix fw/transient-modes ()
+(transient-define-prefix fw/transient-text ()
   [["Spelling"
-    ("i" "Check word" ispell-word)
+    ("t" "Check word" ispell-word)
     ("f" "Flyspell mode" flyspell-mode)
     ("b" "Flyspell buffer" flyspell-buffer)]
 
-   ["Other"
+   ["Layout"
     ("w" "Whitespace mode" whitespace-mode)]
 
    ["Quit"
