@@ -712,6 +712,7 @@ transients and the apps/menu key:
     ("u" "Unhighlight" unhighlight-regexp)]])
 
 (transient-define-prefix fw/transient-project ()
+  "fw/transient-project"
   [["Magit"
     ("g" "Status" magit-status)
     ("o" "Open repository" fw/prefix-magit-status)
@@ -727,6 +728,7 @@ transients and the apps/menu key:
     ("c" "Compile" fw/compile)]])
 
 (transient-define-prefix fw/transient-org ()
+  "fw/transient-org"
   [["Org"
     ("o" "Agenda" fw/org-agenda)
     ("i" "Inbox" fw/org-capture-inbox)
@@ -740,6 +742,7 @@ transients and the apps/menu key:
     ("B" "Babel" org-babel-tangle)]])
 
 (transient-define-prefix fw/transient-text ()
+  "fw/transient-text"
   [["Spelling"
     ("t" "Check word" ispell-word)
     ("f" "Flyspell mode" flyspell-mode)
