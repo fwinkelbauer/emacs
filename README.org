@@ -324,29 +324,6 @@ Define a function to make my org-agenda pretty. Based on [[https://old.reddit.co
   `(,category ,(list (all-the-icons-material icon)) nil nil :ascent center))
 #+end_src
 
-* Browser Functions
-
-#+begin_src emacs-lisp
-(defun fw/browse-query (url name)
-  "Search text input using `url'"
-  (browse-url
-   (concat
-    url
-    (read-string (concat "Browse " name ": ")))))
-
-(defun fw/browse-leo ()
-  "Search text input using https://dict.leo.org"
-  (interactive)
-  (fw/browse-query "https://dict.leo.org/german-english/?side=both&search="
-                   "dict.leo.org"))
-
-(defun fw/browse-chocolatey ()
-  "Search text input using https://chocolatey.org"
-  (interactive)
-  (fw/browse-query "https://community.chocolatey.org/packages?q="
-                   "chocolatey.org"))
-#+end_src
-
 * External Packages
 
 ** Compilation
@@ -688,7 +665,7 @@ transients and the apps/menu key:
     ("e" "Elfeed" elfeed)
     ("o" "Org" fw/transient-org :transient nil)
     ("t" "Text" fw/transient-text :transient nil)
-    ("a" "Apps" fw/transient-apps :transient nil)
+    ("y" "youtube-dl" fw/youtube-dl-prompt)
     ("<return>" "Execute" counsel-M-x)]
 
    ["Quit"
@@ -750,15 +727,6 @@ transients and the apps/menu key:
 
    ["Layout"
     ("w" "Whitespace mode" whitespace-mode)]])
-
-(transient-define-prefix fw/transient-apps ()
-  "fw/transient-apps"
-  [["Browse"
-    ("l" "dict.leo.org" fw/browse-leo)
-    ("c" "chocolatey.org" fw/browse-chocolatey)]
-
-   ["Download"
-    ("y" "youtube-dl" fw/youtube-dl-prompt)]])
 
 (global-set-key (kbd "<menu>") 'fw/transient-main)
 (global-set-key (kbd "<apps>") 'fw/transient-main)
