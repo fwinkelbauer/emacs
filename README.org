@@ -472,7 +472,7 @@ Run ~compile~ in the current/root directory:
   (pop-to-buffer (get-buffer "*compilation*")))
 #+end_src
 
-Put the file name of the current buffer onto the clipborad. Adapted from [[https://blog.sumtypeofway.com/posts/emacs-config.html][here]]:
+Put the file name of the current buffer onto the clipboard. Adapted from [[https://blog.sumtypeofway.com/posts/emacs-config.html][here]]:
 
 #+begin_src emacs-lisp
 (defun fw/buffer-file-name ()
