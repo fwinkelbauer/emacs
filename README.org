@@ -546,12 +546,6 @@ Do not show method names in the modeline:
 (add-to-list 'auto-mode-alist '("\\.csproj\\'" . nxml-mode))
 #+end_src
 
-** Undo Tree
-
-#+begin_src emacs-lisp
-(global-undo-tree-mode)
-#+end_src
-
 * Keybindings
 
 A post by [[http://xahlee.info/kbd/whats_the_use_of_the_menu_app_key.html][Xah Lee]] gave me the idea to create alternative keybindings using
@@ -585,7 +579,6 @@ transients and the apps/menu key:
     ("b" "Switch buffer" counsel-switch-buffer)
     ("B" "Open ibuffer" ibuffer)
     ("h" "Mark all" mark-whole-buffer)
-    ("u" "Undo Tree" undo-tree-visualize)
     ("SPC" "Set mark" set-mark-command)]
 
    ["Window"
@@ -671,8 +664,7 @@ transients and the apps/menu key:
 (global-set-key (kbd "<apps>") 'fw/transient-main)
 (global-set-key (kbd "<f5>") 'fw/transient-main)
 
-(global-set-key (kbd "C-z") 'undo-tree-undo)
-(global-set-key (kbd "C-S-z") 'undo-tree-redo)
+(global-set-key (kbd "C-z") 'undo)
 #+end_src
 
 Change all transients so that I can use q to close them:
