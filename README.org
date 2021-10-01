@@ -757,6 +757,7 @@ Additional configuration that is only relevant on a particular machine should be
 stored in a ~custom.el~ file:
 
 #+begin_src emacs-lisp
-(when (file-exists-p "~/.emacs.d/custom.el")
-  (load-file "~/.emacs.d/custom.el"))
+(let ((fw/custom-el (concat user-emacs-directory "custom.el")))
+  (when (file-exists-p fw/custom-el)
+    (load-file fw/custom-el)))
 #+end_src
