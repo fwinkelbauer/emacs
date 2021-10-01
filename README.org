@@ -372,7 +372,8 @@ with just some minor adjustments:
 I'd like to spellcheck my commit messages:
 
 #+begin_src emacs-lisp
-(add-hook 'git-commit-mode-hook 'flyspell-mode)
+(when (executable-find "aspell")
+  (add-hook 'git-commit-mode-hook 'flyspell-mode))
 #+end_src
 
 Add a custom function to fetch from all repositories:
