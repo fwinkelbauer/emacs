@@ -673,7 +673,6 @@ transients and the apps/menu key:
 
 (global-set-key (kbd "C-z") 'undo-tree-undo)
 (global-set-key (kbd "C-S-z") 'undo-tree-redo)
-(global-set-key (kbd "C-x s") 'save-buffer)
 #+end_src
 
 Change all transients so that I can use q to close them:
