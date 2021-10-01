@@ -364,19 +364,6 @@ I'd like to spellcheck my commit messages:
   (add-hook 'git-commit-mode-hook 'flyspell-mode))
 #+end_src
 
-Add a custom function to fetch from all repositories:
-
-#+begin_src emacs-lisp
-(defun fw/git-fetch-all ()
-  "Runs git fetch for every repository found in `magit-list-repos'"
-  (interactive)
-  (require 'magit)
-  (if magit-repository-directories
-      (dolist (default-directory (magit-list-repos))
-        (async-shell-command "git fetch --all --verbose"
-                             (concat "*git-fetch " default-directory "*")))))
-#+end_src
-
 Running ~magit-status~ with a prefix argument shows all repositories defined in
 ~magit-repository-directories~, even if I am already in a git repository. Since
 I don't like to press ~C-u~, I'll define a function to do it for me:
@@ -689,8 +676,7 @@ transients and the apps/menu key:
   [["Magit"
     ("g" "Status" magit-status)
     ("o" "Open repository" fw/prefix-magit-status)
-    ("d" "File dispatch" magit-file-dispatch)
-    ("f" "Fetch all" fw/git-fetch-all)]
+    ("d" "File dispatch" magit-file-dispatch)]
 
    ["OS"
     ("s" "Shell" fw/eshell)
