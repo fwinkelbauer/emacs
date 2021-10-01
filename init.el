@@ -5,7 +5,7 @@
 (package-initialize)
 
 (prefer-coding-system 'utf-8)
-(org-babel-load-file "~/.emacs.d/README.org")
+(org-babel-load-file (concat user-emacs-directory "README.org"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
