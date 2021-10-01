@@ -182,6 +182,7 @@ General org configuration:
 
 #+begin_src emacs-lisp
 (require 'org)
+
 (setq org-catch-invisible-edits 'smart
       org-log-into-drawer t
       org-capture-bookmark nil)
@@ -201,7 +202,9 @@ changes the date format in ~%%(diary.anniversary ...)~:
 
 #+begin_src emacs-lisp
 (require 'calendar)
+
 (calendar-set-date-style 'iso)
+
 (setq calendar-week-start-day 1
       calendar-day-name-array ["Sonntag" "Montag" "Dienstag" "Mittwoch"
                                "Donnerstag" "Freitag" "Samstag"]
@@ -342,6 +345,7 @@ with just some minor adjustments:
 #+begin_src emacs-lisp
 (autoload 'gfm-mode "markdown-mode"
   "Major mode for editing GitHub Flavored Markdown files" t)
+
 (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
 #+end_src
 
