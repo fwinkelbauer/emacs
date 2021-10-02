@@ -9,8 +9,7 @@ I am currently running GNU Emacs 27.1.
 
 #+begin_src emacs-lisp
 (setq fw/is-linux (eq system-type 'gnu/linux)
-      fw/is-windows (eq system-type 'windows-nt)
-      fw/is-raspberry (string-prefix-p "arm" system-configuration))
+      fw/is-windows (eq system-type 'windows-nt))
 #+end_src
 
 * General
@@ -405,27 +404,13 @@ Define a function to open the current/root directory in an external file
 manager:
 
 #+begin_src emacs-lisp
-(defun fw/linux-pcmanfm ()
-  "Opens pcmanfm (Raspbian) in `fw/default-or-root-dir'."
-  (start-process "pcmanfm" nil "pcmanfm" (fw/default-or-root-dir)))
-
-(defun fw/linux-thunar ()
-  "Opens thunar (Linux XFCE) in `fw/default-or-root-dir'."
-  (start-process "thunar" nil "thunar" (fw/default-or-root-dir)))
-
-(defun fw/windows-explorer ()
-  "Opens Windows explorer in `fw/default-or-root-dir'."
-  (start-process "explorer" nil "explorer" (replace-regexp-in-string "/" "\\\\" (fw/default-or-root-dir))))
-
 (defun fw/native-file-manager ()
   "Opens the OS native file manager in `fw/default-or-root-dir'."
   (interactive)
   (when fw/is-linux
-    (if fw/is-raspberry
-        (fw/linux-pcmanfm)
-      (fw/linux-thunar)))
+    (call-process "xdg-open" nil 0 nil (fw/default-or-root-dir)))
   (when fw/is-windows
-      (fw/windows-explorer)))
+    (w32-shell-execute "open" (fw/default-or-root-dir))))
 #+end_src
 
 Run ~compile~ in the current/root directory:
