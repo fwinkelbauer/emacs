@@ -312,18 +312,6 @@ Define a function to make my org-agenda pretty. Based on [[https://old.reddit.co
 
 * External Packages
 
-** Compilation
-
-I have excluded ~*.elc~ files in this git repository, which is why I need a
-function to compile new packages:
-
-#+begin_src emacs-lisp
-(defun fw/compile-elpa-dir ()
-  "Byte-compile all elpa packages."
-  (interactive)
-  (byte-recompile-directory (concat user-emacs-directory "elpa") 0))
-#+end_src
-
 ** Themes
 
 I like to use [[https://github.com/purcell/color-theme-sanityinc-tomorrow][light themes]]:
@@ -538,6 +526,15 @@ Do not show method names in the modeline:
 
 (add-hook 'csharp-mode-hook 'fw/csharp-mode-setup t)
 (add-to-list 'auto-mode-alist '("\\.csproj\\'" . nxml-mode))
+#+end_src
+
+** Compilation
+
+I have excluded ~*.elc~ files in this git repository, which is why I need to
+make sure that all packages are compiled:
+
+#+begin_src emacs-lisp
+(byte-recompile-directory (concat user-emacs-directory "elpa") 0)
 #+end_src
 
 * Keybindings
