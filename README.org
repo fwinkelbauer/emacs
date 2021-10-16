@@ -526,6 +526,7 @@ Do not show method names in the modeline:
 
 (add-hook 'csharp-mode-hook 'fw/csharp-mode-setup t)
 (add-to-list 'auto-mode-alist '("\\.csproj\\'" . nxml-mode))
+(add-to-list 'auto-mode-alist '("\\.props\\'" . nxml-mode))
 #+end_src
 
 ** Compilation
