@@ -363,8 +363,8 @@ I don't like to press ~C-u~, I'll define a function to do it for me:
   (call-interactively 'magit-status))
 #+end_src
 
-I'd like to open a shell buffer in either the current directory, or in the root
-directory of a project in version control:
+Define a function to open the current/root directory in an external file
+manager:
 
 #+begin_src emacs-lisp
 (defun fw/default-or-root-dir ()
@@ -376,22 +376,6 @@ directory of a project in version control:
          root-dir
        default-directory))))
 
-(setq eshell-scroll-to-bottom-on-input t)
-
-(defun fw/eshell ()
-  "Opens `eshell' in `magit-toplevel' or `default-directory'."
-  (interactive)
-  (let ((default-directory (fw/default-or-root-dir))
-        (eshell-buffer-name (concat "*eshell (" (fw/default-or-root-dir) ")*")))
-    (if (string= (buffer-name) eshell-buffer-name)
-        (bury-buffer)
-      (eshell))))
-#+end_src
-
-Define a function to open the current/root directory in an external file
-manager:
-
-#+begin_src emacs-lisp
 (defun fw/native-file-manager ()
   "Opens the OS native file manager in `fw/default-or-root-dir'."
   (interactive)
@@ -399,26 +383,6 @@ manager:
     (call-process "xdg-open" nil 0 nil (fw/default-or-root-dir)))
   (when fw/is-windows
     (w32-shell-execute "open" (fw/default-or-root-dir))))
-#+end_src
-
-Run ~compile~ in the current/root directory:
-
-#+begin_src emacs-lisp
-(setq compilation-scroll-output t)
-
-(defun fw/compile ()
-  "Run `compile' in `fw/default-or-root-dir'."
-  (interactive)
-  (let ((default-directory (fw/default-or-root-dir)))
-    (call-interactively #'compile))
-  (pop-to-buffer (get-buffer "*compilation*")))
-
-(defun fw/recompile ()
-  "Run `recompile' in `fw/default-or-root-dir'."
-  (interactive)
-  (let ((default-directory (fw/default-or-root-dir)))
-    (call-interactively #'recompile))
-  (pop-to-buffer (get-buffer "*compilation*")))
 #+end_src
 
 ** Elfeed
@@ -585,12 +549,12 @@ transients and the apps/menu key:
     ("<down>" "Down" windmove-down)]
 
    ["More"
-    ("." "Point" fw/transient-point :transient nil)
-    ("r" "Rectangle" fw/transient-rectangle :transient nil)
-    ("g" "Project" fw/transient-project :transient nil)
+    ("." "Point" fw/transient-point)
+    ("r" "Rectangle" fw/transient-rectangle)
+    ("g" "Project" fw/transient-project)
     ("e" "Elfeed" elfeed)
-    ("o" "Org" fw/transient-org :transient nil)
-    ("t" "Text" fw/transient-text :transient nil)
+    ("o" "Org" fw/transient-org)
+    ("t" "Text" fw/transient-text)
     ("y" "youtube-dl" fw/youtube-dl-prompt)
     ("<return>" "Execute" counsel-M-x)]
 
@@ -622,12 +586,7 @@ transients and the apps/menu key:
     ("d" "File dispatch" magit-file-dispatch)]
 
    ["OS"
-    ("s" "Shell" fw/eshell)
-    ("e" "File manager" fw/native-file-manager)]
-
-   ["Programming"
-    ("r" "Recompile" fw/recompile)
-    ("c" "Compile" fw/compile)]])
+    ("e" "File manager" fw/native-file-manager)]])
 
 (transient-define-prefix fw/transient-org ()
   "fw/transient-org"
