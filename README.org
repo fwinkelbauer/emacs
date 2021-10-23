@@ -612,11 +612,14 @@ transients and the apps/menu key:
    ["Layout"
     ("w" "Whitespace mode" whitespace-mode)]])
 
-(global-set-key (kbd "<menu>") 'fw/transient-main)
-(global-set-key (kbd "<apps>") 'fw/transient-main)
+(global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "<f5>") 'fw/transient-main)
 
-(global-set-key (kbd "C-z") 'undo)
+(when fw/is-linux
+  (global-set-key (kbd "<menu>") 'fw/transient-main))
+
+(when fw/is-windows
+  (global-set-key (kbd "<apps>") 'fw/transient-main))
 #+end_src
 
 Change all transients so that I can use q to close them:
