@@ -417,26 +417,27 @@ feeds. This snippet is based on code I found [[https://github.com/skeeto/.emacs.
 (define-key elfeed-search-mode-map "d" 'fw/elfeed-search-youtube-dl)
 #+end_src
 
-** Ivy, Counsel & Swiper
+** Vertico & Orderless
 
 #+begin_src emacs-lisp
-(ivy-mode 1)
-(counsel-mode 1)
-(setq ivy-count-format "%d/%d ")
+(vertico-mode)
+
+(require 'orderless)
+(setq completion-styles '(orderless))
 #+end_src
 
-[[https://oremacs.com/2019/07/20/ivy-0.12.0/][Ivy 0.12.0]] did add some command extensions such as ~swiper-thing-at-point~,
-which are based on ~ivy-thing-at-point~. I'd like to use ~counsel-rg~ through
-~ivy-thing-at-point~:
+** Embark
 
 #+begin_src emacs-lisp
-(defun fw/counsel-rg-thing-at-point ()
-  "`counsel-rg' with `ivy-thing-at-point'."
-  (interactive)
-  (let ((thing (ivy-thing-at-point)))
-    (when (use-region-p)
-      (deactivate-mark))
-    (counsel-rg (regexp-quote thing))))
+(setq prefix-help-command #'embark-prefix-help-command)
+
+(when fw/is-linux
+  (global-set-key (kbd "M-<menu>") 'embark-act))
+
+(when fw/is-windows
+  (global-set-key (kbd "M-<apps>") 'embark-act))
+
+(require 'embark-consult)
 #+end_src
 
 ** Company
@@ -524,16 +525,16 @@ transients and the apps/menu key:
 (transient-define-prefix fw/transient-main ()
   "fw/transient-main"
   [["Search"
-    ("f" "Find file" counsel-find-file)
-    ("F" "Find file recursive" counsel-git)
-    ("s" "Search buffer" swiper)
-    ("S" "Search directory" counsel-rg)
-    ("j" "Goto line" goto-line)]
+    ("f" "Find file" find-file)
+    ("F" "Find file recursive" consult-find)
+    ("s" "Search buffer" consult-line)
+    ("S" "Search directory" consult-ripgrep)
+    ("j" "Goto line" consult-goto-line)]
 
    ["Buffer"
     ("w" "Save buffer" fw/save)
     ("k" "Kill this buffer" kill-this-buffer)
-    ("b" "Switch buffer" counsel-switch-buffer)
+    ("b" "Switch buffer" consult-buffer)
     ("B" "Open ibuffer" ibuffer)
     ("h" "Mark all" mark-whole-buffer)
     ("SPC" "Set mark" set-mark-command)]
@@ -549,14 +550,13 @@ transients and the apps/menu key:
     ("<down>" "Down" windmove-down)]
 
    ["More"
-    ("." "Point" fw/transient-point)
     ("r" "Rectangle" fw/transient-rectangle)
     ("g" "Project" fw/transient-project)
     ("e" "Elfeed" elfeed)
     ("o" "Org" fw/transient-org)
     ("t" "Text" fw/transient-text)
     ("y" "youtube-dl" fw/youtube-dl-prompt)
-    ("<return>" "Execute" counsel-M-x)]
+    ("<return>" "Execute" execute-extended-command)]
 
    ["Quit"
     ("q" "Exit Emacs" save-buffers-kill-terminal)]])
@@ -567,16 +567,6 @@ transients and the apps/menu key:
     ("r" "Mark" rectangle-mark-mode)
     ("i" "Insert" string-rectangle)
     ("d" "Delete" delete-rectangle)]])
-
-(transient-define-prefix fw/transient-point ()
-  "fw/transient-point"
-  [["Search"
-    ("s" "Search buffer" swiper-isearch-thing-at-point)
-    ("S" "Search directory" fw/counsel-rg-thing-at-point)]
-
-   ["Highlight"
-    ("h" "Highlight" highlight-symbol-at-point)
-    ("u" "Unhighlight" unhighlight-regexp)]])
 
 (transient-define-prefix fw/transient-project ()
   "fw/transient-project"
@@ -608,6 +598,10 @@ transients and the apps/menu key:
     ("t" "Check word" ispell-word)
     ("f" "Flyspell mode" flyspell-mode)
     ("b" "Flyspell buffer" flyspell-buffer)]
+
+   ["Highlight"
+    ("h" "Highlight" highlight-symbol-at-point)
+    ("u" "Unhighlight" unhighlight-regexp)]
 
    ["Layout"
     ("w" "Whitespace mode" whitespace-mode)]])

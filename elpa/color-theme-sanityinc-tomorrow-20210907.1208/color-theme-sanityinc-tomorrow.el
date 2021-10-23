@@ -520,6 +520,12 @@ names to which it refers are bound."
       (nxml-delimited-data-face (:foreground unspecified :inherit font-lock-string-face))
       (rng-error-face (:underline ,red))
 
+      ;; orderless
+      (orderless-match-face-0 (:foreground ,aqua))
+      (orderless-match-face-1 (:foreground ,yellow))
+      (orderless-match-face-2 (:foreground ,orange))
+      (orderless-match-face-3 (:foreground ,blue))
+
       ;; org-mode (built-in)
       (org-agenda-structure (:foreground ,purple))
       (org-agenda-current-time (:foreground ,yellow))
@@ -550,6 +556,8 @@ names to which it refers are bound."
       (org-habit-overdue-future-face (:foreground ,background :background ,red))
       (org-habit-ready-face (:foreground ,background :background ,aqua))
       (org-habit-ready-future-face (:foreground ,background :background ,green))
+      (org-headline-done (:foreground nil :strike-through t))
+      (org-headline-todo (:foreground ,orange))
       (org-link (:foreground ,blue :underline t))
       (org-mode-line-clock-overrun (:inherit mode-line :background ,red))
       (org-scheduled (:foreground ,green))
@@ -1495,6 +1503,9 @@ names to which it refers are bound."
       (undo-tree-visualizer-current-face (:foreground ,green :weight bold))
       (undo-tree-visualizer-active-branch-face (:foreground ,red))
       (undo-tree-visualizer-register-face (:foreground ,yellow))
+
+      ;; vertico
+      (vertico-current (:background ,contrast-bg :extend t))
 
       ;; visual-regexp
       (vr/match-0 (:foreground ,yellow :background ,background :inverse-video t))
