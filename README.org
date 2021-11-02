@@ -385,6 +385,23 @@ manager:
     (w32-shell-execute "open" (fw/default-or-root-dir))))
 #+end_src
 
+Make ~consult-find~ and ~consult-ripgrep~ more useful when dealing with git
+repositories:
+
+#+begin_src emacs-lisp
+(defun fw/consult-find ()
+  "Run `consult-find' in `fw/default-or-root-dir'."
+  (interactive)
+  (let ((default-directory (fw/default-or-root-dir)))
+    (consult-find)))
+
+(defun fw/consult-ripgrep ()
+  "Run `consult-ripgrep in `fw/default-or-root-dir'."
+  (interactive)
+  (let ((default-directory (fw/default-or-root-dir)))
+    (consult-ripgrep)))
+#+end_src
+
 ** Elfeed
 
 Let's extend elfeed's UI so that I can use ~youtube-dl~ to download RSS video
@@ -526,9 +543,9 @@ transients and the apps/menu key:
   "fw/transient-main"
   [["Search"
     ("f" "Find file" find-file)
-    ("F" "Find file recursive" consult-find)
+    ("F" "Find file recursive" fw/consult-find)
     ("s" "Search buffer" consult-line)
-    ("S" "Search directory" consult-ripgrep)
+    ("S" "Search directory" fw/consult-ripgrep)
     ("j" "Goto line" consult-goto-line)]
 
    ["Buffer"
