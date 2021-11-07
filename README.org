@@ -567,11 +567,11 @@ transients and the apps/menu key:
     ("<down>" "Down" windmove-down)]
 
    ["More"
-    ("r" "Rectangle" fw/transient-rectangle)
-    ("g" "Project" fw/transient-project)
+    ("r" "Rectangle" fw/transient-rectangle :transient nil)
+    ("g" "Project" fw/transient-project :transient nil)
     ("e" "Elfeed" elfeed)
-    ("o" "Org" fw/transient-org)
-    ("t" "Text" fw/transient-text)
+    ("o" "Org" fw/transient-org :transient nil)
+    ("t" "Text" fw/transient-text :transient nil)
     ("y" "youtube-dl" fw/youtube-dl-prompt)
     ("<return>" "Execute" execute-extended-command)]
 
