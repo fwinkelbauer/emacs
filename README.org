@@ -572,7 +572,7 @@ transients and the apps/menu key:
     ("e" "Elfeed" elfeed)
     ("o" "Org" fw/transient-org :transient nil)
     ("t" "Text" fw/transient-text :transient nil)
-    ("y" "youtube-dl" fw/youtube-dl-prompt)
+    ("y" "Yank" consult-yank-pop)
     ("<return>" "Execute" execute-extended-command)]
 
    ["Quit"
