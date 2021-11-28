@@ -550,7 +550,7 @@ transients and the apps/menu key:
 
    ["Buffer"
     ("w" "Save buffer" fw/save)
-    ("k" "Kill this buffer" kill-this-buffer)
+    ("k" "Kill buffer" kill-this-buffer)
     ("b" "Switch buffer" consult-buffer)
     ("B" "Open ibuffer" ibuffer)
     ("h" "Mark all" mark-whole-buffer)
@@ -576,7 +576,7 @@ transients and the apps/menu key:
     ("<return>" "Execute" execute-extended-command)]
 
    ["Quit"
-    ("q" "Exit Emacs" save-buffers-kill-terminal)]])
+    ("q" "Quit Emacs" save-buffers-kill-terminal)]])
 
 (transient-define-prefix fw/transient-rectangle ()
   "fw/transient-rectangle"
