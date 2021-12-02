@@ -500,13 +500,6 @@ Do not show method names in the modeline:
 ** C Sharp
 
 #+begin_src emacs-lisp
-(defun fw/csharp-mode-setup ()
-  (setq c-syntactic-indentation t)
-  (c-set-style "ellemtel")
-  (setq c-basic-offset 4)
-  (setq truncate-lines t))
-
-(add-hook 'csharp-mode-hook 'fw/csharp-mode-setup t)
 (add-to-list 'auto-mode-alist '("\\.csproj\\'" . nxml-mode))
 (add-to-list 'auto-mode-alist '("\\.props\\'" . nxml-mode))
 (add-to-list 'auto-mode-alist '("\\.editorconfig\\'" . conf-mode))
