@@ -412,13 +412,16 @@ feeds. This snippet is based on code I found [[https://github.com/skeeto/.emacs.
 #+begin_src emacs-lisp
 (require 'elfeed)
 
+(defcustom fw/youtube-dl-program "youtube-dl"
+  "The default youtube-dl program")
+
 (defcustom fw/youtube-dl-args ""
   "A string containing command line arguments which are passed to
   youtube-dl")
 
 (defun fw/youtube-dl (url)
   "Downloads a URL using youtube-dl"
-  (async-shell-command (concat "youtube-dl " fw/youtube-dl-args " " url)
+  (async-shell-command (concat fw/youtube-dl-program " " fw/youtube-dl-args " " url)
                        (concat "*youtube-dl " url "*")))
 
 (defun fw/youtube-dl-prompt ()
