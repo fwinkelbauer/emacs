@@ -448,6 +448,10 @@ feeds. This snippet is based on code I found [[https://github.com/skeeto/.emacs.
 #+begin_src emacs-lisp
 (vertico-mode)
 
+(define-key vertico-map "\r" #'vertico-directory-enter)
+(define-key vertico-map "\d" #'vertico-directory-delete-char)
+(define-key vertico-map "\M-\d" #'vertico-directory-delete-word)
+
 (require 'orderless)
 (setq completion-styles '(orderless))
 #+end_src
