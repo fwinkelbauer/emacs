@@ -3,7 +3,12 @@
 
 * Introduction
 
-I am currently running GNU Emacs 27.1.
+Make sure that we are running a newer version of Emacs:
+
+#+begin_src emacs-lisp
+(when (version< emacs-version "27.1")
+  (error "Unsupported version of Emacs"))
+#+end_src
 
 * OS Detection
 
@@ -130,19 +135,17 @@ Delete trailing whitespace on save:
 Hide toolbar:
 
 #+begin_src emacs-lisp
-(tool-bar-mode -1)
+(tool-bar-mode 0)
 #+end_src
 
 Set the default font:
 
 #+begin_src emacs-lisp
-(if (version< emacs-version "27.1")
-    (set-default-font "Roboto Mono 12" nil t)
-  (set-face-attribute 'default nil
-                      :family "Roboto Mono Medium"
-                      :height 120
-                      :weight 'normal
-                      :width 'normal))
+(set-face-attribute 'default nil
+                    :family "Roboto Mono Medium"
+                    :height 120
+                    :weight 'normal
+                    :width 'normal)
 #+end_src
 
 Enable column numbers:
@@ -294,13 +297,10 @@ Basic agenda configuration with a custom agenda view:
   (org-agenda nil "."))
 #+end_src
 
-I don't want to see repeating TODOs in my calendar. The variable name to change
-this behavior is different depending on the current version of org-mode, so I'll
-set them both:
+I don't want to see repeating TODOs in my calendar:
 
 #+begin_src emacs-lisp
-(setq org-agenda-show-future-repeats nil
-      org-agenda-repeating-timestamp-show-all nil)
+(setq org-agenda-show-future-repeats nil)
 #+end_src
 
 Define a function to make my org-agenda pretty. Based on [[https://old.reddit.com/r/emacs/comments/hnf3cw/my_orgmode_agenda_much_better_now_with_category/][this reddit post]]:
@@ -459,8 +459,6 @@ feeds. This snippet is based on code I found [[https://github.com/skeeto/.emacs.
 ** Embark
 
 #+begin_src emacs-lisp
-(setq prefix-help-command #'embark-prefix-help-command)
-
 (when fw/is-linux
   (global-set-key (kbd "M-<menu>") 'embark-act))
 
@@ -524,7 +522,7 @@ I have excluded ~*.elc~ files in this git repository, which is why I need to
 make sure that all packages are compiled:
 
 #+begin_src emacs-lisp
-(byte-recompile-directory (concat user-emacs-directory "elpa") 0)
+(byte-recompile-directory package-user-dir 0)
 #+end_src
 
 * Keybindings
