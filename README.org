@@ -531,6 +531,16 @@ transients and the apps/menu key:
   (interactive)
   (funcall (key-binding (kbd "C-c '"))))
 
+(defun fw/consult-line-at-point ()
+  "Calls `consult-line' using `thing-at-point'"
+  (interactive)
+  (consult-line (thing-at-point 'symbol)))
+
+(defun fw/consult-ripgrep-at-point ()
+  "Calls `consult-ripgrep' using `thing-at-point'"
+  (interactive)
+  (consult-ripgrep nil (thing-at-point 'symbol)))
+
 (transient-define-prefix fw/transient-main ()
   "fw/transient-main"
   [["Search"
@@ -564,6 +574,7 @@ transients and the apps/menu key:
     ("e" "Elfeed" elfeed)
     ("o" "Org" fw/transient-org :transient nil)
     ("t" "Text" fw/transient-text :transient nil)
+    ("." "Point" fw/transient-at-point :transient nil)
     ("y" "Yank" consult-yank-pop)
     ("<return>" "Execute" execute-extended-command)]
 
@@ -608,12 +619,18 @@ transients and the apps/menu key:
     ("f" "Flyspell mode" flyspell-mode)
     ("b" "Flyspell buffer" flyspell-buffer)]
 
-   ["Highlight"
-    ("h" "Highlight" highlight-symbol-at-point)
-    ("u" "Unhighlight" unhighlight-regexp)]
-
    ["Layout"
     ("w" "Whitespace mode" whitespace-mode)]])
+
+(transient-define-prefix fw/transient-at-point ()
+  "fw/transient-at-point"
+  [["Search"
+    ("s" "Search buffer" fw/consult-line-at-point)
+    ("S" "Search directory" fw/consult-ripgrep-at-point)]
+
+   ["Highlight"
+    ("h" "Highlight" highlight-symbol-at-point)
+    ("u" "Clear" unhighlight-regexp)]])
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "<f5>") 'fw/transient-main)
