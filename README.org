@@ -281,7 +281,9 @@ Basic agenda configuration with a custom agenda view:
 (setq org-agenda-custom-commands
       '(("." "Overview"
          ((agenda ""
-                  ((org-agenda-overriding-header "Kalender\n")))
+                  ((org-agenda-overriding-header "Kalender\n")
+                   (org-agenda-prefix-format "%-2i %-12:c%?-12t% s")
+                   (org-agenda-scheduled-leaders '("" ""))))
           (todo ""
                 ((org-agenda-overriding-header "\nOffen\n")
                  (org-agenda-block-separator nil)
