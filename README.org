@@ -595,7 +595,8 @@ transients and the apps/menu key:
   [["Magit"
     ("g" "Status" magit-status)
     ("o" "Open repository" fw/prefix-magit-status)
-    ("d" "File dispatch" magit-file-dispatch)]
+    ("d" "Dispatch" magit-dispatch)
+    ("f" "File dispatch" magit-file-dispatch)]
 
    ["OS"
     ("e" "File manager" fw/native-file-manager)]])
