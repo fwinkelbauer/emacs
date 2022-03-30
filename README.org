@@ -542,6 +542,11 @@ transients and the apps/menu key:
   (interactive)
   (consult-ripgrep nil (thing-at-point 'symbol)))
 
+(defun fw/unhiglight-all ()
+  "Remove all hi-lock highlighting"
+  (interactive)
+  (unhighlight-regexp t))
+
 (transient-define-prefix fw/transient-main ()
   "fw/transient-main"
   [["Search"
@@ -631,8 +636,8 @@ transients and the apps/menu key:
     ("S" "Search directory" fw/consult-ripgrep-at-point)]
 
    ["Highlight"
-    ("h" "Highlight" highlight-symbol-at-point)
-    ("u" "Clear" unhighlight-regexp)]])
+    ("." "Highlight" highlight-symbol-at-point)
+    ("c" "Clear" fw/unhiglight-all)]])
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "<f5>") 'fw/transient-main)
