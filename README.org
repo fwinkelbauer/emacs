@@ -390,7 +390,7 @@ manager:
     (w32-shell-execute "open" (fw/default-or-root-dir))))
 #+end_src
 
-Use magit so that consult can identify git projects:
+Update consult so that it can identify git projects:
 
 #+begin_src emacs-lisp
 (setq consult-project-root-function #'magit-toplevel)
@@ -399,7 +399,7 @@ Use magit so that consult can identify git projects:
 ** Elfeed
 
 Let's extend elfeed's UI so that I can use ~youtube-dl~ to download RSS video
-feeds. This snippet is based on code I found [[https://github.com/skeeto/.emacs.d/blob/master/etc/feed-setup.el][here]] and [[https://codingquark.com/emacs/2019/05/16/emacs-elfeed-youtube.html][here]]:
+feeds:
 
 #+begin_src emacs-lisp
 (require 'elfeed)
@@ -442,7 +442,6 @@ feeds. This snippet is based on code I found [[https://github.com/skeeto/.emacs.
 
 (define-key vertico-map "\r" #'vertico-directory-enter)
 (define-key vertico-map "\d" #'vertico-directory-delete-char)
-(define-key vertico-map "\M-\d" #'vertico-directory-delete-word)
 
 (require 'orderless)
 (setq completion-styles '(orderless))
