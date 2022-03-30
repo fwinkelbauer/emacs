@@ -154,13 +154,6 @@ Enable column numbers:
 (setq column-number-mode t)
 #+end_src
 
-Highlight current line:
-
-#+begin_src emacs-lisp
-(when window-system
-  (global-hl-line-mode))
-#+end_src
-
 * Ibuffer
 
 #+begin_src emacs-lisp
