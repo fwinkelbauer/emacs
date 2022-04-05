@@ -252,12 +252,8 @@ I've found this snippet of Austrian holidays in [[https://github.com/novoid/dot-
 Setup org-capture:
 
 #+begin_src emacs-lisp
-(defcustom fw/default-inbox "~/org/inbox.org"
-  "The path to an org-mode file which is used when calling
-  `fw/org-capture-inbox'")
-
 (setq org-capture-templates
-      '(("i" "Inbox" entry (file fw/default-inbox)
+      '(("i" "Inbox" entry (file org-default-notes-file)
          "* %?" :empty-lines-before 1)))
 
 (defun fw/org-capture-inbox ()
@@ -288,7 +284,7 @@ Basic agenda configuration with a custom agenda view:
   "Show my custom org-agenda."
   (interactive)
   (delete-other-windows)
-  (find-file fw/default-inbox)
+  (find-file org-default-notes-file)
   (org-agenda nil "."))
 #+end_src
 
