@@ -391,45 +391,6 @@ Update consult so that it can identify git projects:
 (setq consult-project-root-function #'magit-toplevel)
 #+end_src
 
-** Elfeed
-
-Let's extend elfeed's UI so that I can use ~youtube-dl~ to download RSS video
-feeds:
-
-#+begin_src emacs-lisp
-(require 'elfeed)
-
-(defcustom fw/youtube-dl-program "youtube-dl"
-  "The default youtube-dl program")
-
-(defcustom fw/youtube-dl-args ""
-  "A string containing command line arguments which are passed to
-  youtube-dl")
-
-(defun fw/youtube-dl (url)
-  "Downloads a URL using youtube-dl"
-  (async-shell-command (concat fw/youtube-dl-program " " fw/youtube-dl-args " " url)
-                       (concat "*youtube-dl " url "*")))
-
-(defun fw/youtube-dl-prompt ()
-  "Prompts the user for an URL to download using youtube-dl"
-  (interactive)
-  (fw/youtube-dl (read-string "YouTube URL: ")))
-
-(defun fw/elfeed-search-youtube-dl ()
-  "Downloads an elfeed entry using youtube-dl"
-  (interactive)
-  (let ((entries (elfeed-search-selected)))
-    (dolist (entry entries)
-      (fw/youtube-dl (elfeed-entry-link entry))
-      (elfeed-untag entry 'unread)
-      (elfeed-search-update-entry entry)
-      (unless (use-region-p) (forward-line)))))
-
-(define-key elfeed-show-mode-map "d" 'fw/elfeed-search-youtube-dl)
-(define-key elfeed-search-mode-map "d" 'fw/elfeed-search-youtube-dl)
-#+end_src
-
 ** Vertico & Orderless
 
 #+begin_src emacs-lisp
