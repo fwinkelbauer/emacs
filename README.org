@@ -472,6 +472,14 @@ make sure that all packages are compiled:
 (byte-recompile-directory package-user-dir 0)
 #+end_src
 
+#+begin_src emacs-lisp
+(defun fw/reset-emacs ()
+ "Resets the Emacs directory to the latest git commit"
+ (interactive)
+ (let ((default-directory (concat user-emacs-directory "elpa")))
+   (shell-command "git clean -dfx -e archives -e gnupg; git reset --hard")))
+#+end_src
+
 * Keybindings
 
 A post by [[http://xahlee.info/kbd/whats_the_use_of_the_menu_app_key.html][Xah Lee]] gave me the idea to create alternative keybindings using
