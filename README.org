@@ -70,8 +70,6 @@ Make scrolling a little bit smoother:
 (setq mouse-wheel-progressive-speed nil)
 #+end_src
 
-* Server
-
 Start Emacs in server mode:
 
 #+begin_src emacs-lisp
@@ -99,10 +97,11 @@ Overwrite selected text when typing:
 (delete-selection-mode t)
 #+end_src
 
-Ensure that files end with a new line:
+Ensure that files end with a new line and contain no trailing whitespace:
 
 #+begin_src emacs-lisp
 (setq require-final-newline t)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
 
 Mark matching pairs of parentheses:
@@ -122,12 +121,6 @@ Use single space after a sentence:
 
 #+begin_src emacs-lisp
 (setq sentence-end-double-space nil)
-#+end_src
-
-Delete trailing whitespace on save:
-
-#+begin_src emacs-lisp
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
 
 * Styling
