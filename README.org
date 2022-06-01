@@ -374,8 +374,6 @@ with just some minor adjustments:
 ** Magit
 
 #+begin_src emacs-lisp
-(require 'magit)
-
 (setq git-commit-summary-max-length 50
       git-commit-fill-column 72
       magit-display-buffer-function 'magit-display-buffer-same-window-except-diff-v1)
@@ -495,6 +493,8 @@ A post by [[http://xahlee.info/kbd/whats_the_use_of_the_menu_app_key.html][Xah L
 transients and the apps/menu key:
 
 #+begin_src emacs-lisp
+(require 'transient)
+
 (defun fw/save ()
   "Runs the keybinding C-x C-s"
   (interactive)
