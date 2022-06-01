@@ -302,6 +302,49 @@ Define a function to make my org-agenda pretty. Based on [[https://old.reddit.co
   `(,category ,(list (all-the-icons-material icon)) nil nil :ascent center))
 #+end_src
 
+* Project
+
+Define a set of functions that operate on the default directory or the
+project-current directory:
+
+#+begin_src emacs-lisp
+(defun fw/project-current-or-default ()
+  "Returns `project-current' or `default-directory'."
+  (expand-file-name
+   (if (project-current)
+       (cdr (project-current))
+     default-directory)))
+
+(defun fw/native-file-manager ()
+  "Opens the OS native file manager in `fw/project-current-or-default'."
+  (interactive)
+  (when fw/is-linux
+    (call-process "xdg-open" nil 0 nil (fw/project-current-or-default)))
+  (when fw/is-windows
+    (w32-shell-execute "open" (fw/project-current-or-default))))
+
+(defun fw/find-file ()
+  "Finds files in `fw/project-current-or-default'."
+  (interactive)
+  (if (project-current)
+      (project-find-file)
+    (consult-find)))
+
+(defun fw/compile ()
+  "Run `compile' in `fw/project-current-or-default'."
+  (interactive)
+  (let ((default-directory (fw/project-current-or-default))
+        (compilation-scroll-output t))
+    (call-interactively #'compile)))
+
+(defun fw/recompile ()
+  "Run `recompile' in `fw/project-current-or-default'."
+  (interactive)
+  (let ((default-directory (fw/project-current-or-default))
+        (compilation-scroll-output t))
+    (call-interactively #'recompile)))
+#+end_src
+
 * External Packages
 
 ** Themes
@@ -355,27 +398,6 @@ I don't like to press ~C-u~, I'll define a function to do it for me:
   (interactive)
   (setq current-prefix-arg '(4))
   (call-interactively 'magit-status))
-#+end_src
-
-Define a function to open the current/root directory in an external file
-manager:
-
-#+begin_src emacs-lisp
-(defun fw/default-or-root-dir ()
-  "Returns `magit-toplevel' or `default-directory'."
-  (let ((root-dir (magit-toplevel)))
-    (expand-file-name
-     (if root-dir
-         root-dir
-       default-directory))))
-
-(defun fw/native-file-manager ()
-  "Opens the OS native file manager in `fw/default-or-root-dir'."
-  (interactive)
-  (when fw/is-linux
-    (call-process "xdg-open" nil 0 nil (fw/default-or-root-dir)))
-  (when fw/is-windows
-    (w32-shell-execute "open" (fw/default-or-root-dir))))
 #+end_src
 
 Update consult so that it can identify git projects:
@@ -498,7 +520,7 @@ transients and the apps/menu key:
   "fw/transient-main"
   [["Search"
     ("f" "Find file" find-file)
-    ("F" "Find file recursive" consult-find)
+    ("F" "Find file recursive" fw/find-file)
     ("s" "Search buffer" consult-line)
     ("S" "Search directory" consult-ripgrep)
     ("j" "Goto line" consult-goto-line)
@@ -550,8 +572,10 @@ transients and the apps/menu key:
     ("d" "Dispatch" magit-dispatch)
     ("f" "File dispatch" magit-file-dispatch)]
 
-   ["OS"
-    ("e" "File manager" fw/native-file-manager)]])
+   ["Project"
+    ("e" "File manager" fw/native-file-manager)
+    ("c" "Compile" fw/compile)
+    ("r" "Recompile" fw/recompile)]])
 
 (transient-define-prefix fw/transient-org ()
   "fw/transient-org"
