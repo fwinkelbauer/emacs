@@ -400,12 +400,6 @@ I don't like to press ~C-u~, I'll define a function to do it for me:
   (call-interactively 'magit-status))
 #+end_src
 
-Update consult so that it can identify git projects:
-
-#+begin_src emacs-lisp
-(setq consult-project-root-function #'magit-toplevel)
-#+end_src
-
 ** Vertico & Orderless
 
 #+begin_src emacs-lisp
