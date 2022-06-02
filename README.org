@@ -172,15 +172,13 @@ General org configuration:
 (require 'org)
 
 (setq org-catch-invisible-edits 'smart
-      org-log-into-drawer t
-      org-capture-bookmark nil)
+      org-log-into-drawer t)
 #+end_src
 
 Improve org's source code blocks:
 
 #+begin_src emacs-lisp
-(setq org-src-fontify-natively t
-      org-src-tab-acts-natively t
+(setq org-src-tab-acts-natively t
       org-src-window-setup 'current-window
       org-edit-src-content-indentation 0)
 #+end_src
@@ -245,7 +243,8 @@ I've found this snippet of Austrian holidays in [[https://github.com/novoid/dot-
 Setup org-capture:
 
 #+begin_src emacs-lisp
-(setq org-capture-templates
+(setq org-capture-bookmark nil
+      org-capture-templates
       '(("i" "Inbox" entry (file org-default-notes-file)
          "* %?" :empty-lines-before 1)))
 
