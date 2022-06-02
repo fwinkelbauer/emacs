@@ -525,8 +525,7 @@ transients and the apps/menu key:
     ("k" "Kill buffer" kill-this-buffer)
     ("b" "Switch buffer" consult-buffer)
     ("B" "Open ibuffer" ibuffer)
-    ("h" "Mark all" mark-whole-buffer)
-    ("SPC" "Set mark" set-mark-command)]
+    ("h" "Mark all" mark-whole-buffer)]
 
    ["Window"
     ("0" "Delete window" delete-window)
