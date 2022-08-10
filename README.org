@@ -172,7 +172,9 @@ General org configuration:
 (require 'org)
 
 (setq org-catch-invisible-edits 'smart
-      org-log-into-drawer t)
+      org-log-into-drawer t
+      org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)"))
+      org-todo-keyword-faces '(("WAIT" . "orange") ("STOP" . "sienna")))
 #+end_src
 
 Improve org's source code blocks:
