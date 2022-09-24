@@ -7,3 +7,4 @@ transient/
 README.el
 custom.el
 *.elc
+/projects
