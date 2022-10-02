@@ -490,7 +490,7 @@ make sure that all packages are compiled:
    (shell-command "git clean -dfx -e archives -e gnupg; git reset --hard")))
 #+end_src
 
-* Keybindings
+** Transient
 
 A post by [[http://xahlee.info/kbd/whats_the_use_of_the_menu_app_key.html][Xah Lee]] gave me the idea to create alternative keybindings using
 transients and the apps/menu key:
