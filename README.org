@@ -522,7 +522,7 @@ transients and the apps/menu key:
     ("f" "Find file" find-file)
     ("F" "Find file recursive" fw/find-file)
     ("s" "Search buffer" consult-line)
-    ("S" "Search directory" consult-ripgrep)
+    ("S" "Search directory" consult-grep)
     ("j" "Goto line" consult-goto-line)
     ("." "Highlight" highlight-symbol-at-point)
     ("c" "Clear" fw/unhiglight-all)]
