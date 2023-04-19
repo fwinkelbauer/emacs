@@ -147,23 +147,6 @@ Enable column numbers:
 (setq column-number-mode t)
 #+end_src
 
-* Ibuffer
-
-#+begin_src emacs-lisp
-(setq-default ibuffer-saved-filter-groups
-              `(("Default"
-                 ("Temporary" (name . "\*.*\*"))
-                 ("Magit" (name . "^magit")))))
-
-(add-hook 'ibuffer-mode-hook
-          (lambda ()
-            (ibuffer-auto-mode 1)
-            (ibuffer-switch-to-saved-filter-groups "Default")))
-
-(setq ibuffer-show-empty-filter-groups nil
-      ibuffer-expert t)
-#+end_src
-
 * Org
 
 General org configuration:
@@ -531,7 +514,6 @@ transients and the apps/menu key:
     ("w" "Save buffer" fw/save)
     ("k" "Kill buffer" kill-this-buffer)
     ("b" "Switch buffer" consult-buffer)
-    ("B" "Open ibuffer" ibuffer)
     ("h" "Mark all" mark-whole-buffer)]
 
    ["Window"
