@@ -459,33 +459,6 @@ Do not show method names in the modeline:
 (add-to-list 'auto-mode-alist '("\\.editorconfig\\'" . conf-mode))
 #+end_src
 
-** Centaur Tabs
-
-#+begin_src emacs-lisp
-(require 'centaur-tabs)
-
-(centaur-tabs-mode t)
-(centaur-tabs-headline-match)
-
-(setq centaur-tabs-set-icons t
-      centaur-tabs-set-modified-marker t
-      centaur-tabs-modified-marker "!"
-      centaur-tabs-cycle-scope 'tabs)
-
-(defun centaur-tabs-hide-tab (x)
-  "Do no to show buffer X in tabs."
-  (let ((name (format "%s" x)))
-    (or
-     (window-dedicated-p (selected-window))
-     (string-prefix-p "magit" name)
-     (string-prefix-p "*" name)
-     (string-prefix-p " *" name))))
-
-(defun centaur-tabs-buffer-groups ()
-  "`centaur-tabs-buffer-groups' control buffers' group rules."
-  (list (centaur-tabs-get-group-name (current-buffer))))
-#+end_src
-
 ** Compilation
 
 I have excluded ~*.elc~ files in this git repository, which is why I need to
@@ -535,9 +508,7 @@ transients and the apps/menu key:
     ("S" "Search directory" consult-grep)
     ("j" "Goto line" consult-goto-line)
     ("." "Highlight" highlight-symbol-at-point)
-    ("c" "Clear" fw/unhiglight-all)
-    ("t" "Tab forward" centaur-tabs-forward)
-    ("T" "Tab backward" centaur-tabs-backward)]
+    ("c" "Clear" fw/unhiglight-all)]
 
    ["Buffer"
     ("w" "Save buffer" fw/save)
@@ -560,7 +531,7 @@ transients and the apps/menu key:
     ("g" "Project" fw/transient-project :transient nil)
     ("e" "Elfeed" elfeed)
     ("o" "Org" fw/transient-org :transient nil)
-    ("u" "Text" fw/transient-text :transient nil)
+    ("t" "Text" fw/transient-text :transient nil)
     ("y" "Yank" consult-yank-pop)
     ("<return>" "Execute" execute-extended-command)]
 
@@ -604,7 +575,7 @@ transients and the apps/menu key:
 (transient-define-prefix fw/transient-text ()
   "fw/transient-text"
   [["Spelling"
-    ("u" "Check word" ispell-word)
+    ("t" "Check word" ispell-word)
     ("f" "Flyspell mode" flyspell-mode)
     ("b" "Flyspell buffer" flyspell-buffer)]
 
