@@ -521,10 +521,7 @@ transients and the apps/menu key:
     ("1" "Delete other windows" delete-other-windows)
     ("2" "Split window below" split-window-vertically)
     ("3" "Split window right" split-window-horizontally)
-    ("<right>" "Right" windmove-right)
-    ("<left>" "Left" windmove-left)
-    ("<up>" "Up" windmove-up)
-    ("<down>" "Down" windmove-down)]
+    ("i" "Other window" other-window)]
 
    ["More"
     ("r" "Rectangle" fw/transient-rectangle :transient nil)
