@@ -499,6 +499,18 @@ transients and the apps/menu key:
   (interactive)
   (unhighlight-regexp t))
 
+(defun fw/split-window-vertically ()
+  "Split the selected window into two vertical windows."
+  (interactive)
+  (split-window-vertically)
+  (other-window 1))
+
+(defun fw/split-window-horizontally ()
+  "Split the selected window into two horizontal windows."
+  (interactive)
+  (split-window-horizontally)
+  (other-window 1))
+
 (transient-define-prefix fw/transient-main ()
   "fw/transient-main"
   [["Search"
@@ -519,8 +531,8 @@ transients and the apps/menu key:
    ["Window"
     ("0" "Delete window" delete-window)
     ("1" "Delete other windows" delete-other-windows)
-    ("2" "Split window below" split-window-vertically)
-    ("3" "Split window right" split-window-horizontally)
+    ("2" "Split window below" fw/split-window-vertically)
+    ("3" "Split window right" fw/split-window-horizontally)
     ("i" "Other window" other-window)]
 
    ["More"
