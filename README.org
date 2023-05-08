@@ -518,9 +518,7 @@ transients and the apps/menu key:
     ("F" "Find file recursive" fw/find-file)
     ("s" "Search buffer" consult-line)
     ("S" "Search directory" consult-grep)
-    ("j" "Goto line" consult-goto-line)
-    ("." "Highlight" highlight-symbol-at-point)
-    ("c" "Clear" fw/unhiglight-all)]
+    ("j" "Goto line" consult-goto-line)]
 
    ["Buffer"
     ("w" "Save buffer" fw/save)
@@ -536,23 +534,14 @@ transients and the apps/menu key:
     ("i" "Other window" other-window)]
 
    ["More"
-    ("r" "Rectangle" fw/transient-rectangle :transient nil)
     ("g" "Project" fw/transient-project :transient nil)
     ("e" "Elfeed" elfeed)
     ("o" "Org" fw/transient-org :transient nil)
     ("t" "Text" fw/transient-text :transient nil)
-    ("y" "Yank" consult-yank-pop)
     ("<return>" "Execute" execute-extended-command)]
 
    ["Quit"
     ("q" "Quit Emacs" save-buffers-kill-terminal)]])
-
-(transient-define-prefix fw/transient-rectangle ()
-  "fw/transient-rectangle"
-  [["Rectangle"
-    ("r" "Mark" rectangle-mark-mode)
-    ("i" "Insert" string-rectangle)
-    ("d" "Delete" delete-rectangle)]])
 
 (transient-define-prefix fw/transient-project ()
   "fw/transient-project"
@@ -588,8 +577,19 @@ transients and the apps/menu key:
     ("f" "Flyspell mode" flyspell-mode)
     ("b" "Flyspell buffer" flyspell-buffer)]
 
-   ["Layout"
-    ("w" "Whitespace mode" whitespace-mode)]])
+   ["Highlight"
+    ("." "Point" highlight-symbol-at-point)
+    ("h" "Regex" highlight-regexp)
+    ("c" "Clear" fw/unhiglight-all)]
+
+   ["Rectangle"
+    ("r" "Mark" rectangle-mark-mode)
+    ("i" "Insert" string-rectangle)
+    ("d" "Delete" delete-rectangle)]
+
+   ["Other"
+    ("w" "Whitespace mode" whitespace-mode)
+    ("y" "Yank" consult-yank-pop)]])
 
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "<f5>") 'fw/transient-main)
