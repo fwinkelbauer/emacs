@@ -13,7 +13,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(all-the-icons orderless vertico embark-consult consult embark csharp-mode powershell doom-modeline company elfeed counsel ivy color-theme-sanityinc-tomorrow markdown-mode magit))
+   '(embark-consult orderless vertico consult embark csharp-mode powershell doom-modeline company elfeed counsel ivy color-theme-sanityinc-tomorrow markdown-mode magit))
  '(safe-local-variable-values '((eval flyspell-buffer))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -280,15 +280,6 @@ I don't want to see repeating TODOs in my calendar:
 (setq org-agenda-show-future-repeats nil)
 #+end_src
 
-Define a function to make my org-agenda pretty. Based on [[https://old.reddit.com/r/emacs/comments/hnf3cw/my_orgmode_agenda_much_better_now_with_category/][this reddit post]]:
-
-#+begin_src emacs-lisp
-(defun fw/org-agenda-category-icon (category icon)
-  "Returns an `org-agenda-category-icon-alist' entry using an
-`all-the-icons-material' icon"
-  `(,category ,(list (all-the-icons-material icon)) nil nil :ascent center))
-#+end_src
-
 * Project
 
 Define a set of functions that operate on the default directory or the
@@ -429,9 +420,6 @@ get downcased, even if notations such as camel casing are used):
 
 ** Doom Modeline
 
-This modeline uses ~all-the-icons~, which can be installed by running the
-command ~M-x all-the-icons-install-fonts~.
-
 #+begin_src emacs-lisp
 (doom-modeline-mode 1)
 
@@ -442,6 +430,15 @@ Do not show method names in the modeline:
 
 #+begin_src emacs-lisp
 (setq which-func-modes nil)
+#+end_src
+
+Define a function to make my org-agenda pretty. Based on [[https://old.reddit.com/r/emacs/comments/hnf3cw/my_orgmode_agenda_much_better_now_with_category/][this reddit post]]:
+
+#+begin_src emacs-lisp
+(defun fw/org-agenda-category-icon (category icon)
+  "Returns an `org-agenda-category-icon-alist' entry using a
+`nerd-icons' icon"
+  `(,category ,(list (nerd-icons-mdicon icon)) nil nil :ascent center))
 #+end_src
 
 ** PowerShell
