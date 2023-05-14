@@ -262,6 +262,7 @@ Basic agenda configuration with a custom agenda view:
           (todo ""
                 ((org-agenda-overriding-header "\nOffen\n")
                  (org-agenda-block-separator nil)
+                 (org-agenda-prefix-format "%-2i %-12:c%?-12t% s")
                  (org-agenda-sorting-strategy '(todo-state-up))
                  (org-agenda-todo-ignore-deadlines 'all)
                  (org-agenda-todo-ignore-scheduled 'all)))))))
