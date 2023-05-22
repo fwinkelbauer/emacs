@@ -252,6 +252,7 @@ Basic agenda configuration with a custom agenda view:
          ((agenda ""
                   ((org-agenda-overriding-header "Kalender\n")
                    (org-agenda-prefix-format "%-2i %-12:c%?-12t% s")
+                   (org-agenda-sorting-strategy '(todo-state-up))
                    (org-agenda-time-grid '((daily today require-timed)
                                            (800 1000 1200 1400 1600 1800 2000)
                                            " ....."
