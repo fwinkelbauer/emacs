@@ -64,12 +64,6 @@ Always start in fullscreen:
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 #+end_src
 
-Make scrolling a little bit smoother:
-
-#+begin_src emacs-lisp
-(setq mouse-wheel-progressive-speed nil)
-#+end_src
-
 Start Emacs in server mode:
 
 #+begin_src emacs-lisp
