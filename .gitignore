@@ -2,9 +2,10 @@ auto-save-list/
 elpa/archives/
 elpa/gnupg/
 eshell/
+projects/
 server/
 transient/
+
 README.el
 custom.el
 *.elc
-/projects
