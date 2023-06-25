@@ -3,6 +3,8 @@
 
 * Introduction
 
+*Deprecated*: My config can now be found [[https://github.com/fwinkelbauer/dotfiles][here]].
+
 Make sure that we are running a newer version of Emacs:
 
 #+begin_src emacs-lisp
